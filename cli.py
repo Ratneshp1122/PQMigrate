@@ -372,9 +372,23 @@ def main():
     command = args[0]
     rest    = args[1:]
 
+    def cmd_patch(args: list[str]):
+        if not args:
+            print("Usage: python3 cli.py patch <report_v2.json> [--verify]")
+            sys.exit(1)
+        
+        report_file = args[0]
+        do_verify = "--verify" in args
+        
+        from pqc_migration_tool.patcher.engine import PatcherEngine
+        engine = PatcherEngine(report_file)
+        engine.verify = do_verify
+        engine.run()
+
     dispatch = {
         "scan":          cmd_scan,
         "repo":          cmd_repo,
+        "patch":         cmd_patch,
         "migration":     cmd_migration,
         "list-patterns": cmd_list_patterns,
     }
@@ -568,6 +582,12 @@ def main():
         cmd_migration(rest)
     elif command == "list-patterns":
         cmd_list_patterns(rest)
+    elif command == "patch":
+        if not rest:
+            print("Usage: python3 cli.py patch <report_v2.json>")
+            sys.exit(1)
+        from pqc_migration_tool.patcher.engine import PatcherEngine
+        PatcherEngine(rest[0]).run()
     else:
         print(f"Unknown command: {command}")
         print("Run: python3 cli.py  (no args) for help")
