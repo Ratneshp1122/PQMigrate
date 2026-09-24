@@ -161,6 +161,8 @@ def _run_scan(path: str, fmt: str, output: str | None,
     Core scan runner — auto-detects language and calls appropriate scanner(s).
     Day 4: Now shows live progress + scan statistics.
     """
+    from pqc_migration_tool.schema.models import ProjectReport, CryptoIR, CodeLocation, CryptoRole, CryptoOperation, SecurityStatus, ConfidenceLevel
+    from pqc_migration_tool.resolver.planner import MigrationPlanner
     from pqc_migration_tool.scanner.progress import ScanProgress, ScanStats
 
     stats = ScanStats()

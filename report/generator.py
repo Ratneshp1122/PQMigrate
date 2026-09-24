@@ -158,17 +158,76 @@ def _print_recommendations(summary: SystemSummary):
 # ── JSON reporter ─────────────────────────────────────────────────────────────
 
 def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
-    data = summary.as_dict()
-    # Add per-finding details
-    data["findings"] = [
-        f.as_dict()
-        for fs in summary.file_summaries
-        for f in fs.findings
-    ]
-    out = json.dumps(data, indent=2)
+    import uuid
+    from datetime import datetime
+    import os
+    from pqc_migration_tool.schema.models import ProjectReport, CryptoIR, CodeLocation, CryptoRole, CryptoOperation, SecurityStatus, ConfidenceLevel
+    from pqc_migration_tool.resolver.planner import MigrationPlanner
+    
+    planner = MigrationPlanner()
+    records = []
+    
+    for fs in summary.file_summaries:
+        for f in fs.findings:
+            is_import = "import" in f.match_type.lower()
+            role = CryptoRole.UNKNOWN
+            op = CryptoOperation.UNKNOWN
+            
+            if not is_import:
+                name_lower = f.pattern.name.lower()
+                if any(x in name_lower for x in ["sign", "ecdsa", "ed25519", "dsa"]):
+                    role = CryptoRole.SIGNATURE
+                    op = CryptoOperation.SIGN
+                elif any(x in name_lower for x in ["x25519", "ecdh", "dh"]):
+                    role = CryptoRole.KEY_ESTABLISHMENT
+                    op = CryptoOperation.GENERATE
+                elif "encrypt" in name_lower or "rsa" in name_lower:
+                    role = CryptoRole.KEY_TRANSPORT
+                    op = CryptoOperation.ENCRYPT
+                elif "sha" in name_lower or "md5" in name_lower:
+                    role = CryptoRole.HASH
+                    op = CryptoOperation.HASH
+                elif "aes" in name_lower:
+                    role = CryptoRole.ENCRYPTION
+                    op = CryptoOperation.ENCRYPT
+                    
+            status = SecurityStatus.QUANTUM_VULNERABLE
+            if f.pattern.risk.value == "SAFE":
+                status = SecurityStatus.STANDARDIZED_PQC
+            elif "sha256" in f.pattern.name.lower() or "aes" in f.pattern.name.lower():
+                status = SecurityStatus.QUANTUM_SECURITY_REDUCED
+            elif f.pattern.risk.value == "MEDIUM":
+                status = SecurityStatus.DEPRECATED_CLASSICALLY
+                
+            ir = CryptoIR(
+                id=uuid.uuid4().hex[:12],
+                primitive_name=f.pattern.name,
+                location=CodeLocation(
+                    file_path=f.filepath,
+                    line_number=f.line,
+                    column=f.col,
+                    context_snippet=f.match_text
+                ),
+                role=role,
+                operation=op,
+                status=status,
+                confidence=ConfidenceLevel.AMBIGUOUS if is_import else ConfidenceLevel.DIRECT,
+                detection_type="import_lead" if is_import else "operation_candidate"
+            )
+            records.append(planner.generate_plan(ir))
+            
+    report = ProjectReport(
+        project_name=os.path.basename(os.path.abspath(summary.root)),
+        scan_timestamp=datetime.utcnow().isoformat(),
+        files_scanned=summary.files_scanned,
+        total_findings=summary.total_findings,
+        records=records
+    )
+    
+    out = report.to_json()
     if output_path:
         Path(output_path).write_text(out)
-        print(f"  JSON report saved → {output_path}")
+        print(f"  JSON report (Schema v2) saved → {output_path}")
     return out
 
 
