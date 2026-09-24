@@ -1,0 +1,46 @@
+
+════════════════════════════════════════════════════════════
+  PQC Migration Tool — Test Suite (Day 5)
+════════════════════════════════════════════════════════════
+
+── Group 1: Python Scanner (fixture) ──
+  [92m✓ PASS[0m  Python fixture produces findings
+  [92m✓ PASS[0m  At least one CRITICAL finding (RSA/ECDSA/Ed25519)
+  [92m✓ PASS[0m  At least one MEDIUM finding (MD5/SHA-1)
+  [92m✓ PASS[0m  At least one SAFE finding (SHA-256 or similar)
+  [92m✓ PASS[0m  At least one HIGH finding (SSL/TLS)
+
+── Group 2: Python Scanner — Deduplication ──
+  [92m✓ PASS[0m  RSA reported exactly once (dedup works)
+
+── Group 3: Go Scanner (fixture) ──
+  [92m✓ PASS[0m  Go fixture produces findings
+  [92m✓ PASS[0m  At least one CRITICAL finding (RSA/ECDSA/Ed25519)
+  [92m✓ PASS[0m  At least one MEDIUM finding (MD5/SHA-1)
+  [92m✓ PASS[0m  SHA-256 detected as SAFE
+  [92m✓ PASS[0m  TLS detected as HIGH (harvest risk)
+
+── Group 4: Go Scanner — False Positive Check ──
+  [92m✓ PASS[0m  No CRITICAL findings in safe-only Go file
+  [92m✓ PASS[0m  No HIGH findings in safe-only Go file
+
+── Group 5: Gitignore Support ──
+  [92m✓ PASS[0m  Gitignored file is skipped (no RSA finding with gitignore ON)
+  [92m✓ PASS[0m  Gitignored file scanned when gitignore OFF
+
+── Group 6: Risk Scorer ──
+  [92m✓ PASS[0m  Risk score > 0 for vulnerable fixture
+  [92m✓ PASS[0m  CISA grade is failing for vulnerable fixture
+  [92m✓ PASS[0m  Critical count > 0
+  [92m✓ PASS[0m  Empty findings → risk score = 0
+  [92m✓ PASS[0m  No findings → CISA Grade A
+
+── Group 7: Full Pipeline Integration ──
+  [92m✓ PASS[0m  Integration: combined findings > 0
+  [92m✓ PASS[0m  Integration: risk score > 50 for known-vulnerable fixtures
+  [92m✓ PASS[0m  Integration: Grade F or D for known-vulnerable code
+
+  Summary: 7 CRITICAL, 2 HIGH, 4 MEDIUM, 2 SAFE | Grade: F — Immediate action required | Score: 100.0
+
+════════════════════════════════════════════════════════════
+  Results: 23/23 passed  [92mALL TESTS PASSED ✓[0m

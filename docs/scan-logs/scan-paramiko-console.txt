@@ -1,0 +1,13 @@
+
+╔══════════════════════════════════════════════════════╗
+║  PQC Migration Scanner  v0.3.0                      ║
+║  Finds classical crypto vulnerable to Shor/Grover    ║
+║  Maps to NIST FIPS 203/204/205 PQC replacements      ║
+╚══════════════════════════════════════════════════════╝
+
+  ⬇  Cloning https://github.com/paramiko/paramiko
+  ✓  Cloned in 3.3s → /tmp/pqc_scan_paramiko
+
+  JSON report saved → pqc_migration_tool/docs/scan-logs/scan-paramiko-baseline.json
+
+  🗑  Cleaned up: /tmp/pqc_scan_paramiko  (use --keep to retain)

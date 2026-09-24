@@ -1,0 +1,90 @@
+============================================================
+  D0 Registry Audit — PQMigrate v0.3.0  (baseline commit 11dbc71)
+============================================================
+
+Total registry entries: 91
+  Python: 44
+  Go:     47
+
+Classification breakdown:
+  configuration_lead            : 4
+  import_lead                   : 58
+  operation_candidate           : 29
+
+────────────────────────────────────────────────────────────
+CRITICAL entries that are import_leads (17):
+  These CANNOT be safely auto-patched without operation inference.
+  [python] Crypto.PublicKey.DSA                                  → DSA (pycryptodome)
+  [python] Crypto.PublicKey.ECC                                  → ECC (pycryptodome)
+  [python] Crypto.PublicKey.RSA                                  → RSA (pycryptodome)
+  [python] cryptography.hazmat.primitives.asymmetric.dh          → DH (Diffie-Hellman)
+  [python] cryptography.hazmat.primitives.asymmetric.dsa         → DSA
+  [python] cryptography.hazmat.primitives.asymmetric.ec          → Elliptic Curve (ECDH / ECDSA)
+  [python] cryptography.hazmat.primitives.asymmetric.padding     → RSA padding (OAEP / PKCS1v15)
+  [python] cryptography.hazmat.primitives.asymmetric.rsa         → RSA
+  [python] cryptography.hazmat.primitives.asymmetric.x25519      → X25519 (ECDH)
+  [python] cryptography.hazmat.primitives.asymmetric.x448        → X448 (ECDH)
+  [go    ] crypto/dsa                                            → DSA (Go stdlib)
+  [go    ] crypto/ecdh                                           → ECDH (Go stdlib)
+  [go    ] crypto/ecdsa                                          → ECDSA (Go stdlib)
+  [go    ] crypto/elliptic                                       → Elliptic Curves (Go stdlib)
+  [go    ] crypto/rsa                                            → RSA (Go stdlib)
+  [go    ] golang.org/x/crypto/curve25519                        → X25519 / Curve25519 (x/crypto)
+  [go    ] golang.org/x/crypto/ed25519                           → Ed25519 (x/crypto)
+
+────────────────────────────────────────────────────────────
+Baseline scan results (reproduced at commit 11dbc71):
+
+  Repo: paramiko/paramiko
+    files_scanned   : 70
+    critical_count  : ?
+    high_count      : ?
+    medium_count    : ?
+    system_risk_score: 97.6
+    compliance_grade: F — Immediate action required
+
+  Repo: psf/requests
+    files_scanned   : 37
+    critical_count  : ?
+    high_count      : ?
+    medium_count    : ?
+    system_risk_score: 84.3
+    compliance_grade: D — High priority migration needed
+
+  Repo: hashicorp/vault
+    files_scanned   : 2381
+    critical_count  : ?
+    high_count      : ?
+    medium_count    : ?
+    system_risk_score: 89.4
+    compliance_grade: F — Immediate action required
+
+────────────────────────────────────────────────────────────
+Known issues identified in D0 audit:
+
+  [BUG-01] [CRITICAL] All import patterns flagged as CRITICAL without operation proof
+           Fix: import rsa ≠ RSA is used; needs call-site resolution (D3 work)
+
+  [BUG-02] [CRITICAL] Single risk score collapses all evidence into one number
+           Fix: Grade F not traceable to specific evidence; replace with dimension table (D8)
+
+  [BUG-03] [CRITICAL] Patch rules: prior sprint planned RSA→ML-KEM auto-rewrite
+           Fix: CANCELLED per roadmap §0. RSA sign/encrypt/wrap are different operations.
+
+  [BUG-04] [CRITICAL] Homegrown HKDF(X25519||MLKEM) combiner in demo files
+           Fix: CANCELLED as migration recommendation. RFC 10024 only for TLS hybrid.
+
+  [BUG-05] [MEDIUM] Deduplication by primitive name per file loses second usage location
+           Fix: Two distinct RSA operations in same file collapse to one finding
+
+  [BUG-06] [MEDIUM] SHA-256 under Grover has 128-bit post-quantum security, not 'safe'
+           Fix: Label as quantum_security_reduced, not SAFE for all contexts
+
+  [BUG-07] [LOW] vendored/generated code tracked in coverage/skip ledger not yet implemented
+           Fix: Skipped files currently silently excluded — not recorded in output
+
+  [BUG-08] [LOW] No parser failure tracking — malformed .py/.go files silently skipped
+           Fix: Needs coverage/skip ledger in output schema
+
+
+Full audit saved → /home/ratneshp0411/pqc_migration_tool/tests/../docs/scan-logs/registry-audit-full.json

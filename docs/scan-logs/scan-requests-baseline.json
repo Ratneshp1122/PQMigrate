@@ -1,0 +1,199 @@
+{
+  "root": "requests (https://github.com/psf/requests)",
+  "files_scanned": 37,
+  "files_with_findings": 6,
+  "total_findings": 9,
+  "counts": {
+    "critical": 0,
+    "high": 5,
+    "medium": 2,
+    "safe": 2
+  },
+  "harvest_risk_files": 5,
+  "system_risk_score": 84.3,
+  "compliance_grade": "D \u2014 High priority migration needed",
+  "files": [
+    {
+      "file": "/tmp/pqc_scan_requests/src/requests/__init__.py",
+      "risk_score": 87.5,
+      "dominant_risk": "HIGH",
+      "harvest_risk": true,
+      "counts": {
+        "critical": 0,
+        "high": 1,
+        "medium": 0,
+        "safe": 0
+      }
+    },
+    {
+      "file": "/tmp/pqc_scan_requests/src/requests/auth.py",
+      "risk_score": 40,
+      "dominant_risk": "MEDIUM",
+      "harvest_risk": false,
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 2,
+        "safe": 2
+      }
+    },
+    {
+      "file": "/tmp/pqc_scan_requests/src/requests/help.py",
+      "risk_score": 87.5,
+      "dominant_risk": "HIGH",
+      "harvest_risk": true,
+      "counts": {
+        "critical": 0,
+        "high": 1,
+        "medium": 0,
+        "safe": 0
+      }
+    },
+    {
+      "file": "/tmp/pqc_scan_requests/tests/conftest.py",
+      "risk_score": 87.5,
+      "dominant_risk": "HIGH",
+      "harvest_risk": true,
+      "counts": {
+        "critical": 0,
+        "high": 1,
+        "medium": 0,
+        "safe": 0
+      }
+    },
+    {
+      "file": "/tmp/pqc_scan_requests/tests/test_requests.py",
+      "risk_score": 87.5,
+      "dominant_risk": "HIGH",
+      "harvest_risk": true,
+      "counts": {
+        "critical": 0,
+        "high": 1,
+        "medium": 0,
+        "safe": 0
+      }
+    },
+    {
+      "file": "/tmp/pqc_scan_requests/tests/testserver/server.py",
+      "risk_score": 87.5,
+      "dominant_risk": "HIGH",
+      "harvest_risk": true,
+      "counts": {
+        "critical": 0,
+        "high": 1,
+        "medium": 0,
+        "safe": 0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "file": "/tmp/pqc_scan_requests/src/requests/__init__.py",
+      "line": 131,
+      "primitive": "ssl module (audit for deprecated protocols)",
+      "family": "tls",
+      "risk": "HIGH",
+      "harvest_risk": true,
+      "replacement": "TLS 1.3 with hybrid key exchange",
+      "guidance": "Audit ssl.PROTOCOL_* constants. Minimum TLS 1.3. Migrate to PQC key exchange.",
+      "match_type": "import",
+      "match_text": "import ssl"
+    },
+    {
+      "file": "/tmp/pqc_scan_requests/src/requests/auth.py",
+      "line": 179,
+      "primitive": "MD5 (hashlib)",
+      "family": "hash",
+      "risk": "MEDIUM",
+      "harvest_risk": false,
+      "replacement": "SHA-256 or SHA3-256",
+      "guidance": "MD5 is classically broken (collision attacks). Replace with SHA-256.",
+      "match_type": "call",
+      "match_text": "hashlib.md5()"
+    },
+    {
+      "file": "/tmp/pqc_scan_requests/src/requests/auth.py",
+      "line": 187,
+      "primitive": "SHA-1 (hashlib)",
+      "family": "hash",
+      "risk": "MEDIUM",
+      "harvest_risk": false,
+      "replacement": "SHA-256 or SHA3-256",
+      "guidance": "SHA-1 is deprecated (SHAttered attack, 2017). Replace with SHA-256.",
+      "match_type": "call",
+      "match_text": "hashlib.sha1()"
+    },
+    {
+      "file": "/tmp/pqc_scan_requests/src/requests/auth.py",
+      "line": 195,
+      "primitive": "SHA-256 (hashlib) \u2713",
+      "family": "hash",
+      "risk": "SAFE",
+      "harvest_risk": false,
+      "replacement": "No action required",
+      "guidance": "SHA-256 is quantum-safe. Grover's algorithm provides at most quadratic speedup, leaving ~128-bit post-quantum security.",
+      "match_type": "call",
+      "match_text": "hashlib.sha256()"
+    },
+    {
+      "file": "/tmp/pqc_scan_requests/src/requests/auth.py",
+      "line": 203,
+      "primitive": "SHA-512 (hashlib) \u2713",
+      "family": "hash",
+      "risk": "SAFE",
+      "harvest_risk": false,
+      "replacement": "No action required",
+      "guidance": "SHA-512 provides 256-bit post-quantum security against Grover's algorithm.",
+      "match_type": "call",
+      "match_text": "hashlib.sha512()"
+    },
+    {
+      "file": "/tmp/pqc_scan_requests/src/requests/help.py",
+      "line": 5,
+      "primitive": "ssl module (audit for deprecated protocols)",
+      "family": "tls",
+      "risk": "HIGH",
+      "harvest_risk": true,
+      "replacement": "TLS 1.3 with hybrid key exchange",
+      "guidance": "Audit ssl.PROTOCOL_* constants. Minimum TLS 1.3. Migrate to PQC key exchange.",
+      "match_type": "import",
+      "match_text": "import ssl"
+    },
+    {
+      "file": "/tmp/pqc_scan_requests/tests/conftest.py",
+      "line": 7,
+      "primitive": "ssl module (audit for deprecated protocols)",
+      "family": "tls",
+      "risk": "HIGH",
+      "harvest_risk": true,
+      "replacement": "TLS 1.3 with hybrid key exchange",
+      "guidance": "Audit ssl.PROTOCOL_* constants. Minimum TLS 1.3. Migrate to PQC key exchange.",
+      "match_type": "import",
+      "match_text": "import ssl"
+    },
+    {
+      "file": "/tmp/pqc_scan_requests/tests/test_requests.py",
+      "line": 70,
+      "primitive": "ssl module (audit for deprecated protocols)",
+      "family": "tls",
+      "risk": "HIGH",
+      "harvest_risk": true,
+      "replacement": "TLS 1.3 with hybrid key exchange",
+      "guidance": "Audit ssl.PROTOCOL_* constants. Minimum TLS 1.3. Migrate to PQC key exchange.",
+      "match_type": "import",
+      "match_text": "from ssl import SSLContext"
+    },
+    {
+      "file": "/tmp/pqc_scan_requests/tests/testserver/server.py",
+      "line": 3,
+      "primitive": "ssl module (audit for deprecated protocols)",
+      "family": "tls",
+      "risk": "HIGH",
+      "harvest_risk": true,
+      "replacement": "TLS 1.3 with hybrid key exchange",
+      "guidance": "Audit ssl.PROTOCOL_* constants. Minimum TLS 1.3. Migrate to PQC key exchange.",
+      "match_type": "import",
+      "match_text": "import ssl"
+    }
+  ]
+}

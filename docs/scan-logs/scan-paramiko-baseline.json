@@ -1,0 +1,343 @@
+{
+  "root": "paramiko (https://github.com/paramiko/paramiko)",
+  "files_scanned": 70,
+  "files_with_findings": 10,
+  "total_findings": 17,
+  "counts": {
+    "critical": 15,
+    "high": 0,
+    "medium": 2,
+    "safe": 0
+  },
+  "harvest_risk_files": 9,
+  "system_risk_score": 97.6,
+  "compliance_grade": "F \u2014 Immediate action required",
+  "files": [
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/ecdsakey.py",
+      "risk_score": 100,
+      "dominant_risk": "CRITICAL",
+      "harvest_risk": true,
+      "counts": {
+        "critical": 1,
+        "high": 0,
+        "medium": 0,
+        "safe": 0
+      }
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/kex_curve25519.py",
+      "risk_score": 100,
+      "dominant_risk": "CRITICAL",
+      "harvest_risk": true,
+      "counts": {
+        "critical": 1,
+        "high": 0,
+        "medium": 0,
+        "safe": 0
+      }
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/kex_ecdh_nist.py",
+      "risk_score": 100,
+      "dominant_risk": "CRITICAL",
+      "harvest_risk": true,
+      "counts": {
+        "critical": 1,
+        "high": 0,
+        "medium": 0,
+        "safe": 0
+      }
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/kex_mlkem.py",
+      "risk_score": 100,
+      "dominant_risk": "CRITICAL",
+      "harvest_risk": true,
+      "counts": {
+        "critical": 1,
+        "high": 0,
+        "medium": 0,
+        "safe": 0
+      }
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/pkey.py",
+      "risk_score": 100,
+      "dominant_risk": "CRITICAL",
+      "harvest_risk": true,
+      "counts": {
+        "critical": 3,
+        "high": 0,
+        "medium": 1,
+        "safe": 0
+      }
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/rsakey.py",
+      "risk_score": 100,
+      "dominant_risk": "CRITICAL",
+      "harvest_risk": true,
+      "counts": {
+        "critical": 2,
+        "high": 0,
+        "medium": 0,
+        "safe": 0
+      }
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/transport.py",
+      "risk_score": 40,
+      "dominant_risk": "MEDIUM",
+      "harvest_risk": false,
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 1,
+        "safe": 0
+      }
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/tests/pkey.py",
+      "risk_score": 100,
+      "dominant_risk": "CRITICAL",
+      "harvest_risk": true,
+      "counts": {
+        "critical": 3,
+        "high": 0,
+        "medium": 0,
+        "safe": 0
+      }
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/tests/test_kex.py",
+      "risk_score": 100,
+      "dominant_risk": "CRITICAL",
+      "harvest_risk": true,
+      "counts": {
+        "critical": 2,
+        "high": 0,
+        "medium": 0,
+        "safe": 0
+      }
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/tests/test_pkey.py",
+      "risk_score": 100,
+      "dominant_risk": "CRITICAL",
+      "harvest_risk": true,
+      "counts": {
+        "critical": 1,
+        "high": 0,
+        "medium": 0,
+        "safe": 0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/ecdsakey.py",
+      "line": 28,
+      "primitive": "Elliptic Curve (ECDH / ECDSA)",
+      "family": "key_exchange",
+      "risk": "CRITICAL",
+      "harvest_risk": true,
+      "replacement": "Hybrid X25519+ML-KEM-768 (key exchange) or ML-DSA-65 (signatures)",
+      "guidance": "ECDLP broken by Shor. Use Hybrid X25519+ML-KEM-768 during transition period.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.asymmetric import ec"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/kex_curve25519.py",
+      "line": 6,
+      "primitive": "X25519 (ECDH)",
+      "family": "key_exchange",
+      "risk": "CRITICAL",
+      "harvest_risk": true,
+      "replacement": "Hybrid X25519+ML-KEM-768",
+      "guidance": "X25519 ECDH broken by Shor. Add ML-KEM-768 \u2014 same pattern as Chrome/Signal.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PrivateKey"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/kex_ecdh_nist.py",
+      "line": 11,
+      "primitive": "Elliptic Curve (ECDH / ECDSA)",
+      "family": "key_exchange",
+      "risk": "CRITICAL",
+      "harvest_risk": true,
+      "replacement": "Hybrid X25519+ML-KEM-768 (key exchange) or ML-DSA-65 (signatures)",
+      "guidance": "ECDLP broken by Shor. Use Hybrid X25519+ML-KEM-768 during transition period.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.asymmetric import ec"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/kex_mlkem.py",
+      "line": 20,
+      "primitive": "X25519 (ECDH)",
+      "family": "key_exchange",
+      "risk": "CRITICAL",
+      "harvest_risk": true,
+      "replacement": "Hybrid X25519+ML-KEM-768",
+      "guidance": "X25519 ECDH broken by Shor. Add ML-KEM-768 \u2014 same pattern as Chrome/Signal.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PrivateKey"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/pkey.py",
+      "line": 37,
+      "primitive": "Elliptic Curve (ECDH / ECDSA)",
+      "family": "key_exchange",
+      "risk": "CRITICAL",
+      "harvest_risk": true,
+      "replacement": "Hybrid X25519+ML-KEM-768 (key exchange) or ML-DSA-65 (signatures)",
+      "guidance": "ECDLP broken by Shor. Use Hybrid X25519+ML-KEM-768 during transition period.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.asymmetric.ec import EllipticCurvePrivateKey"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/pkey.py",
+      "line": 40,
+      "primitive": "Ed25519 (signatures)",
+      "family": "signature",
+      "risk": "CRITICAL",
+      "harvest_risk": false,
+      "replacement": "ML-DSA-65 (FIPS 204)",
+      "guidance": "Ed25519 ECDLP broken by Shor. Migrate to ML-DSA-65.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/pkey.py",
+      "line": 41,
+      "primitive": "RSA",
+      "family": "key_exchange",
+      "risk": "CRITICAL",
+      "harvest_risk": true,
+      "replacement": "ML-KEM-768 (FIPS 203) for encapsulation; ML-DSA-65 (FIPS 204) for signatures",
+      "guidance": "RSA is broken by Shor's algorithm. Migrate to NIST PQC immediately.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/pkey.py",
+      "line": 61,
+      "primitive": "3DES / Triple-DES",
+      "family": "symmetric",
+      "risk": "MEDIUM",
+      "harvest_risk": false,
+      "replacement": "AES-256-GCM",
+      "guidance": "3DES deprecated by NIST SP 800-131A. Migrate to AES-256-GCM.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.ciphers.algorithms import TripleDES"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/rsakey.py",
+      "line": 28,
+      "primitive": "RSA padding (OAEP / PKCS1v15)",
+      "family": "key_exchange",
+      "risk": "CRITICAL",
+      "harvest_risk": true,
+      "replacement": "ML-KEM-768",
+      "guidance": "RSA padding implies RSA key exchange \u2014 broken by Shor. Migrate to ML-KEM-768.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.asymmetric import padding"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/rsakey.py",
+      "line": 28,
+      "primitive": "RSA",
+      "family": "key_exchange",
+      "risk": "CRITICAL",
+      "harvest_risk": true,
+      "replacement": "ML-KEM-768 (FIPS 203) for encapsulation; ML-DSA-65 (FIPS 204) for signatures",
+      "guidance": "RSA is broken by Shor's algorithm. Migrate to NIST PQC immediately.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.asymmetric import rsa"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/paramiko/transport.py",
+      "line": 137,
+      "primitive": "3DES / Triple-DES",
+      "family": "symmetric",
+      "risk": "MEDIUM",
+      "harvest_risk": false,
+      "replacement": "AES-256-GCM",
+      "guidance": "3DES deprecated by NIST SP 800-131A. Migrate to AES-256-GCM.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.ciphers.algorithms import TripleDES"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/tests/pkey.py",
+      "line": 5,
+      "primitive": "Elliptic Curve (ECDH / ECDSA)",
+      "family": "key_exchange",
+      "risk": "CRITICAL",
+      "harvest_risk": true,
+      "replacement": "Hybrid X25519+ML-KEM-768 (key exchange) or ML-DSA-65 (signatures)",
+      "guidance": "ECDLP broken by Shor. Use Hybrid X25519+ML-KEM-768 during transition period.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.asymmetric.ec import EllipticCurvePrivateKey"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/tests/pkey.py",
+      "line": 8,
+      "primitive": "Ed448 (signatures)",
+      "family": "signature",
+      "risk": "CRITICAL",
+      "harvest_risk": false,
+      "replacement": "ML-DSA-87 (FIPS 204)",
+      "guidance": "Ed448 ECDLP broken by Shor. Migrate to ML-DSA-87.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.asymmetric.ed448 import Ed448PrivateKey"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/tests/pkey.py",
+      "line": 9,
+      "primitive": "RSA",
+      "family": "key_exchange",
+      "risk": "CRITICAL",
+      "harvest_risk": true,
+      "replacement": "ML-KEM-768 (FIPS 203) for encapsulation; ML-DSA-65 (FIPS 204) for signatures",
+      "guidance": "RSA is broken by Shor's algorithm. Migrate to NIST PQC immediately.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/tests/test_kex.py",
+      "line": 31,
+      "primitive": "Elliptic Curve (ECDH / ECDSA)",
+      "family": "key_exchange",
+      "risk": "CRITICAL",
+      "harvest_risk": true,
+      "replacement": "Hybrid X25519+ML-KEM-768 (key exchange) or ML-DSA-65 (signatures)",
+      "guidance": "ECDLP broken by Shor. Use Hybrid X25519+ML-KEM-768 during transition period.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.asymmetric import ec"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/tests/test_kex.py",
+      "line": 34,
+      "primitive": "X25519 (ECDH)",
+      "family": "key_exchange",
+      "risk": "CRITICAL",
+      "harvest_risk": true,
+      "replacement": "Hybrid X25519+ML-KEM-768",
+      "guidance": "X25519 ECDH broken by Shor. Add ML-KEM-768 \u2014 same pattern as Chrome/Signal.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.asymmetric import x25519"
+    },
+    {
+      "file": "/tmp/pqc_scan_paramiko/tests/test_pkey.py",
+      "line": 34,
+      "primitive": "RSA",
+      "family": "key_exchange",
+      "risk": "CRITICAL",
+      "harvest_risk": true,
+      "replacement": "ML-KEM-768 (FIPS 203) for encapsulation; ML-DSA-65 (FIPS 204) for signatures",
+      "guidance": "RSA is broken by Shor's algorithm. Migrate to NIST PQC immediately.",
+      "match_type": "import",
+      "match_text": "from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateNumbers"
+    }
+  ]
+}

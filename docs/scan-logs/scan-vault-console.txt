@@ -1,0 +1,6 @@
+  ⬇  Cloning https://github.com/hashicorp/vault
+  ✓  Cloned in 6.9s → /tmp/pqc_scan_vault
+
+  JSON report saved → pqc_migration_tool/docs/scan-logs/scan-vault-baseline.json
+
+  🗑  Cleaned up: /tmp/pqc_scan_vault  (use --keep to retain)
