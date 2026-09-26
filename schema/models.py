@@ -1,4 +1,5 @@
 import json
+import uuid
 from dataclasses import dataclass, field, asdict
 from enum import Enum
 from typing import List, Optional, Dict, Any
@@ -119,13 +120,27 @@ class ProjectReport:
     files_scanned: int
     total_findings: int
     records: List[AssuranceRecord] = field(default_factory=list)
+    schema_version: str = "2.1"
+    scan_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    scanner_version: str = "0.3.0"
+    rules_version: str = "2026-09-26"
+    source_commit: Optional[str] = None
+    skipped_files: int = 0
+    errors: List[str] = field(default_factory=list)
 
     def to_dict(self) -> Dict[str, Any]:
         return {
+            'schema_version': self.schema_version,
+            'scan_id': self.scan_id,
+            'scanner_version': self.scanner_version,
+            'rules_version': self.rules_version,
+            'source_commit': self.source_commit,
             'project_name': self.project_name,
             'scan_timestamp': self.scan_timestamp,
             'files_scanned': self.files_scanned,
+            'skipped_files': self.skipped_files,
             'total_findings': self.total_findings,
+            'errors': self.errors,
             'records': [r.to_dict() for r in self.records]
         }
     

@@ -1,0 +1,135 @@
+{
+  "schema_version": "2.1",
+  "scan_id": "47af6f81-2a2e-4c5a-b37a-03e49f621581",
+  "scanner_version": "0.3.0",
+  "rules_version": "2026-09-26",
+  "source_commit": null,
+  "project_name": "review",
+  "scan_timestamp": "2026-09-26T13:31:12.227142+00:00",
+  "files_scanned": 3,
+  "skipped_files": 0,
+  "total_findings": 4,
+  "errors": [],
+  "records": [
+    {
+      "finding": {
+        "id": "8cb763802590",
+        "primitive_name": "RSA",
+        "location": {
+          "file_path": "tests/fixtures/review/review_rsa_import_only.py",
+          "line_number": 3,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric import rsa"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead",
+        "protocol_context": "unknown",
+        "context_evidence": "No linked RSA operation was found."
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high",
+        "rule_id": null
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "4a2c2c871088",
+        "primitive_name": "RSA",
+        "location": {
+          "file_path": "tests/fixtures/review/review_rsa_jwt_signing.py",
+          "line_number": 7,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric import rsa"
+        },
+        "role": "signature",
+        "operation": "sign",
+        "status": "quantum_vulnerable",
+        "confidence": "direct",
+        "detection_type": "linked_operation",
+        "protocol_context": "jwt",
+        "context_evidence": "Line 12: jwt.encode consumes tracked RSA key 'signing_key' with algorithm 'RS256'."
+      },
+      "plan": {
+        "target_algorithm": "ML-DSA",
+        "target_standard": "FIPS 204",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Signature format, verifier support, key lifecycle, and protocol compatibility require review.",
+        "estimated_effort": "medium",
+        "rule_id": null
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "8477083d34c8",
+        "primitive_name": "RSA padding (OAEP / PKCS1v15)",
+        "location": {
+          "file_path": "tests/fixtures/review/review_rsa_key_transport.py",
+          "line_number": 9,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric import padding"
+        },
+        "role": "key_transport",
+        "operation": "encrypt",
+        "status": "quantum_vulnerable",
+        "confidence": "direct",
+        "detection_type": "linked_operation",
+        "protocol_context": "unknown",
+        "context_evidence": "Line 15: RSA key 'transport_key' encrypts tracked session secret 'session_key' generated on line 14."
+      },
+      "plan": {
+        "target_algorithm": "ML-KEM-based KEM/DEM redesign",
+        "target_standard": "FIPS 203",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "RSA encryption requires coordinated sender/recipient and data-format redesign; no one-line replacement is safe.",
+        "estimated_effort": "high",
+        "rule_id": null
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "c74a9bcb0014",
+        "primitive_name": "RSA",
+        "location": {
+          "file_path": "tests/fixtures/review/review_rsa_key_transport.py",
+          "line_number": 9,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric import rsa"
+        },
+        "role": "key_transport",
+        "operation": "encrypt",
+        "status": "quantum_vulnerable",
+        "confidence": "direct",
+        "detection_type": "linked_operation",
+        "protocol_context": "unknown",
+        "context_evidence": "Line 15: RSA key 'transport_key' encrypts tracked session secret 'session_key' generated on line 14."
+      },
+      "plan": {
+        "target_algorithm": "ML-KEM-based KEM/DEM redesign",
+        "target_standard": "FIPS 203",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "RSA encryption requires coordinated sender/recipient and data-format redesign; no one-line replacement is safe.",
+        "estimated_effort": "high",
+        "rule_id": null
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    }
+  ]
+}

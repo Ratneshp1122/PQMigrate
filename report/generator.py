@@ -158,11 +158,21 @@ def _print_recommendations(summary: SystemSummary):
 # ── JSON reporter ─────────────────────────────────────────────────────────────
 
 def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
-    import uuid
-    from datetime import datetime
+    import hashlib
+    from datetime import datetime, timezone
     import os
-    from pqc_migration_tool.schema.models import ProjectReport, CryptoIR, CodeLocation, CryptoRole, CryptoOperation, SecurityStatus, ConfidenceLevel
+    from pqc_migration_tool.resolver.context_inference import infer_rsa_usage
     from pqc_migration_tool.resolver.planner import MigrationPlanner
+    from pqc_migration_tool.schema.models import (
+        CodeLocation,
+        ConfidenceLevel,
+        CryptoIR,
+        CryptoOperation,
+        CryptoRole,
+        ProjectReport,
+        ProtocolContext,
+        SecurityStatus,
+    )
     
     planner = MigrationPlanner()
     records = []
@@ -172,9 +182,31 @@ def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
             is_import = "import" in f.match_type.lower()
             role = CryptoRole.UNKNOWN
             op = CryptoOperation.UNKNOWN
-            
+            protocol_context = ProtocolContext.UNKNOWN
+            context_evidence = None
+            confidence = ConfidenceLevel.AMBIGUOUS if is_import else ConfidenceLevel.DIRECT
+            detection_type = "import_lead" if is_import else "operation_candidate"
+
+            name_lower = f.pattern.name.lower()
+
+            # D6: use bounded, same-scope dataflow for RSA. Merely importing an
+            # RSA module remains an inventory lead when no linked operation is
+            # proven. Target source is parsed but never imported or executed.
+            if is_import and "rsa" in name_lower:
+                try:
+                    source = Path(f.filepath).read_text(encoding="utf-8", errors="replace")
+                    inference = infer_rsa_usage(source, f.filepath)
+                    context_evidence = inference.evidence
+                    if inference.role != CryptoRole.UNKNOWN:
+                        role = inference.role
+                        op = inference.operation
+                        protocol_context = inference.protocol_context
+                        confidence = inference.confidence
+                        detection_type = "linked_operation"
+                except OSError as exc:
+                    context_evidence = f"Source could not be read for role inference: {exc}."
+
             if not is_import:
-                name_lower = f.pattern.name.lower()
                 if any(x in name_lower for x in ["sign", "ecdsa", "ed25519", "dsa"]):
                     role = CryptoRole.SIGNATURE
                     op = CryptoOperation.SIGN
@@ -199,8 +231,10 @@ def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
             elif f.pattern.risk.value == "MEDIUM":
                 status = SecurityStatus.DEPRECATED_CLASSICALLY
                 
+            finding_key = f"{f.filepath}:{f.line}:{f.pattern.name}:{role.value}:{op.value}"
+            finding_id = hashlib.sha256(finding_key.encode("utf-8")).hexdigest()[:12]
             ir = CryptoIR(
-                id=uuid.uuid4().hex[:12],
+                id=finding_id,
                 primitive_name=f.pattern.name,
                 location=CodeLocation(
                     file_path=f.filepath,
@@ -211,14 +245,16 @@ def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
                 role=role,
                 operation=op,
                 status=status,
-                confidence=ConfidenceLevel.AMBIGUOUS if is_import else ConfidenceLevel.DIRECT,
-                detection_type="import_lead" if is_import else "operation_candidate"
+                confidence=confidence,
+                detection_type=detection_type,
+                protocol_context=protocol_context,
+                context_evidence=context_evidence,
             )
             records.append(planner.generate_plan(ir))
             
     report = ProjectReport(
         project_name=os.path.basename(os.path.abspath(summary.root)),
-        scan_timestamp=datetime.utcnow().isoformat(),
+        scan_timestamp=datetime.now(timezone.utc).isoformat(),
         files_scanned=summary.files_scanned,
         total_findings=summary.total_findings,
         records=records

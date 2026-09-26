@@ -1,0 +1,128 @@
+{
+  "project_name": "review",
+  "scan_timestamp": "2026-09-26T13:06:26.039977",
+  "files_scanned": 3,
+  "total_findings": 4,
+  "records": [
+    {
+      "finding": {
+        "id": "211bdf240e8d",
+        "primitive_name": "RSA",
+        "location": {
+          "file_path": "tests/fixtures/review/review_rsa_import_only.py",
+          "line_number": 3,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric import rsa"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead",
+        "protocol_context": "unknown",
+        "context_evidence": null
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high",
+        "rule_id": null
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "6d81e7c73190",
+        "primitive_name": "RSA",
+        "location": {
+          "file_path": "tests/fixtures/review/review_rsa_jwt_signing.py",
+          "line_number": 7,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric import rsa"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead",
+        "protocol_context": "unknown",
+        "context_evidence": null
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high",
+        "rule_id": null
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "96d51aa5ed38",
+        "primitive_name": "RSA padding (OAEP / PKCS1v15)",
+        "location": {
+          "file_path": "tests/fixtures/review/review_rsa_key_transport.py",
+          "line_number": 9,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric import padding"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead",
+        "protocol_context": "unknown",
+        "context_evidence": null
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high",
+        "rule_id": null
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "b7edad8d3947",
+        "primitive_name": "RSA",
+        "location": {
+          "file_path": "tests/fixtures/review/review_rsa_key_transport.py",
+          "line_number": 9,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric import rsa"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead",
+        "protocol_context": "unknown",
+        "context_evidence": null
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high",
+        "rule_id": null
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    }
+  ]
+}

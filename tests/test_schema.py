@@ -1,6 +1,6 @@
 import json
 import unittest
-from datetime import datetime
+from datetime import datetime, timezone
 
 from pqc_migration_tool.schema.models import (
     CryptoIR, CodeLocation, CryptoRole, CryptoOperation, 
@@ -49,7 +49,7 @@ class TestSchemaValidation(unittest.TestCase):
         # 5. Create Root Report
         report = ProjectReport(
             project_name="test-project",
-            scan_timestamp=datetime.utcnow().isoformat(),
+            scan_timestamp=datetime.now(timezone.utc).isoformat(),
             files_scanned=1,
             total_findings=1,
             records=[record]
@@ -60,6 +60,10 @@ class TestSchemaValidation(unittest.TestCase):
         out_json = report.to_json()
 
         self.assertEqual(out_dict['project_name'], "test-project")
+        self.assertEqual(out_dict['schema_version'], "2.1")
+        self.assertTrue(out_dict['scan_id'])
+        self.assertEqual(out_dict['scanner_version'], "0.3.0")
+        self.assertEqual(out_dict['rules_version'], "2026-09-26")
         self.assertEqual(out_dict['records'][0]['finding']['role'], "signature")
         self.assertEqual(out_dict['records'][0]['plan']['target_standard'], "FIPS 204")
         

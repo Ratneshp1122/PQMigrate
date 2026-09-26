@@ -36,17 +36,19 @@ class MigrationPlanner:
                 plan = MigrationPlan(
                     target_algorithm="ML-DSA",
                     target_standard="FIPS 204",
-                    patch_available=True,
-                    requires_manual_intervention=False,
+                    patch_available=False,
+                    requires_manual_intervention=True,
+                    intervention_reason="Signature format, verifier support, key lifecycle, and protocol compatibility require review.",
                     estimated_effort="medium"
                 )
             elif ir.role == CryptoRole.KEY_TRANSPORT or ir.role == CryptoRole.ENCRYPTION:
                 plan = MigrationPlan(
-                    target_algorithm="ML-KEM",
+                    target_algorithm="ML-KEM-based KEM/DEM redesign",
                     target_standard="FIPS 203",
-                    patch_available=True,
-                    requires_manual_intervention=False,
-                    estimated_effort="medium"
+                    patch_available=False,
+                    requires_manual_intervention=True,
+                    intervention_reason="RSA encryption requires coordinated sender/recipient and data-format redesign; no one-line replacement is safe.",
+                    estimated_effort="high"
                 )
         
         # ECC / DH Logic
@@ -54,18 +56,20 @@ class MigrationPlanner:
             plan = MigrationPlan(
                 target_algorithm="X25519 + ML-KEM",
                 target_standard="RFC 10024",
-                patch_available=True,
-                requires_manual_intervention=False,
-                estimated_effort="low"
+                patch_available=False,
+                requires_manual_intervention=True,
+                intervention_reason="Both peers and the deployed TLS provider must support and negotiate the selected hybrid group.",
+                estimated_effort="high"
             )
             
         elif "ecdsa" in primitive or "ed25519" in primitive or "dsa" in primitive:
             plan = MigrationPlan(
                 target_algorithm="ML-DSA",
                 target_standard="FIPS 204",
-                patch_available=True,
-                requires_manual_intervention=False,
-                estimated_effort="low"
+                patch_available=False,
+                requires_manual_intervention=True,
+                intervention_reason="Signature format, verifier support, key lifecycle, and protocol compatibility require review.",
+                estimated_effort="medium"
             )
             
         # Symmetric / Hashing Logic
@@ -83,8 +87,9 @@ class MigrationPlanner:
              plan = MigrationPlan(
                 target_algorithm="SHA-256 / SHA-3",
                 target_standard="FIPS 180-4 / FIPS 202",
-                patch_available=True,
-                requires_manual_intervention=False,
+                patch_available=False,
+                requires_manual_intervention=True,
+                intervention_reason="The hash purpose and compatibility requirements must be established before replacement.",
                 estimated_effort="low"
             )
              

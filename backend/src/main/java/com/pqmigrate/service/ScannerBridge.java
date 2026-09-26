@@ -7,11 +7,14 @@ import com.pqmigrate.model.ScanRecord;
 import com.pqmigrate.repository.FindingRepository;
 import com.pqmigrate.repository.ScanRecordRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ScannerBridge {
 
     private final ScanRecordRepository scanRecordRepository;
@@ -54,28 +58,41 @@ public class ScannerBridge {
                     "--output", outputPath
             );
             pb.redirectErrorStream(true);
+            pb.redirectOutput(ProcessBuilder.Redirect.DISCARD);
             Process process = pb.start();
             boolean finished = process.waitFor(5, TimeUnit.MINUTES);
 
             if (finished && (process.exitValue() == 0 || process.exitValue() == 1)) {
-                parseAndSaveResults(scan, outputPath);
-                scan.setStatus("COMPLETE");
+                scan.setStatus(parseAndSaveResults(scan, outputPath) ? "COMPLETE" : "FAILED");
             } else {
+                if (!finished) {
+                    process.destroyForcibly();
+                }
                 scan.setStatus("FAILED");
             }
         } catch (Exception e) {
+            log.error("Scanner worker failed for scan {}", scan.getId(), e);
             scan.setStatus("FAILED");
+        } finally {
+            try {
+                Files.deleteIfExists(Path.of(outputPath));
+            } catch (IOException e) {
+                log.warn("Could not remove temporary scanner output {}", outputPath, e);
+            }
         }
 
         scan.setCompletedAt(LocalDateTime.now());
         return scanRecordRepository.save(scan);
     }
 
-    private void parseAndSaveResults(ScanRecord scan, String outputPath) throws IOException {
+    boolean parseAndSaveResults(ScanRecord scan, String outputPath) throws IOException {
         File resultFile = new File(outputPath);
-        if (!resultFile.exists()) return;
+        if (!resultFile.isFile() || resultFile.length() == 0) return false;
 
         JsonNode rootNode = objectMapper.readTree(resultFile);
+        if (rootNode == null || !rootNode.isObject() || !rootNode.path("records").isArray()) {
+            return false;
+        }
         
         scan.setProjectName(rootNode.path("project_name").asText());
         scan.setFilesScanned(rootNode.path("files_scanned").asInt());
@@ -110,5 +127,6 @@ public class ScannerBridge {
             }
         }
         findingRepository.saveAll(findings);
+        return true;
     }
 }
