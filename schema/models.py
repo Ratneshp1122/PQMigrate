@@ -94,6 +94,9 @@ class MigrationPlan:
     
     # D7: Originating Rule ID
     rule_id: Optional[str] = None
+    rule_version: Optional[str] = None
+    blocker_codes: List[str] = field(default_factory=list)
+    standard_refs: List[str] = field(default_factory=list)
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -123,7 +126,7 @@ class ProjectReport:
     schema_version: str = "2.1"
     scan_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     scanner_version: str = "0.3.0"
-    rules_version: str = "2026-09-26"
+    rules_version: str = "unknown"
     source_commit: Optional[str] = None
     skipped_files: int = 0
     errors: List[str] = field(default_factory=list)

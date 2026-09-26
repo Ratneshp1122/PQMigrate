@@ -95,11 +95,11 @@ flowchart LR
     P1 -->|Accepted files| P2((2. Parse and discover))
     P2 -->|Inventory leads| P3((3. Infer bounded role))
     P3 -->|Role and evidence or UNKNOWN| P4((4. Plan or abstain))
-    K[(Rule registry)] -->|Primitive rules| P2
+    K[(Versioned YAML knowledge base)] -->|Role predicates and advisory rules| P4
     P4 -->|Versioned report| D[(Report store or JSON file)]
     D -->|Authorized report| U
 ```
 
 ## Target extension after the review
 
-SARIF/CBOM export, a versioned YAML knowledge base, a labelled benchmark, isolated patch verification, and interoperability tests remain later milestones. They do not appear as completed processes in the current diagrams.
+SARIF/CBOM export, a labelled benchmark, isolated patch verification, and interoperability tests remain later milestones. They do not appear as completed processes in the current diagrams.

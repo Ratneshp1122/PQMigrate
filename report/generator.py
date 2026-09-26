@@ -257,7 +257,8 @@ def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
         scan_timestamp=datetime.now(timezone.utc).isoformat(),
         files_scanned=summary.files_scanned,
         total_findings=summary.total_findings,
-        records=records
+        records=records,
+        rules_version=planner.rules_version,
     )
     
     out = report.to_json()

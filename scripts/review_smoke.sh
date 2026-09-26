@@ -5,9 +5,15 @@ repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 artifact_dir="$repo_root/review-artifacts/latest"
 mkdir -p "$artifact_dir"
 
+if [[ -x "$repo_root/../venv/bin/python3" ]]; then
+  python_bin="$repo_root/../venv/bin/python3"
+else
+  python_bin="python3"
+fi
+
 cd "$(dirname "$repo_root")"
-python3 -m pytest -q pqc_migration_tool/tests 2>&1 | tee "$artifact_dir/python-pytest.log"
-python3 pqc_migration_tool/tests/test_scanner.py 2>&1 | tee "$artifact_dir/day5-scanner-checks.log"
+"$python_bin" -m pytest -q pqc_migration_tool/tests 2>&1 | tee "$artifact_dir/python-pytest.log"
+"$python_bin" pqc_migration_tool/tests/test_scanner.py 2>&1 | tee "$artifact_dir/day5-scanner-checks.log"
 
 cd "$repo_root/backend"
 mvn test 2>&1 | tee "$artifact_dir/backend-maven-test.log"
@@ -17,7 +23,7 @@ npm run build 2>&1 | tee "$artifact_dir/frontend-build.log"
 
 cd "$repo_root"
 set +e
-python3 cli.py scan tests/fixtures/review \
+"$python_bin" cli.py scan tests/fixtures/review \
   --format json \
   --output "$artifact_dir/three-fixture-report.json" \
   2>&1 | tee "$artifact_dir/three-fixture-scan.log"
@@ -28,15 +34,17 @@ if [[ "$scanner_status" -ne 1 ]]; then
   exit 1
 fi
 
-python3 - "$artifact_dir/three-fixture-report.json" <<'PY'
+"$python_bin" - "$artifact_dir/three-fixture-report.json" <<'PY'
 import json
 import sys
 
 report = json.load(open(sys.argv[1], encoding="utf-8"))
 assert report["schema_version"] == "2.1"
+assert report["rules_version"] == "2026.09.26-d7.1"
 roles = {record["finding"]["role"] for record in report["records"]}
 assert {"signature", "key_transport", "unknown"}.issubset(roles)
 assert all(record["plan"]["patch_available"] is False for record in report["records"])
+assert all(record["plan"]["rule_id"] for record in report["records"])
 print("Validated role coverage and advisory-only plans.")
 PY
 
@@ -44,8 +52,8 @@ git diff --check
 {
   git rev-parse HEAD
   git status --short --branch
-  python3 --version
-  pytest --version
+  "$python_bin" --version
+  "$python_bin" -m pytest --version
   java -version
   mvn -version
   node --version

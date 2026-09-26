@@ -4,18 +4,18 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-green.svg)](https://python.org)
 [![React](https://img.shields.io/badge/Dashboard-React_18-61dafb.svg)](https://reactjs.org)
 
-**PQMigrate** is an enterprise-grade, AST-aware static analysis and automated remediation tool designed to transition legacy cryptographic primitives (RSA, ECC, AES-128) to NIST-standardized Post-Quantum Cryptography (PQC).
+**PQMigrate** is a research prototype for AST-aware cryptographic inventory and evidence-linked post-quantum migration planning.
 
-Unlike naive regex search tools, PQMigrate uses Abstract Syntax Tree (AST) dataflow tracking to infer the *semantic role* of a cryptographic primitive (e.g., distinguishing between a signing operation and an encryption operation) to safely generate and apply FIPS-compliant code patches.
+The current Python path uses bounded AST dataflow to distinguish selected RSA signing and key-transport cases from unresolved imports. A versioned YAML knowledge base produces advisory plans with blocker codes and standards references. The planner abstains when evidence is missing or conflicting and does not treat role inference as authorization to patch.
 
 ---
 
 ## ✨ Key Capabilities
 
-1. **Deep AST Analysis (`/scanner`)**: Traces variable assignments and method calls (e.g., `.sign()`, `.encrypt()`) to understand cryptographic intent.
-2. **Deterministic Planner (`/resolver`)**: Maps legacy algorithms to FIPS 203 (ML-KEM) and FIPS 204 (ML-DSA). Enforces **ADR-001**, explicitly abstaining from patching if a variable's usage is ambiguous.
-3. **Assurance Dashboard (`/dashboard`)**: A standalone React dashboard that visualizes cryptographic vulnerabilities, distinguishing between automated patch targets and manual review requirements.
-4. **Auto-Patcher & Verifier (`/patcher` & `/verification`)**: Safely injects PQC wrappers into source code. Automatically runs unit tests post-patch and triggers an instant `.bak` rollback if the patch breaks the build.
+1. **AST discovery (`/scanner`)**: Detects supported Python operations and inventory leads. Go support remains regex-based.
+2. **Bounded role inference (`/resolver`)**: Links selected same-scope RSA key uses and explicitly abstains on unrelated, absent, or conflicting evidence.
+3. **Versioned rule planning (`/knowledge`)**: Loads validated YAML rules with rule IDs, blocker codes, standards references, and advisory-only decisions.
+4. **Assurance interface (`/backend` and `/frontend`)**: Stores and displays scan evidence. The CLI remains the primary verified review path.
 
 ---
 
@@ -24,13 +24,10 @@ Unlike naive regex search tools, PQMigrate uses Abstract Syntax Tree (AST) dataf
 ```mermaid
 graph LR
     A[Source Code] --> B[AST Scanner]
-    B --> C[Resolver / Planner]
-    C --> D[JSON V2 Spec]
-    D --> E[React Dashboard]
-    D --> F[Auto-Patcher]
-    F --> G[Verifier / PyTest]
-    G -- Pass --> H[PQC Safe Code]
-    G -- Fail --> I[Auto-Rollback]
+    B --> C[Bounded Role Resolver]
+    C --> D[YAML Rule Planner]
+    D --> E[JSON Schema 2.1]
+    E --> F[CLI or React Dashboard]
 ```
 
 ---
@@ -47,7 +44,7 @@ pip install -r requirements.txt
 ```
 
 ### 2. Generate a Migration Plan
-Scan a target directory and export the FIPS-compliant migration plan:
+Scan a target directory and export a standards-referenced advisory plan:
 ```bash
 python3 cli.py scan demo/ --format json --output report_v2.json
 ```
@@ -59,10 +56,10 @@ python3 -m http.server 8080
 # Open http://localhost:8080/dashboard/index.html in your browser
 ```
 
-### 4. Execute Auto-Patching & Verification
-Apply the migration plan to the source code. The `--verify` flag ensures that if the tests fail, the code is instantly rolled back.
+### 4. Run the review smoke suite
+Run the Python tests, Maven tests, frontend build, and controlled three-fixture scan:
 ```bash
-python3 cli.py patch report_v2.json --verify
+scripts/review_smoke.sh
 ```
 
 ---
@@ -80,7 +77,8 @@ python3 cli.py patch report_v2.json --verify
 
 ## 🛑 Architectural Decision Records (ADRs)
 
-* **ADR-001 (Semantic Abstention):** PQMigrate operates under strict "Do No Harm" compliance. If the AST parser identifies an import (e.g., `import rsa`) but cannot trace its execution flow to a specific cryptographic role, the planner assigns an `ABSTAIN` status. The tool will *never* blindly overwrite code without semantic confidence.
+* **ADR-001 (Semantic Abstention):** If the analyzer cannot link a primitive to a supported role, the planner emits an abstention with explicit blocker codes.
+* **D7 rule safety:** The YAML loader rejects duplicate rule IDs, unsupported role names, missing provenance fields, and any D7 rule that enables automatic patching.
 
 ---
 *Developed for advanced cryptographic modernization workflows.*

@@ -1,117 +1,77 @@
-import uuid
-from typing import Optional
+"""Role-aware migration planning backed by the D7 YAML knowledge base."""
 
+from __future__ import annotations
+
+from pqc_migration_tool.knowledge.loader import KnowledgeBase, load_default_knowledge_base
 from pqc_migration_tool.schema.models import (
-    CryptoIR, MigrationPlan, AssuranceRecord, 
-    CryptoRole, CryptoOperation, SecurityStatus, ConfidenceLevel, CodeLocation
+    AssuranceRecord,
+    ConfidenceLevel,
+    CryptoIR,
+    MigrationPlan,
 )
 
+
 class MigrationPlanner:
-    """
-    Phase 3 Engine: Determines the migration plan for a given CryptoIR.
-    Enforces ADR-001 (Explicit Abstention).
-    """
+    """Generate advisory plans and enforce ADR-001 abstention."""
+
+    def __init__(self, knowledge_base: KnowledgeBase | None = None) -> None:
+        self.knowledge_base = knowledge_base or load_default_knowledge_base()
+
+    @property
+    def rules_version(self) -> str:
+        return self.knowledge_base.rules_version
 
     def generate_plan(self, ir: CryptoIR) -> AssuranceRecord:
-        plan = None
-        
-        # Enforce ADR-001: Abstain if ambiguous
         if ir.confidence == ConfidenceLevel.AMBIGUOUS:
-            plan = MigrationPlan(
-                target_algorithm="UNKNOWN",
-                target_standard="N/A",
-                patch_available=False,
-                requires_manual_intervention=True,
-                intervention_reason="Role inference failed; cannot safely patch an ambiguous primitive usage.",
-                estimated_effort="high"
-            )
-            return AssuranceRecord(finding=ir, plan=plan)
-
-        # Logic for well-understood primitives
-        primitive = ir.primitive_name.lower()
-
-        # RSA Logic
-        if "rsa" in primitive:
-            if ir.role == CryptoRole.SIGNATURE:
-                plan = MigrationPlan(
-                    target_algorithm="ML-DSA",
-                    target_standard="FIPS 204",
+            return AssuranceRecord(
+                finding=ir,
+                plan=MigrationPlan(
+                    target_algorithm="UNKNOWN",
+                    target_standard="N/A",
                     patch_available=False,
                     requires_manual_intervention=True,
-                    intervention_reason="Signature format, verifier support, key lifecycle, and protocol compatibility require review.",
-                    estimated_effort="medium"
-                )
-            elif ir.role == CryptoRole.KEY_TRANSPORT or ir.role == CryptoRole.ENCRYPTION:
-                plan = MigrationPlan(
-                    target_algorithm="ML-KEM-based KEM/DEM redesign",
-                    target_standard="FIPS 203",
+                    intervention_reason="Role inference failed; cannot safely plan an ambiguous primitive usage.",
+                    estimated_effort="high",
+                    rule_id="ABSTAIN-AMBIGUOUS",
+                    rule_version=self.rules_version,
+                    blocker_codes=["ROLE_UNKNOWN"],
+                    standard_refs=[],
+                ),
+            )
+
+        rule = self.knowledge_base.match(ir)
+        if rule is None:
+            return AssuranceRecord(
+                finding=ir,
+                plan=MigrationPlan(
+                    target_algorithm="Manual Review",
+                    target_standard="N/A",
                     patch_available=False,
                     requires_manual_intervention=True,
-                    intervention_reason="RSA encryption requires coordinated sender/recipient and data-format redesign; no one-line replacement is safe.",
-                    estimated_effort="high"
-                )
-        
-        # ECC / DH Logic
-        elif "x25519" in primitive or "ecdh" in primitive or "dh" in primitive:
-            plan = MigrationPlan(
-                target_algorithm="X25519 + ML-KEM",
-                target_standard="RFC 10024",
-                patch_available=False,
-                requires_manual_intervention=True,
-                intervention_reason="Both peers and the deployed TLS provider must support and negotiate the selected hybrid group.",
-                estimated_effort="high"
-            )
-            
-        elif "ecdsa" in primitive or "ed25519" in primitive or "dsa" in primitive:
-            plan = MigrationPlan(
-                target_algorithm="ML-DSA",
-                target_standard="FIPS 204",
-                patch_available=False,
-                requires_manual_intervention=True,
-                intervention_reason="Signature format, verifier support, key lifecycle, and protocol compatibility require review.",
-                estimated_effort="medium"
-            )
-            
-        # Symmetric / Hashing Logic
-        elif "aes" in primitive:
-            plan = MigrationPlan(
-                target_algorithm="AES-256",
-                target_standard="FIPS 197",
-                patch_available=False,
-                requires_manual_intervention=True,
-                intervention_reason="Key rotation required to double key size against Grover's algorithm.",
-                estimated_effort="medium"
-            )
-            
-        elif "sha1" in primitive or "md5" in primitive:
-             plan = MigrationPlan(
-                target_algorithm="SHA-256 / SHA-3",
-                target_standard="FIPS 180-4 / FIPS 202",
-                patch_available=False,
-                requires_manual_intervention=True,
-                intervention_reason="The hash purpose and compatibility requirements must be established before replacement.",
-                estimated_effort="low"
-            )
-             
-        elif "sha256" in primitive:
-            plan = MigrationPlan(
-                target_algorithm="SHA-384 / SHA-512",
-                target_standard="FIPS 180-4",
-                patch_available=False,
-                requires_manual_intervention=True,
-                intervention_reason="256-bit hash provides ~128-bit quantum security. Upgrade only if 256-bit PQ security is strictly required.",
-                estimated_effort="low"
+                    intervention_reason=(
+                        f"No enabled knowledge-base rule matches {ir.primitive_name} "
+                        f"acting as {ir.role.value}."
+                    ),
+                    estimated_effort="high",
+                    rule_id="ABSTAIN-NO-RULE",
+                    rule_version=self.rules_version,
+                    blocker_codes=["NO_MATCHING_RULE"],
+                    standard_refs=[],
+                ),
             )
 
-        # Fallback if unhandled
-        if plan is None:
-            plan = MigrationPlan(
-                target_algorithm="Manual Review",
-                target_standard="N/A",
-                patch_available=False,
-                requires_manual_intervention=True,
-                intervention_reason=f"No automated path defined for {primitive} acting as {ir.role.value}",
-                estimated_effort="high"
-            )
-
-        return AssuranceRecord(finding=ir, plan=plan)
+        return AssuranceRecord(
+            finding=ir,
+            plan=MigrationPlan(
+                target_algorithm=rule.target_algorithm,
+                target_standard=rule.target_standard,
+                patch_available=rule.patch_available,
+                requires_manual_intervention=rule.requires_manual_intervention,
+                intervention_reason=rule.intervention_reason,
+                estimated_effort=rule.estimated_effort,
+                rule_id=rule.rule_id,
+                rule_version=self.rules_version,
+                blocker_codes=list(rule.blocker_codes),
+                standard_refs=list(rule.standard_refs),
+            ),
+        )

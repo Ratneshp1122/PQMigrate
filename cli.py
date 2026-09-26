@@ -296,6 +296,22 @@ def cmd_list_patterns(args: list[str]):
     print()
 
 
+def cmd_list_rules(args: list[str]):
+    """Validate and list the active D7 migration knowledge base."""
+    from pqc_migration_tool.knowledge.loader import KnowledgeBase, load_default_knowledge_base
+
+    knowledge = KnowledgeBase.load(args[0]) if args else load_default_knowledge_base()
+    print(f"\nKnowledge base: {knowledge.source_path}")
+    print(f"Rules version : {knowledge.rules_version}")
+    print(f"Rule count    : {len(knowledge.rules)}\n")
+    print(f"  {'Rule ID':<36} {'Roles':<22} Target")
+    print(f"  {'-' * 34:<36} {'-' * 20:<22} {'-' * 30}")
+    for rule in knowledge.rules:
+        roles = ",".join(role.value for role in rule.roles)
+        print(f"  {rule.rule_id:<36} {roles:<22} {rule.target_algorithm}")
+    print()
+
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # Helpers
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -358,6 +374,7 @@ def main():
         print("  repo   <owner/repo|url>    Clone & scan any git repository")
         print("  migration <primitive>      Show migration code example")
         print("  list-patterns             List all detectable patterns")
+        print("  list-rules [yaml-path]    Validate and list D7 rules")
         print()
         print("Examples:")
         print("  python3 cli.py scan /home/ratneshp0411/")
@@ -367,6 +384,7 @@ def main():
         print("  python3 cli.py repo django/django --branch stable/4.2.x --keep")
         print("  python3 cli.py migration X25519")
         print("  python3 cli.py list-patterns")
+        print("  python3 cli.py list-rules")
         return
 
     command = args[0]
@@ -391,6 +409,7 @@ def main():
         "patch":         cmd_patch,
         "migration":     cmd_migration,
         "list-patterns": cmd_list_patterns,
+        "list-rules":    cmd_list_rules,
     }
 
     if command in dispatch:

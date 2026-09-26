@@ -44,6 +44,8 @@ Exit code 1 is expected because the policy found vulnerable cryptography. Show t
 2. Key-transport fixture: role `key_transport`, evidence linking `os.urandom` to RSA encryption, KEM/DEM redesign assessment, no automatic patch.
 3. Import-only fixture: role `unknown`, `import_lead`, explicit abstention.
 
+For each plan, show `rule_id`, `rule_version`, blocker codes, and standards references from the D7 YAML knowledge base.
+
 ## 6:45–7:25 — Negative evidence
 
 ```bash
@@ -55,7 +57,7 @@ Mention the unrelated-key and conflicting-role tests. These prevent proximity-on
 
 ## 7:25–8:00 — Next measured milestones
 
-State that the next milestones are the versioned knowledge base, pilot benchmark, standard exports, and isolated migration assurance. Ask the reviewer to confirm the ground-truth labelling rules and the contexts that deserve priority.
+State that the next milestones are decision-trace presentation, the pilot benchmark, standard exports, and isolated migration assurance. Ask the reviewer to confirm the ground-truth labelling rules and the contexts that deserve priority.
 
 ## Failure fallback
 

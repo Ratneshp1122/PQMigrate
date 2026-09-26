@@ -23,6 +23,22 @@ def test_help_has_one_cli_version() -> None:
     assert result.stdout.count("PQC Migration Scanner") == 1
     assert "v0.3.0" in result.stdout
     assert "v0.1.0" not in result.stdout
+    assert "list-rules" in result.stdout
+
+
+def test_list_rules_validates_and_prints_active_version() -> None:
+    result = subprocess.run(
+        [sys.executable, str(CLI), "list-rules"],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 0
+    assert "2026.09.26-d7.1" in result.stdout
+    assert "RSA-SIGNATURE-001" in result.stdout
+    assert "Rule count    : 9" in result.stdout
 
 
 def test_json_output_is_written_once(tmp_path: Path) -> None:
@@ -94,11 +110,16 @@ def test_review_fixtures_produce_role_aware_advisory_plans(tmp_path: Path) -> No
 
     assert jwt["finding"]["role"] == "signature"
     assert jwt["finding"]["protocol_context"] == "jwt"
-    assert jwt["plan"]["target_algorithm"] == "ML-DSA"
+    assert jwt["plan"]["target_algorithm"] == "ML-DSA assessment"
+    assert jwt["plan"]["rule_id"] == "RSA-SIGNATURE-001"
+    assert jwt["plan"]["rule_version"] == "2026.09.26-d7.1"
+    assert jwt["plan"]["standard_refs"]
     assert jwt["plan"]["patch_available"] is False
 
     assert transport["finding"]["role"] == "key_transport"
     assert transport["plan"]["target_standard"] == "FIPS 203"
+    assert transport["plan"]["rule_id"] == "RSA-KEY-TRANSPORT-001"
+    assert transport["plan"]["blocker_codes"]
     assert transport["plan"]["patch_available"] is False
 
     assert import_only["finding"]["role"] == "unknown"

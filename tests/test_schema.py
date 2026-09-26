@@ -63,7 +63,7 @@ class TestSchemaValidation(unittest.TestCase):
         self.assertEqual(out_dict['schema_version'], "2.1")
         self.assertTrue(out_dict['scan_id'])
         self.assertEqual(out_dict['scanner_version'], "0.3.0")
-        self.assertEqual(out_dict['rules_version'], "2026-09-26")
+        self.assertEqual(out_dict['rules_version'], "unknown")
         self.assertEqual(out_dict['records'][0]['finding']['role'], "signature")
         self.assertEqual(out_dict['records'][0]['plan']['target_standard'], "FIPS 204")
         
