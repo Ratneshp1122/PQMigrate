@@ -24,3 +24,8 @@ coverage.xml
 /docs/scan-logs/tmp/
 .DS_Store
 Thumbs.db
+node_modules/
+backend/target/
+__pycache__/
+*.pyc
+frontend/.vite/

@@ -1,0 +1,467 @@
+{
+  "project_name": "paramiko)",
+  "scan_timestamp": "2026-09-24T13:16:53.162824",
+  "files_scanned": 70,
+  "total_findings": 17,
+  "records": [
+    {
+      "finding": {
+        "id": "6b061435755d",
+        "primitive_name": "Elliptic Curve (ECDH / ECDSA)",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/paramiko/ecdsakey.py",
+          "line_number": 28,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric import ec"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "f350e1b095d2",
+        "primitive_name": "X25519 (ECDH)",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/paramiko/kex_curve25519.py",
+          "line_number": 6,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PrivateKey"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "75ef5827a4c5",
+        "primitive_name": "Elliptic Curve (ECDH / ECDSA)",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/paramiko/kex_ecdh_nist.py",
+          "line_number": 11,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric import ec"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "84e453d24ed8",
+        "primitive_name": "X25519 (ECDH)",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/paramiko/kex_mlkem.py",
+          "line_number": 20,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PrivateKey"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "872ee9fb4d1a",
+        "primitive_name": "Elliptic Curve (ECDH / ECDSA)",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/paramiko/pkey.py",
+          "line_number": 37,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric.ec import EllipticCurvePrivateKey"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "587975f91798",
+        "primitive_name": "Ed25519 (signatures)",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/paramiko/pkey.py",
+          "line_number": 40,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "6ea1179b9ec0",
+        "primitive_name": "RSA",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/paramiko/pkey.py",
+          "line_number": 41,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "5b7fbbe3cd60",
+        "primitive_name": "3DES / Triple-DES",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/paramiko/pkey.py",
+          "line_number": 61,
+          "column": 4,
+          "context_snippet": "from cryptography.hazmat.primitives.ciphers.algorithms import TripleDES"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "deprecated_classically",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "3b1fe4a35635",
+        "primitive_name": "RSA padding (OAEP / PKCS1v15)",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/paramiko/rsakey.py",
+          "line_number": 28,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric import padding"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "22c8ed7013d8",
+        "primitive_name": "RSA",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/paramiko/rsakey.py",
+          "line_number": 28,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric import rsa"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "2251af406f53",
+        "primitive_name": "3DES / Triple-DES",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/paramiko/transport.py",
+          "line_number": 137,
+          "column": 4,
+          "context_snippet": "from cryptography.hazmat.primitives.ciphers.algorithms import TripleDES"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "deprecated_classically",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "c4ccf6397852",
+        "primitive_name": "Elliptic Curve (ECDH / ECDSA)",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/tests/pkey.py",
+          "line_number": 5,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric.ec import EllipticCurvePrivateKey"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "5198de5c3564",
+        "primitive_name": "Ed448 (signatures)",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/tests/pkey.py",
+          "line_number": 8,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric.ed448 import Ed448PrivateKey"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "27b45d01b1e1",
+        "primitive_name": "RSA",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/tests/pkey.py",
+          "line_number": 9,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "03f2c19d94df",
+        "primitive_name": "Elliptic Curve (ECDH / ECDSA)",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/tests/test_kex.py",
+          "line_number": 31,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric import ec"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "d77682f64197",
+        "primitive_name": "X25519 (ECDH)",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/tests/test_kex.py",
+          "line_number": 34,
+          "column": 4,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric import x25519"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    },
+    {
+      "finding": {
+        "id": "f5d3e77953a6",
+        "primitive_name": "RSA",
+        "location": {
+          "file_path": "/tmp/pqc_scan_paramiko/tests/test_pkey.py",
+          "line_number": 34,
+          "column": 0,
+          "context_snippet": "from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateNumbers"
+        },
+        "role": "unknown",
+        "operation": "unknown",
+        "status": "quantum_vulnerable",
+        "confidence": "ambiguous",
+        "detection_type": "import_lead"
+      },
+      "plan": {
+        "target_algorithm": "UNKNOWN",
+        "target_standard": "N/A",
+        "patch_available": false,
+        "requires_manual_intervention": true,
+        "intervention_reason": "Role inference failed; cannot safely patch an ambiguous primitive usage.",
+        "estimated_effort": "high"
+      },
+      "tests_passed": false,
+      "verified_by_human": false
+    }
+  ]
+}

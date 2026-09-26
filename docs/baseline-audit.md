@@ -60,3 +60,16 @@ Based on the research roadmap, the following prior sprint goals are **CANCELLED*
 
 ## 7. Conclusion
 Gate D0 is **PASSED**. The current tool establishes a reliable, fast baseline inventory but lacks the semantic awareness necessary for safe patching. Proceed to D1: Research Protocol & Threat Modeling.
+
+## D5.5 Verification (2026-09-25)
+
+- **Commit SHA:** c915c47672aa04408e3e011257452e37f958095e (plus working tree changes for schema fixes)
+- **Environment:** Python 3.13.12, Java 21, Maven 3.9.12, Node 20.20.2
+- **Test Status:** 
+  - pytest tests/ - PASSED (8/8)
+  - mvn test - PASSED (BUILD SUCCESS)
+  - 
+pm run build - PASSED (after fixing React unused imports)
+- **Schema Validation:** V2 JSON schema exported successfully (Schema version verified).
+- **Security Check:** Unresolved import_lead findings correctly yield ConfidenceLevel.AMBIGUOUS and fall through to ABSTAIN (patch_available=False). No role-agnostic RSA->ML-KEM rules exist.
+- **Decision:** Ready to begin D6 (Context inference v1).

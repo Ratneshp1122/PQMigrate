@@ -3,6 +3,14 @@ from dataclasses import dataclass, field, asdict
 from enum import Enum
 from typing import List, Optional, Dict, Any
 
+class ProtocolContext(str, Enum):
+    JWT = "jwt"
+    POSSIBLE_JWT = "possible_jwt"
+    SSH = "ssh"
+    POSSIBLE_SSH = "possible_ssh"
+    TLS = "tls"
+    UNKNOWN = "unknown"
+
 class CryptoRole(str, Enum):
     SIGNATURE = "signature"
     KEY_ESTABLISHMENT = "key_establishment"
@@ -25,6 +33,8 @@ class CryptoOperation(str, Enum):
     DECAPSULATE = "decapsulate"
     CONFIGURE = "configure"
     UNKNOWN = "unknown"
+    HASH = "hash"
+    DERIVE = "derive"
 
 class SecurityStatus(str, Enum):
     QUANTUM_VULNERABLE = "quantum_vulnerable"
@@ -49,42 +59,46 @@ class CodeLocation:
 @dataclass
 class CryptoIR:
     """Internal Representation of a Cryptographic usage site."""
-    id: str  # Unique identifier for this finding (e.g., hash of location + primitive)
+    id: str
     primitive_name: str
     location: CodeLocation
     role: CryptoRole
     operation: CryptoOperation
     status: SecurityStatus
     confidence: ConfidenceLevel
+    detection_type: str
     
-    # E.g. 'import_lead', 'operation_candidate'
-    detection_type: str 
+    # D6: Context Tracking
+    protocol_context: ProtocolContext = ProtocolContext.UNKNOWN
+    context_evidence: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
         d = asdict(self)
-        # Convert enums to strings
         d['role'] = self.role.value
         d['operation'] = self.operation.value
         d['status'] = self.status.value
         d['confidence'] = self.confidence.value
+        d['protocol_context'] = self.protocol_context.value
         return d
 
 @dataclass
 class MigrationPlan:
     """A proposed change to migrate a CryptoIR to PQC."""
     target_algorithm: str
-    target_standard: str  # e.g., 'FIPS 204', 'RFC 10024'
+    target_standard: str
     patch_available: bool
     requires_manual_intervention: bool
     intervention_reason: Optional[str] = None
-    estimated_effort: str = "unknown" # 'low', 'medium', 'high'
+    estimated_effort: str = "unknown"
+    
+    # D7: Originating Rule ID
+    rule_id: Optional[str] = None
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
 
 @dataclass
 class AssuranceRecord:
-    """Wraps a CryptoIR with its MigrationPlan and verification status."""
     finding: CryptoIR
     plan: Optional[MigrationPlan] = None
     tests_passed: bool = False
@@ -100,7 +114,6 @@ class AssuranceRecord:
 
 @dataclass
 class ProjectReport:
-    """The root output JSON schema."""
     project_name: str
     scan_timestamp: str
     files_scanned: int
