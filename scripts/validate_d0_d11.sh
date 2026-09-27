@@ -67,7 +67,7 @@ section D0-D11 "Automated implementation and integration checks"
 "$repo_root/scripts/review_smoke.sh"
 
 section D7 "Knowledge-base load and provenance"
-"$python_bin" "$repo_root/cli.py" list-rules | tee "$artifact_dir/d7-list-rules.txt"
+"$python_bin" "$repo_root/cli.py" list-rules | tee "$artifact_dir/d7-list-rules.log"
 
 section MATRIX "Milestone acceptance status"
 summary_path="$artifact_dir/d0-d11-validation-summary.json"

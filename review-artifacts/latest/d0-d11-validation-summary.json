@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-09-27T12:55:58.726471+00:00",
+  "source_commit": "d5910337dfd1501f5b20520f9c573640541c7476",
+  "overall_status": "pass_with_declared_partial",
+  "pass_count": 11,
+  "partial_count": 1,
+  "fail_count": 0,
+  "milestones": [
+    {
+      "id": "D0",
+      "status": "pass",
+      "evidence": "baseline audit and current registry audit"
+    },
+    {
+      "id": "D1",
+      "status": "pass",
+      "evidence": "research protocol, threat model, ADR-001"
+    },
+    {
+      "id": "D2",
+      "status": "pass",
+      "evidence": "typed schema and schema tests"
+    },
+    {
+      "id": "D3",
+      "status": "pass",
+      "evidence": "bounded Python AST resolver tests"
+    },
+    {
+      "id": "D4",
+      "status": "partial",
+      "evidence": "Go regex detection passes; planned Go AST/dataflow resolver is not implemented"
+    },
+    {
+      "id": "D5",
+      "status": "pass",
+      "evidence": "bounded same-scope RSA dataflow and negative tests"
+    },
+    {
+      "id": "D6",
+      "status": "pass",
+      "evidence": "linked JWT context plus abstention fixtures"
+    },
+    {
+      "id": "D7",
+      "status": "pass",
+      "evidence": "nine validated versioned YAML rules"
+    },
+    {
+      "id": "D8",
+      "status": "pass",
+      "evidence": "five-stage decision trace and multi-axis priority"
+    },
+    {
+      "id": "D9",
+      "status": "pass_bounded",
+      "evidence": "72-case single-author synthetic Python RSA pilot"
+    },
+    {
+      "id": "D10",
+      "status": "pass",
+      "evidence": "schema-valid SARIF 2.1.0 and CycloneDX 1.7 CBOM"
+    },
+    {
+      "id": "D11",
+      "status": "pass_fail_closed",
+      "evidence": "243-state patch gate; no transformation approved"
+    }
+  ]
+}
