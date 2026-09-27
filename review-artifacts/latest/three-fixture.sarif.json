@@ -1,0 +1,265 @@
+{
+  "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata01/os/schemas/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "PQMigrate",
+          "semanticVersion": "0.3.0",
+          "informationUri": "https://github.com/ratneshp0411/pqc_migration_tool",
+          "rules": [
+            {
+              "id": "ABSTAIN-AMBIGUOUS",
+              "name": "ABSTAIN_AMBIGUOUS",
+              "shortDescription": {
+                "text": "Review RSA for PQC migration"
+              },
+              "fullDescription": {
+                "text": "PQMigrate advisory target: UNKNOWN; target standard: N/A."
+              },
+              "help": {
+                "text": "Review protocol constraints and interoperability before changing cryptography."
+              },
+              "properties": {
+                "ruleVersion": "2026.09.26-d7.1",
+                "standardRefs": "",
+                "tags": [
+                  "security",
+                  "cryptography",
+                  "post-quantum-cryptography"
+                ]
+              }
+            },
+            {
+              "id": "RSA-SIGNATURE-001",
+              "name": "RSA_SIGNATURE_001",
+              "shortDescription": {
+                "text": "Review RSA for PQC migration"
+              },
+              "fullDescription": {
+                "text": "PQMigrate advisory target: ML-DSA assessment; target standard: FIPS 204."
+              },
+              "help": {
+                "text": "Review protocol constraints and interoperability before changing cryptography."
+              },
+              "properties": {
+                "ruleVersion": "2026.09.26-d7.1",
+                "standardRefs": "https://csrc.nist.gov/pubs/fips/204/final",
+                "tags": [
+                  "security",
+                  "cryptography",
+                  "post-quantum-cryptography"
+                ]
+              }
+            },
+            {
+              "id": "RSA-KEY-TRANSPORT-001",
+              "name": "RSA_KEY_TRANSPORT_001",
+              "shortDescription": {
+                "text": "Review RSA padding (OAEP / PKCS1v15) for PQC migration"
+              },
+              "fullDescription": {
+                "text": "PQMigrate advisory target: ML-KEM-based KEM/DEM redesign; target standard: FIPS 203."
+              },
+              "help": {
+                "text": "Review protocol constraints and interoperability before changing cryptography."
+              },
+              "properties": {
+                "ruleVersion": "2026.09.26-d7.1",
+                "standardRefs": "https://csrc.nist.gov/pubs/fips/203/final",
+                "tags": [
+                  "security",
+                  "cryptography",
+                  "post-quantum-cryptography"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "properties": {
+            "scanId": "d2c2d642-c26f-4259-a048-8f1f72a5c4ad",
+            "schemaVersion": "2.2",
+            "rulesVersion": "2026.09.26-d7.1",
+            "sourceCommit": "a34f07a891cecdbe22dedce4727c0fc4899fc398"
+          }
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "review_rsa_import_only.py",
+            "uriBaseId": "%SRCROOT%"
+          }
+        },
+        {
+          "location": {
+            "uri": "review_rsa_jwt_signing.py",
+            "uriBaseId": "%SRCROOT%"
+          }
+        },
+        {
+          "location": {
+            "uri": "review_rsa_key_transport.py",
+            "uriBaseId": "%SRCROOT%"
+          }
+        }
+      ],
+      "results": [
+        {
+          "ruleId": "ABSTAIN-AMBIGUOUS",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "text": "RSA (unknown/unknown) is quantum_vulnerable; advisory target: UNKNOWN; decision: abstain."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "review_rsa_import_only.py",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 1
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "pqmigrateFindingId": "8cb763802590"
+          },
+          "properties": {
+            "confidence": "ambiguous",
+            "detectionType": "import_lead",
+            "protocolContext": "unknown",
+            "traceId": "a81ae74be519bddd",
+            "decisionOutcome": "abstain",
+            "ruleVersion": "2026.09.26-d7.1",
+            "blockerCodes": "ROLE_UNKNOWN",
+            "standardRefs": "",
+            "patchAvailable": false
+          }
+        },
+        {
+          "ruleId": "RSA-SIGNATURE-001",
+          "ruleIndex": 1,
+          "level": "error",
+          "message": {
+            "text": "RSA (signature/sign) is quantum_vulnerable; advisory target: ML-DSA assessment; decision: recommend."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "review_rsa_jwt_signing.py",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 7,
+                  "startColumn": 1
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "pqmigrateFindingId": "4a2c2c871088"
+          },
+          "properties": {
+            "confidence": "direct",
+            "detectionType": "linked_operation",
+            "protocolContext": "jwt",
+            "traceId": "115714235658428c",
+            "decisionOutcome": "recommend",
+            "ruleVersion": "2026.09.26-d7.1",
+            "blockerCodes": "SIGNATURE_FORMAT, VERIFIER_SUPPORT, KEY_LIFECYCLE, PROTOCOL_COMPATIBILITY",
+            "standardRefs": "https://csrc.nist.gov/pubs/fips/204/final",
+            "patchAvailable": false
+          }
+        },
+        {
+          "ruleId": "RSA-KEY-TRANSPORT-001",
+          "ruleIndex": 2,
+          "level": "error",
+          "message": {
+            "text": "RSA padding (OAEP / PKCS1v15) (key_transport/encrypt) is quantum_vulnerable; advisory target: ML-KEM-based KEM/DEM redesign; decision: recommend."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "review_rsa_key_transport.py",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 1
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "pqmigrateFindingId": "8477083d34c8"
+          },
+          "properties": {
+            "confidence": "direct",
+            "detectionType": "linked_operation",
+            "protocolContext": "unknown",
+            "traceId": "ceaf4980aa146359",
+            "decisionOutcome": "recommend",
+            "ruleVersion": "2026.09.26-d7.1",
+            "blockerCodes": "RECIPIENT_COMPATIBILITY, DATA_FORMAT, DECRYPT_PATH, KEY_LIFECYCLE",
+            "standardRefs": "https://csrc.nist.gov/pubs/fips/203/final",
+            "patchAvailable": false
+          }
+        },
+        {
+          "ruleId": "RSA-KEY-TRANSPORT-001",
+          "ruleIndex": 2,
+          "level": "error",
+          "message": {
+            "text": "RSA (key_transport/encrypt) is quantum_vulnerable; advisory target: ML-KEM-based KEM/DEM redesign; decision: recommend."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "review_rsa_key_transport.py",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 9,
+                  "startColumn": 1
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "pqmigrateFindingId": "c74a9bcb0014"
+          },
+          "properties": {
+            "confidence": "direct",
+            "detectionType": "linked_operation",
+            "protocolContext": "unknown",
+            "traceId": "8085883f83b865d2",
+            "decisionOutcome": "recommend",
+            "ruleVersion": "2026.09.26-d7.1",
+            "blockerCodes": "RECIPIENT_COMPATIBILITY, DATA_FORMAT, DECRYPT_PATH, KEY_LIFECYCLE",
+            "standardRefs": "https://csrc.nist.gov/pubs/fips/203/final",
+            "patchAvailable": false
+          }
+        }
+      ],
+      "originalUriBaseIds": {
+        "%SRCROOT%": {
+          "uri": "file:///home/ratneshp0411/pqc_migration_tool/tests/fixtures/review/"
+        }
+      }
+    }
+  ]
+}

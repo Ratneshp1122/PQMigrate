@@ -4,8 +4,8 @@
   "dataset_case_count": 72,
   "selected_split": "all",
   "evaluated_case_count": 72,
-  "generated_at": "2026-09-27T11:28:36.899291+00:00",
-  "evaluator_commit": "cf42085fe2c6cb977648e78603c6cc8037a4eb82",
+  "generated_at": "2026-09-27T11:57:54.914111+00:00",
+  "evaluator_commit": "a34f07a891cecdbe22dedce4727c0fc4899fc398",
   "label_status": "single_author_synthetic_pilot",
   "scope": "Python bounded RSA role inference only; not product-wide accuracy.",
   "split_counts": {

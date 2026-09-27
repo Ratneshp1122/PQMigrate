@@ -1,0 +1,427 @@
+{
+  "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.7",
+  "serialNumber": "urn:uuid:d2c2d642-c26f-4259-a048-8f1f72a5c4ad",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-09-27T11:58:46.066959+00:00",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "PQMigrate",
+          "version": "0.3.0"
+        }
+      ]
+    },
+    "component": {
+      "type": "application",
+      "bom-ref": "application:review",
+      "name": "review",
+      "version": "a34f07a891ce"
+    }
+  },
+  "components": [
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "pqmigrate:crypto:8cb763802590",
+      "name": "RSA",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke"
+        }
+      },
+      "evidence": {
+        "callstack": {
+          "frames": [
+            {
+              "module": "review_rsa_import_only.py",
+              "line": 3,
+              "column": 1
+            }
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "pqmigrate:finding-id",
+          "value": "8cb763802590"
+        },
+        {
+          "name": "pqmigrate:role",
+          "value": "unknown"
+        },
+        {
+          "name": "pqmigrate:operation",
+          "value": "unknown"
+        },
+        {
+          "name": "pqmigrate:status",
+          "value": "quantum_vulnerable"
+        },
+        {
+          "name": "pqmigrate:confidence",
+          "value": "ambiguous"
+        },
+        {
+          "name": "pqmigrate:detection-type",
+          "value": "import_lead"
+        },
+        {
+          "name": "pqmigrate:protocol-context",
+          "value": "unknown"
+        },
+        {
+          "name": "pqmigrate:rule-id",
+          "value": "ABSTAIN-AMBIGUOUS"
+        },
+        {
+          "name": "pqmigrate:rule-version",
+          "value": "2026.09.26-d7.1"
+        },
+        {
+          "name": "pqmigrate:trace-id",
+          "value": "a81ae74be519bddd"
+        },
+        {
+          "name": "pqmigrate:decision-outcome",
+          "value": "abstain"
+        },
+        {
+          "name": "pqmigrate:blocker-codes",
+          "value": "ROLE_UNKNOWN"
+        },
+        {
+          "name": "pqmigrate:standard-refs",
+          "value": ""
+        },
+        {
+          "name": "pqmigrate:target-algorithm",
+          "value": "UNKNOWN"
+        },
+        {
+          "name": "pqmigrate:patch-available",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "pqmigrate:crypto:4a2c2c871088",
+      "name": "RSA",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "signature"
+        }
+      },
+      "evidence": {
+        "callstack": {
+          "frames": [
+            {
+              "module": "review_rsa_jwt_signing.py",
+              "line": 7,
+              "column": 1
+            }
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "pqmigrate:finding-id",
+          "value": "4a2c2c871088"
+        },
+        {
+          "name": "pqmigrate:role",
+          "value": "signature"
+        },
+        {
+          "name": "pqmigrate:operation",
+          "value": "sign"
+        },
+        {
+          "name": "pqmigrate:status",
+          "value": "quantum_vulnerable"
+        },
+        {
+          "name": "pqmigrate:confidence",
+          "value": "direct"
+        },
+        {
+          "name": "pqmigrate:detection-type",
+          "value": "linked_operation"
+        },
+        {
+          "name": "pqmigrate:protocol-context",
+          "value": "jwt"
+        },
+        {
+          "name": "pqmigrate:rule-id",
+          "value": "RSA-SIGNATURE-001"
+        },
+        {
+          "name": "pqmigrate:rule-version",
+          "value": "2026.09.26-d7.1"
+        },
+        {
+          "name": "pqmigrate:trace-id",
+          "value": "115714235658428c"
+        },
+        {
+          "name": "pqmigrate:decision-outcome",
+          "value": "recommend"
+        },
+        {
+          "name": "pqmigrate:blocker-codes",
+          "value": "SIGNATURE_FORMAT, VERIFIER_SUPPORT, KEY_LIFECYCLE, PROTOCOL_COMPATIBILITY"
+        },
+        {
+          "name": "pqmigrate:standard-refs",
+          "value": "https://csrc.nist.gov/pubs/fips/204/final"
+        },
+        {
+          "name": "pqmigrate:target-algorithm",
+          "value": "ML-DSA assessment"
+        },
+        {
+          "name": "pqmigrate:patch-available",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "pqmigrate:crypto:8477083d34c8",
+      "name": "RSA padding (OAEP / PKCS1v15)",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke"
+        }
+      },
+      "evidence": {
+        "callstack": {
+          "frames": [
+            {
+              "module": "review_rsa_key_transport.py",
+              "line": 9,
+              "column": 1
+            }
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "pqmigrate:finding-id",
+          "value": "8477083d34c8"
+        },
+        {
+          "name": "pqmigrate:role",
+          "value": "key_transport"
+        },
+        {
+          "name": "pqmigrate:operation",
+          "value": "encrypt"
+        },
+        {
+          "name": "pqmigrate:status",
+          "value": "quantum_vulnerable"
+        },
+        {
+          "name": "pqmigrate:confidence",
+          "value": "direct"
+        },
+        {
+          "name": "pqmigrate:detection-type",
+          "value": "linked_operation"
+        },
+        {
+          "name": "pqmigrate:protocol-context",
+          "value": "unknown"
+        },
+        {
+          "name": "pqmigrate:rule-id",
+          "value": "RSA-KEY-TRANSPORT-001"
+        },
+        {
+          "name": "pqmigrate:rule-version",
+          "value": "2026.09.26-d7.1"
+        },
+        {
+          "name": "pqmigrate:trace-id",
+          "value": "ceaf4980aa146359"
+        },
+        {
+          "name": "pqmigrate:decision-outcome",
+          "value": "recommend"
+        },
+        {
+          "name": "pqmigrate:blocker-codes",
+          "value": "RECIPIENT_COMPATIBILITY, DATA_FORMAT, DECRYPT_PATH, KEY_LIFECYCLE"
+        },
+        {
+          "name": "pqmigrate:standard-refs",
+          "value": "https://csrc.nist.gov/pubs/fips/203/final"
+        },
+        {
+          "name": "pqmigrate:target-algorithm",
+          "value": "ML-KEM-based KEM/DEM redesign"
+        },
+        {
+          "name": "pqmigrate:patch-available",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "bom-ref": "pqmigrate:crypto:c74a9bcb0014",
+      "name": "RSA",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke"
+        }
+      },
+      "evidence": {
+        "callstack": {
+          "frames": [
+            {
+              "module": "review_rsa_key_transport.py",
+              "line": 9,
+              "column": 1
+            }
+          ]
+        }
+      },
+      "properties": [
+        {
+          "name": "pqmigrate:finding-id",
+          "value": "c74a9bcb0014"
+        },
+        {
+          "name": "pqmigrate:role",
+          "value": "key_transport"
+        },
+        {
+          "name": "pqmigrate:operation",
+          "value": "encrypt"
+        },
+        {
+          "name": "pqmigrate:status",
+          "value": "quantum_vulnerable"
+        },
+        {
+          "name": "pqmigrate:confidence",
+          "value": "direct"
+        },
+        {
+          "name": "pqmigrate:detection-type",
+          "value": "linked_operation"
+        },
+        {
+          "name": "pqmigrate:protocol-context",
+          "value": "unknown"
+        },
+        {
+          "name": "pqmigrate:rule-id",
+          "value": "RSA-KEY-TRANSPORT-001"
+        },
+        {
+          "name": "pqmigrate:rule-version",
+          "value": "2026.09.26-d7.1"
+        },
+        {
+          "name": "pqmigrate:trace-id",
+          "value": "8085883f83b865d2"
+        },
+        {
+          "name": "pqmigrate:decision-outcome",
+          "value": "recommend"
+        },
+        {
+          "name": "pqmigrate:blocker-codes",
+          "value": "RECIPIENT_COMPATIBILITY, DATA_FORMAT, DECRYPT_PATH, KEY_LIFECYCLE"
+        },
+        {
+          "name": "pqmigrate:standard-refs",
+          "value": "https://csrc.nist.gov/pubs/fips/203/final"
+        },
+        {
+          "name": "pqmigrate:target-algorithm",
+          "value": "ML-KEM-based KEM/DEM redesign"
+        },
+        {
+          "name": "pqmigrate:patch-available",
+          "value": "false"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "application:review",
+      "dependsOn": [
+        "pqmigrate:crypto:8cb763802590",
+        "pqmigrate:crypto:4a2c2c871088",
+        "pqmigrate:crypto:8477083d34c8",
+        "pqmigrate:crypto:c74a9bcb0014"
+      ]
+    },
+    {
+      "ref": "pqmigrate:crypto:8cb763802590",
+      "dependsOn": []
+    },
+    {
+      "ref": "pqmigrate:crypto:4a2c2c871088",
+      "dependsOn": []
+    },
+    {
+      "ref": "pqmigrate:crypto:8477083d34c8",
+      "dependsOn": []
+    },
+    {
+      "ref": "pqmigrate:crypto:c74a9bcb0014",
+      "dependsOn": []
+    }
+  ],
+  "compositions": [
+    {
+      "aggregate": "incomplete",
+      "assemblies": [
+        "pqmigrate:crypto:8cb763802590",
+        "pqmigrate:crypto:4a2c2c871088",
+        "pqmigrate:crypto:8477083d34c8",
+        "pqmigrate:crypto:c74a9bcb0014"
+      ]
+    }
+  ],
+  "properties": [
+    {
+      "name": "pqmigrate:scan-id",
+      "value": "d2c2d642-c26f-4259-a048-8f1f72a5c4ad"
+    },
+    {
+      "name": "pqmigrate:schema-version",
+      "value": "2.2"
+    },
+    {
+      "name": "pqmigrate:scanner-version",
+      "value": "0.3.0"
+    },
+    {
+      "name": "pqmigrate:rules-version",
+      "value": "2026.09.26-d7.1"
+    },
+    {
+      "name": "pqmigrate:source-commit",
+      "value": "a34f07a891cecdbe22dedce4727c0fc4899fc398"
+    },
+    {
+      "name": "pqmigrate:scope-note",
+      "value": "Bounded static-analysis inventory; absence of a component is not proof that cryptography is absent."
+    }
+  ]
+}
