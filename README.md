@@ -18,6 +18,7 @@ The current Python path uses bounded AST dataflow to distinguish selected RSA si
 4. **Assurance interface (`/backend` and `/frontend`)**: Stores and displays scan evidence. The CLI remains the primary verified review path.
 5. **Pilot evaluation (`/benchmarks`)**: Runs a versioned 72-case synthetic Python RSA benchmark with held-out splits, raw predictions, metrics, and error cases.
 6. **Standards export (`/exporters`)**: Emits schema-validated SARIF 2.1.0 and CycloneDX 1.7 CBOM without source snippets or automatic-patch claims.
+7. **Fail-closed patch policy (`/patcher/policy.py`)**: Evaluates five independent three-valued conditions; all current reports remain ineligible for mutation.
 
 ---
 
@@ -87,6 +88,15 @@ python3 cli.py export report_v2.json --format cbom --output report.cdx.json
 
 Exports are validated offline against pinned official schemas before being written. See `docs/review/d10-standards-exports.md` for field mappings and limitations.
 
+### 7. Audit the D11 patch gate
+
+```bash
+cd ..
+python3 -m pqc_migration_tool.patcher.policy_audit
+```
+
+The audit checks all 243 assignments of the five three-valued conditions. Exactly the all-true vector is theoretically eligible; the current pipeline cannot supply the other four trusted conditions and therefore cannot mutate source. See `docs/review/d11-patch-safety-policy.md`.
+
 ---
 
 ## 📜 Supported Cryptographic Mappings
@@ -104,6 +114,7 @@ Exports are validated offline against pinned official schemas before being writt
 
 * **ADR-001 (Semantic Abstention):** If the analyzer cannot link a primitive to a supported role, the planner emits an abstention with explicit blocker codes.
 * **D7 rule safety:** The YAML loader rejects duplicate rule IDs, unsupported role names, missing provenance fields, and any D7 rule that enables automatic patching.
+* **D11 mutation safety:** Report-supplied eligibility claims are not trusted. Missing, false, or unknown gate evidence refuses mutation, and missing verification tools fail closed.
 
 ---
 *Developed for advanced cryptographic modernization workflows.*

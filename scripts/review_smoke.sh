@@ -18,6 +18,23 @@ cd "$(dirname "$repo_root")"
 cd "$repo_root"
 bash scripts/run_benchmark.sh
 
+cd "$(dirname "$repo_root")"
+"$python_bin" -m pqc_migration_tool.patcher.policy_audit \
+  --output "$artifact_dir/d11-patch-policy-audit.json"
+"$python_bin" - "$artifact_dir/d11-patch-policy-audit.json" <<'PY'
+import json
+import sys
+
+audit = json.load(open(sys.argv[1], encoding="utf-8"))
+assert audit["evaluated_combinations"] == 243
+assert audit["eligible_count"] == 1
+assert audit["ineligible_count"] == 242
+assert set(audit["eligible_vectors"][0].values()) == {"true"}
+assert audit["current_pipeline_mutation_enabled"] is False
+assert audit["report_supplied_eligibility_is_trusted"] is False
+print("Validated the D11 five-condition fail-closed patch gate across all 243 assignments.")
+PY
+
 cd "$repo_root/backend"
 mvn test 2>&1 | tee "$artifact_dir/backend-maven-test.log"
 

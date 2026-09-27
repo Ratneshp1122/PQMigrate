@@ -33,9 +33,9 @@ If a `CryptoIR` is well-understood (e.g., Confidence is `direct` or `inferred`),
 {
   "target_algorithm": "ML-DSA-65",
   "target_standard": "FIPS 204",
-  "patch_available": true,
-  "requires_manual_intervention": false,
-  "intervention_reason": null,
+  "patch_available": false,
+  "requires_manual_intervention": true,
+  "intervention_reason": "Protocol and deployment compatibility require review.",
   "estimated_effort": "high",
   "rule_id": "RSA-SIGNATURE-001",
   "rule_version": "2026.09.26-d7.1",
@@ -53,7 +53,7 @@ If a `CryptoIR` is well-understood (e.g., Confidence is `direct` or `inferred`),
 }
 ```
 
-All plans remain advisory in D8: `patch_available` is false and the knowledge-base loader rejects rules that attempt to enable it.
+All plans remain advisory through D11: `patch_available` is false and the knowledge-base loader rejects rules that attempt to enable it. Even a crafted true value cannot authorize mutation because the separate D11 gate does not trust eligibility assertions from a report.
 
 ### 2.3 DecisionTrace
 Each plan carries a deterministic trace from the source observation to the decision. The identifier excludes run IDs and timestamps, so equivalent pinned input and rule versions produce the same trace ID.

@@ -36,10 +36,8 @@ class VerificationEngine:
                 return False
                 
         except FileNotFoundError:
-            print("  ⚠️ 'pytest' not found. Cannot verify correctness.")
-            # Default to true if we can't test, or false depending on strictness.
-            # For demonstration, we'll assume manual review needed if no tests.
-            return True 
+            print("  ❌ 'pytest' not found. Verification is inconclusive and fails closed.")
+            return False
         except subprocess.TimeoutExpired:
             print("  ❌ Tests timed out!")
             return False

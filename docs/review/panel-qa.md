@@ -16,6 +16,10 @@ The current Python path links a generated RSA key to selected same-scope consume
 
 No. Role inference supplies advice, but it does not establish provider support, peer interoperability, test adequacy, or operator authorization. The planner therefore keeps `patch_available=false` for the review cases.
 
+## What mathematically prevents an unknown condition from enabling a patch?
+
+The D11 gate uses five independent three-valued conditions: known role, supported construction, interoperable peers, tests, and operator authorization. Eligibility requires all five to be true. The exhaustive test evaluates all 243 assignments; 242 are refused and only the all-true vector is theoretically eligible. Current reports cannot supply four trusted conditions, so no mutation is enabled.
+
 ## Does passing pytest prove migration safety?
 
 No. It proves only the specified checks in that environment. Protocol interoperability, certificate formats, external consumers, deployment configuration, and unsupported paths remain separate conditions.
@@ -26,7 +30,7 @@ The analyzer requires identity-linked use of the tracked key, includes negative 
 
 ## What are the present limitations?
 
-Python role inference covers a deliberately narrow RSA subset. Go detection remains regex-based. D9 exposes false negatives for parameter and alias flows. Independent benchmark adjudication, downstream-platform export integration, isolated patch verification, and interoperability remain future milestones.
+Python role inference covers a deliberately narrow RSA subset. Go detection remains regex-based. D9 exposes false negatives for parameter and alias flows. No transformation is approved. Independent benchmark adjudication, downstream-platform export integration, isolated patch verification, and interoperability remain future milestones.
 
 ## Can other security tools consume the result?
 

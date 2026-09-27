@@ -65,9 +65,9 @@ Show `review-artifacts/latest/d9-benchmark-results.json`: 72 total cases, four s
 
 Show the preserved SARIF 2.1.0 and CycloneDX 1.7 CBOM artifacts. State that both were validated against pinned official schemas, include trace IDs and advisory-only state, and exclude source snippets. Do not claim downstream-platform import testing.
 
-## 7:55–8:00 — Next measured milestones
+## 7:55–8:00 — D11 patch boundary
 
-State that the next milestones are independent benchmark labelling/real-project cases, downstream integration, and isolated migration assurance. Ask the reviewer to confirm the ground-truth labelling rules and the contexts that deserve priority.
+Show `d11-patch-policy-audit.json`: all 243 assignments were checked, 242 are refused, and only the theoretical all-true vector is eligible. State that current reports leave four trusted conditions unknown, no transformation is approved, and D12/D13/D14 must separately establish preview safety, isolated verification, and interoperability.
 
 ## Failure fallback
 

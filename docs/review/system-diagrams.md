@@ -55,11 +55,20 @@ classDiagram
       +int filesScanned
       +int totalFindings
     }
+    class PatchGate {
+      +TriState knownRole
+      +TriState supportedConstruction
+      +TriState interoperablePeers
+      +TriState testsAvailable
+      +TriState operatorAuthorized
+      +boolean eligible
+    }
     ProjectReport "1" --> "0..*" AssuranceRecord
     AssuranceRecord "1" --> "1" CryptoIR
     AssuranceRecord "1" --> "0..1" MigrationPlan
     MigrationPlan "1" --> "1" DecisionTrace
     MigrationPlan "1" --> "1" PriorityAssessment
+    AssuranceRecord ..> PatchGate : assessed independently
 ```
 
 ## Current CLI sequence
@@ -71,7 +80,7 @@ sequenceDiagram
     participant Scanner as Python AST scanner
     participant Resolver as Bounded role analyzer
     participant Planner as Migration planner
-    participant Report as JSON report
+    participant Report as JSON/SARIF/CBOM
     Dev->>CLI: scan owned fixture
     CLI->>Scanner: enumerate and parse source
     Scanner-->>Resolver: findings and source paths
@@ -116,6 +125,6 @@ flowchart LR
     D -->|Authorized report| U
 ```
 
-## Target extension after the review
+## Current export and mutation boundary
 
-SARIF/CBOM export, a labelled benchmark, isolated patch verification, and interoperability tests remain later milestones. They do not appear as completed processes in the current diagrams.
+The D9 labelled synthetic pilot and D10 SARIF/CBOM exporters are implemented and separately bounded by their evidence documents. D11 adds a five-condition fail-closed gate, but no transformation is approved: current reports leave supported construction, interoperability, trusted tests, and operator authorization unknown. Isolated patch verification and interoperability tests remain later milestones and do not appear as completed processes.

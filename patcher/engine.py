@@ -3,6 +3,8 @@ import json
 import shutil
 from pathlib import Path
 
+from pqc_migration_tool.patcher.policy import assess_record
+
 class PatcherEngine:
     def __init__(self, report_path: str):
         self.report_path = report_path
@@ -20,9 +22,23 @@ class PatcherEngine:
         for record in records:
             plan = record.get("plan", {})
             finding = record.get("finding", {})
+
+            # D11: scan reports are evidence, not mutation authority. The
+            # policy assessor deliberately ignores report-supplied eligibility
+            # assertions and currently leaves four required conditions unknown.
+            policy_decision = assess_record(record)
+            if not policy_decision.eligible:
+                skipped_count += 1
+                finding_id = finding.get("id", "unknown")
+                blockers = ", ".join(policy_decision.blocker_codes)
+                print(f"  [POLICY REFUSAL] {finding_id}: {blockers}")
+                continue
             
             # Adhere to ADR-001: Abstain if manual intervention is required
-            if plan.get("requires_manual_intervention", True):
+            if (
+                not plan.get("patch_available", False)
+                or plan.get("requires_manual_intervention", True)
+            ):
                 skipped_count += 1
                 continue
                 
@@ -86,7 +102,7 @@ class PatcherEngine:
         print(f"\n=======================================")
         print(f"🏁 Patching Complete.")
         print(f"   Successfully patched : {patched_count}")
-        print(f"   Abstained (Manual)   : {skipped_count}")
+        print(f"   Refused / abstained  : {skipped_count}")
 
         # Integration with Phase 4: Verification
         if getattr(self, 'verify', False) and patched_count > 0:
