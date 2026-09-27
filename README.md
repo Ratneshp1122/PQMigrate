@@ -6,7 +6,7 @@
 
 **PQMigrate** is a research prototype for AST-aware cryptographic inventory and evidence-linked post-quantum migration planning.
 
-New to the project? Start with [`docs/BEGINNER_GUIDE_AND_ALGORITHMIC_ANALYSIS.md`](docs/BEGINNER_GUIDE_AND_ALGORITHMIC_ANALYSIS.md) for the original-prototype history, current pipeline, worked examples, mathematical model, complexity analysis, commands, outputs, and limitations.
+New to the project? Open [`START_HERE.md`](START_HERE.md), then [`PQMIGRATE_FULL_GUIDE.md`](PQMIGRATE_FULL_GUIDE.md) for the original-prototype history, current pipeline, worked examples, mathematical model, complexity analysis, commands, outputs, and limitations.
 
 The current Python path uses bounded AST dataflow to distinguish selected RSA signing and key-transport cases from unresolved imports. A versioned YAML knowledge base produces advisory plans with blocker codes and standards references. The planner abstains when evidence is missing or conflicting and does not treat role inference as authorization to patch.
 
