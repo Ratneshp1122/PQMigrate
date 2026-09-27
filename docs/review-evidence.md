@@ -30,6 +30,7 @@ This record verifies the repository against `PQMigrate_48h_Review_Packet_SRS_Mod
 | D10 CycloneDX CBOM export | **Verified** | CycloneDX 1.7 output models each finding as a cryptographic asset with call-stack evidence and namespaced decision properties; every document is validated against the pinned official schema before writing. |
 | D11 patch gate | **Verified, fail-closed** | All 243 assignments of five three-valued conditions are evaluated. Exactly the all-true vector is theoretically eligible; current reports leave four conditions unknown and cannot authorize mutation. |
 | Legacy patch/verification quarantine | **Verified** | Crafted report claims cannot reach the write path, no backup is created, and a missing test runner now fails closed. No transformation is approved. |
+| D0–D11 reproduction entry point | **Verified with declared partial** | `scripts/validate_d0_d11.sh` runs the complete local acceptance path and emits a per-day JSON matrix. D4 remains partial because Go semantic resolution is regex-based. |
 | Spring backend | **Verified at unit/build level** | Five Maven tests pass. Scan list/detail/delete operations are owner-scoped. Missing or invalid worker JSON cannot become `COMPLETE`. |
 | Frontend production build | **Verified with warning** | `npm run build` passes. The main JavaScript chunk remains above Vite's 500 kB warning threshold. |
 | Three-fixture end-to-end CLI path | **Verified** | Three files produce signature, key-transport, and unknown roles. Four findings are emitted because the key-transport fixture contains RSA and RSA-padding leads. |
@@ -52,6 +53,8 @@ This record verifies the repository against `PQMigrate_48h_Review_Packet_SRS_Mod
 cd /home/ratneshp0411/pqc_migration_tool
 scripts/review_smoke.sh
 ```
+
+For the complete milestone matrix, current registry audit, and strict partial-scope handling, run `scripts/validate_d0_d11.sh`; use `--strict` to return exit code 2 while D4 remains partial.
 
 The script performs:
 

@@ -9,11 +9,18 @@ Classifies all 62 patterns as:
 
 Also identifies the scan totals from the 3 baseline JSON scans.
 """
+import argparse
 import json
 import os
 import sys
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(repo_root))
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--output", help="Write the full JSON audit to this path")
+parser.add_argument("--commit", default="11dbc71", help="Commit represented by this audit run")
+args = parser.parse_args()
 
 from pqc_migration_tool.scanner.patterns import (
     IMPORT_PATTERNS, CALL_PATTERNS, ATTRIBUTE_PATTERNS, Risk, Family
@@ -96,7 +103,7 @@ for r in results:
         dangerous.append(r)
 
 print("=" * 60)
-print("  D0 Registry Audit — PQMigrate v0.3.0  (baseline commit 11dbc71)")
+print(f"  D0 Registry Audit — PQMigrate v0.3.0  (audit commit {args.commit})")
 print("=" * 60)
 print(f"\nTotal registry entries: {len(results)}")
 print(f"  Python: {by_lang.get('python', 0)}")
@@ -113,7 +120,7 @@ for d in dangerous:
 
 # ── Scan results from JSON logs ────────────────────────────────────────────
 print(f"\n{'─'*60}")
-print("Baseline scan results (reproduced at commit 11dbc71):")
+print("Preserved historical baseline scan results (captured at commit 11dbc71):")
 scan_dir = os.path.join(os.path.dirname(__file__), '..', 'docs', 'scan-logs')
 for fname, label in [
     ('scan-paramiko-baseline.json', 'paramiko/paramiko'),
@@ -161,10 +168,12 @@ for bug_id, sev, desc, fix in issues:
     print(f"           Fix: {fix}\n")
 
 # ── Save full JSON ─────────────────────────────────────────────────────────
-out_path = os.path.join(scan_dir, 'registry-audit-full.json')
+out_path = args.output or os.path.join(scan_dir, 'registry-audit-full.json')
+os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)
 with open(out_path, 'w') as f:
     json.dump({
         'baseline_commit': '11dbc71',
+        'audit_commit': args.commit,
         'total_entries': len(results),
         'by_classification': by_class,
         'by_language': by_lang,

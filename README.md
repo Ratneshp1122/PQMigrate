@@ -97,6 +97,14 @@ python3 -m pqc_migration_tool.patcher.policy_audit
 
 The audit checks all 243 assignments of the five three-valued conditions. Exactly the all-true vector is theoretically eligible; the current pipeline cannot supply the other four trusted conditions and therefore cannot mutate source. See `docs/review/d11-patch-safety-policy.md`.
 
+### 8. Reproduce D0–D11 evidence
+
+```bash
+scripts/validate_d0_d11.sh
+```
+
+This runs the complete test/build/export/audit path and writes a machine-readable milestone matrix under `review-artifacts/latest/`. The accurate current outcome is `PASS_WITH_DECLARED_PARTIAL`: D4 still has Go regex detection, not the planned Go AST/dataflow resolver. See `docs/D0-D11_REPRODUCIBILITY.md` before preparing review media.
+
 ---
 
 ## 📜 Supported Cryptographic Mappings
