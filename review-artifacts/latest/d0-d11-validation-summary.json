@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-27T12:58:40.253863+00:00",
-  "source_commit": "ce9e27cc311b56ddb45a3de4147bd2439a79ab4f",
+  "generated_at": "2026-09-27T13:03:10.561660+00:00",
+  "source_commit": "a809d3b6fe83148ac8616881be534413245b88e3",
   "overall_status": "pass_with_declared_partial",
   "pass_count": 11,
   "partial_count": 1,
