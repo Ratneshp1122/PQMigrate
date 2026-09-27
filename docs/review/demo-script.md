@@ -16,7 +16,7 @@ Explain that an RSA name does not identify its purpose. The migration family dep
 
 ## 0:50–1:35 — Verified scope
 
-Show `docs/review-evidence.md`. State the exact Python and Maven test counts. Describe Go support as regex-based. Do not claim benchmark accuracy, safe general patching, or completed interoperability.
+Show `docs/review-evidence.md`. State the exact Python and Maven test counts. Describe Go support as regex-based. Describe D9 only as a synthetic Python RSA pilot; do not claim general benchmark accuracy, safe general patching, or completed interoperability.
 
 ## 1:35–2:35 — SRS boundary
 
@@ -57,9 +57,13 @@ python3 -m pytest -q pqc_migration_tool/tests/test_context_inference.py
 
 Mention the unrelated-key and conflicting-role tests. These prevent proximity-only inference.
 
-## 7:25–8:00 — Next measured milestones
+## 7:25–7:45 — D9 pilot measurement
 
-State that the next milestones are decision-trace presentation, the pilot benchmark, standard exports, and isolated migration assurance. Ask the reviewer to confirm the ground-truth labelling rules and the contexts that deserve priority.
+Show `review-artifacts/latest/d9-benchmark-results.json`: 72 total cases, four separately counted parse failures, and 12 retained false negatives for parameter/alias flows. State the measured values only with the phrase “on this single-author synthetic Python RSA pilot.”
+
+## 7:45–8:00 — Next measured milestones
+
+State that the next milestones are independent benchmark labelling/real-project cases, standard exports, and isolated migration assurance. Ask the reviewer to confirm the ground-truth labelling rules and the contexts that deserve priority.
 
 ## Failure fallback
 

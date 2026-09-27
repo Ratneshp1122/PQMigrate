@@ -16,6 +16,7 @@ The current Python path uses bounded AST dataflow to distinguish selected RSA si
 2. **Bounded role inference (`/resolver`)**: Links selected same-scope RSA key uses and explicitly abstains on unrelated, absent, or conflicting evidence.
 3. **Versioned rule planning (`/knowledge`)**: Loads validated YAML rules with rule IDs, blocker codes, standards references, and advisory-only decisions.
 4. **Assurance interface (`/backend` and `/frontend`)**: Stores and displays scan evidence. The CLI remains the primary verified review path.
+5. **Pilot evaluation (`/benchmarks`)**: Runs a versioned 72-case synthetic Python RSA benchmark with held-out splits, raw predictions, metrics, and error cases.
 
 ---
 
@@ -26,7 +27,7 @@ graph LR
     A[Source Code] --> B[AST Scanner]
     B --> C[Bounded Role Resolver]
     C --> D[YAML Rule Planner]
-    D --> E[JSON Schema 2.1]
+    D --> E[JSON Schema 2.2]
     E --> F[CLI or React Dashboard]
 ```
 
@@ -61,6 +62,14 @@ Run the Python tests, Maven tests, frontend build, and controlled three-fixture 
 ```bash
 scripts/review_smoke.sh
 ```
+
+### 5. Run the D9 pilot benchmark
+
+```bash
+scripts/run_benchmark.sh
+```
+
+The generated metrics apply only to the committed single-author synthetic Python RSA pilot. They are not product-wide or publication-quality accuracy claims.
 
 ---
 

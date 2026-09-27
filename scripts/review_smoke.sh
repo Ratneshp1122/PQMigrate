@@ -15,6 +15,9 @@ cd "$(dirname "$repo_root")"
 "$python_bin" -m pytest -q pqc_migration_tool/tests 2>&1 | tee "$artifact_dir/python-pytest.log"
 "$python_bin" pqc_migration_tool/tests/test_scanner.py 2>&1 | tee "$artifact_dir/day5-scanner-checks.log"
 
+cd "$repo_root"
+bash scripts/run_benchmark.sh
+
 cd "$repo_root/backend"
 mvn test 2>&1 | tee "$artifact_dir/backend-maven-test.log"
 

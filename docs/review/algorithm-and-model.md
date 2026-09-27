@@ -83,4 +83,4 @@ Let `N` be parsed AST nodes, `F` emitted findings, `D` bounded dataflow links, `
 | JWT call with an unrelated key | `UNKNOWN` | abstain |
 | One RSA key used for conflicting roles | `UNKNOWN` with conflict trace | abstain |
 
-These cases demonstrate bounded correctness, not general accuracy. Precision and recall require the later labelled benchmark.
+These fixtures demonstrate bounded behavior, not general accuracy. D9 adds a 72-case single-author synthetic pilot with 68 evaluated cases and four separately counted parse failures. Its raw predictions and metrics are reproducible, but publication-quality accuracy still requires independently labelled real-project cases.

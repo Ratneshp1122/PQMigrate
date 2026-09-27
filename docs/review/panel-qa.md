@@ -22,11 +22,15 @@ No. It proves only the specified checks in that environment. Protocol interopera
 
 ## How do you control false positives?
 
-The analyzer requires identity-linked use of the tracked key, includes negative fixtures, abstains on conflicting roles, and keeps imports separate from confirmed operations. The later benchmark will measure precision, recall, role accuracy, and answer coverage.
+The analyzer requires identity-linked use of the tracked key, includes negative fixtures, abstains on conflicting roles, and keeps imports separate from confirmed operations. The D9 synthetic pilot reports operation precision/recall/F1, role accuracy among answered cases, answer coverage, raw predictions, and errors. Independent labels and real-project cases are still required.
 
 ## What are the present limitations?
 
-Python role inference covers a deliberately narrow RSA subset. Go detection remains regex-based. The benchmark, SARIF/CBOM export, versioned YAML rules, isolated patch verification, and interoperability lab remain future milestones.
+Python role inference covers a deliberately narrow RSA subset. Go detection remains regex-based. D9 exposes false negatives for parameter and alias flows. Independent benchmark adjudication, SARIF/CBOM export, isolated patch verification, and interoperability remain future milestones.
+
+## What do the D9 numbers prove?
+
+Only behavior on 68 evaluated cases in a 72-case, single-author synthetic Python RSA pilot; four parse failures are reported separately. They do not establish repository-level or product-wide accuracy. The useful D9 result is reproducible raw predictions and visible coverage gaps, not a publication claim.
 
 ## Why keep the Spring and React applications?
 

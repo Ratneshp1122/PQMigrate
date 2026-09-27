@@ -14,6 +14,7 @@
 - [ ] Confirm the frontend production build passes.
 - [ ] Confirm the three-fixture report contains signature, key-transport, and unknown results.
 - [ ] Confirm every fixture plan has `patch_available=false`.
+- [ ] Confirm the D9 result has 72 raw predictions, held-out split metrics, and visible error cases.
 
 ## Review documents
 
@@ -32,7 +33,8 @@
 
 ## Claim control
 
-- [ ] Do not claim measured precision or recall before the benchmark exists.
+- [ ] Qualify every D9 metric as a single-author synthetic Python RSA pilot result.
+- [ ] Do not claim independent, repository-level, Go, or product-wide benchmark accuracy.
 - [ ] Do not call an import a confirmed operation.
 - [ ] Do not describe role inference as patch authorization.
 - [ ] Do not claim Go AST resolution.
