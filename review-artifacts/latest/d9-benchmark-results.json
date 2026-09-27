@@ -1,0 +1,2145 @@
+{
+  "benchmark_version": "pqmigratebench-0.1.0",
+  "dataset_sha256": "293fee315c4fbcb95f0d071615ce54a7ac6c9b8b89783a832832c15e3697603b",
+  "dataset_case_count": 72,
+  "selected_split": "all",
+  "evaluated_case_count": 72,
+  "generated_at": "2026-09-27T11:28:36.899291+00:00",
+  "evaluator_commit": "cf42085fe2c6cb977648e78603c6cc8037a4eb82",
+  "label_status": "single_author_synthetic_pilot",
+  "scope": "Python bounded RSA role inference only; not product-wide accuracy.",
+  "split_counts": {
+    "dev": 14,
+    "test": 14,
+    "train": 44
+  },
+  "category_counts": {
+    "asymmetric_encryption": 8,
+    "key_transport": 12,
+    "negative_control": 16,
+    "parse_failure": 4,
+    "signature_direct": 12,
+    "signature_jwt": 8,
+    "unsupported_valid_operation": 12
+  },
+  "parse_failure_count": 4,
+  "metrics": {
+    "case_count": 68,
+    "operation_detection": {
+      "tp": 40,
+      "fp": 0,
+      "fn": 12,
+      "tn": 16,
+      "precision": 1.0,
+      "recall": 0.769231,
+      "f1": 0.869565
+    },
+    "role_resolution": {
+      "gold_operations": 52,
+      "answered": 40,
+      "correct_among_answered": 40,
+      "answer_coverage": 0.769231,
+      "accuracy_among_answered": 1.0,
+      "end_to_end_role_accuracy": 0.769231
+    },
+    "negative_control_specificity": 1.0
+  },
+  "metrics_by_split": {
+    "dev": {
+      "case_count": 13,
+      "operation_detection": {
+        "tp": 8,
+        "fp": 0,
+        "fn": 2,
+        "tn": 3,
+        "precision": 1.0,
+        "recall": 0.8,
+        "f1": 0.888889
+      },
+      "role_resolution": {
+        "gold_operations": 10,
+        "answered": 8,
+        "correct_among_answered": 8,
+        "answer_coverage": 0.8,
+        "accuracy_among_answered": 1.0,
+        "end_to_end_role_accuracy": 0.8
+      },
+      "negative_control_specificity": 1.0
+    },
+    "test": {
+      "case_count": 13,
+      "operation_detection": {
+        "tp": 8,
+        "fp": 0,
+        "fn": 2,
+        "tn": 3,
+        "precision": 1.0,
+        "recall": 0.8,
+        "f1": 0.888889
+      },
+      "role_resolution": {
+        "gold_operations": 10,
+        "answered": 8,
+        "correct_among_answered": 8,
+        "answer_coverage": 0.8,
+        "accuracy_among_answered": 1.0,
+        "end_to_end_role_accuracy": 0.8
+      },
+      "negative_control_specificity": 1.0
+    },
+    "train": {
+      "case_count": 42,
+      "operation_detection": {
+        "tp": 24,
+        "fp": 0,
+        "fn": 8,
+        "tn": 10,
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.857143
+      },
+      "role_resolution": {
+        "gold_operations": 32,
+        "answered": 24,
+        "correct_among_answered": 24,
+        "answer_coverage": 0.75,
+        "accuracy_among_answered": 1.0,
+        "end_to_end_role_accuracy": 0.75
+      },
+      "negative_control_specificity": 1.0
+    }
+  },
+  "error_count": 12,
+  "errors": [
+    {
+      "id": "unsupported-valid-001",
+      "split": "dev",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-002",
+      "split": "test",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "verify",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-003",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-004",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "decrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-005",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-006",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-007",
+      "split": "dev",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-008",
+      "split": "test",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "verify",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-009",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-010",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "decrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-011",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-012",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    }
+  ],
+  "predictions": [
+    {
+      "id": "sig-direct-001",
+      "split": "dev",
+      "category": "signature_direct",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 5: RSA key 'key' is used by .sign().",
+        "evidence_line": 5
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-direct-002",
+      "split": "test",
+      "category": "signature_direct",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "verify",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "verify",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 5: RSA key 'key' is used by .verify().",
+        "evidence_line": 5
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-direct-003",
+      "split": "train",
+      "category": "signature_direct",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 5: RSA key 'key' is used by .sign().",
+        "evidence_line": 5
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-direct-004",
+      "split": "train",
+      "category": "signature_direct",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 5: RSA key 'key' is used by .sign().",
+        "evidence_line": 5
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-direct-005",
+      "split": "train",
+      "category": "signature_direct",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "verify",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "verify",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 5: RSA key 'key' is used by .verify().",
+        "evidence_line": 5
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-direct-006",
+      "split": "train",
+      "category": "signature_direct",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 5: RSA key 'key' is used by .sign().",
+        "evidence_line": 5
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-direct-007",
+      "split": "dev",
+      "category": "signature_direct",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 5: RSA key 'key' is used by .sign().",
+        "evidence_line": 5
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-direct-008",
+      "split": "test",
+      "category": "signature_direct",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "verify",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "verify",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 5: RSA key 'key' is used by .verify().",
+        "evidence_line": 5
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-direct-009",
+      "split": "train",
+      "category": "signature_direct",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 5: RSA key 'key' is used by .sign().",
+        "evidence_line": 5
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-direct-010",
+      "split": "train",
+      "category": "signature_direct",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 5: RSA key 'key' is used by .sign().",
+        "evidence_line": 5
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-direct-011",
+      "split": "train",
+      "category": "signature_direct",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "verify",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "verify",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 5: RSA key 'key' is used by .verify().",
+        "evidence_line": 5
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-direct-012",
+      "split": "train",
+      "category": "signature_direct",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 5: RSA key 'key' is used by .sign().",
+        "evidence_line": 5
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-jwt-001",
+      "split": "dev",
+      "category": "signature_jwt",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "confidence": "direct",
+        "evidence": "Line 6: jwt.encode consumes tracked RSA key 'key' with algorithm 'RS256'.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-jwt-002",
+      "split": "test",
+      "category": "signature_jwt",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "confidence": "direct",
+        "evidence": "Line 6: jwt.encode consumes tracked RSA key 'key' with algorithm 'RS384'.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-jwt-003",
+      "split": "train",
+      "category": "signature_jwt",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "confidence": "direct",
+        "evidence": "Line 6: jwt.encode consumes tracked RSA key 'key' with algorithm 'RS512'.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-jwt-004",
+      "split": "train",
+      "category": "signature_jwt",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "confidence": "direct",
+        "evidence": "Line 6: jwt.encode consumes tracked RSA key 'key' with algorithm 'rs256'.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-jwt-005",
+      "split": "train",
+      "category": "signature_jwt",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "confidence": "direct",
+        "evidence": "Line 6: jwt.encode consumes tracked RSA key 'key' with algorithm 'RS256'.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-jwt-006",
+      "split": "train",
+      "category": "signature_jwt",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "confidence": "direct",
+        "evidence": "Line 6: jwt.encode consumes tracked RSA key 'key' with algorithm 'RS384'.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-jwt-007",
+      "split": "dev",
+      "category": "signature_jwt",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "confidence": "direct",
+        "evidence": "Line 6: jwt.encode consumes tracked RSA key 'key' with algorithm 'RS512'.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "sig-jwt-008",
+      "split": "test",
+      "category": "signature_jwt",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "signature",
+        "operation": "sign",
+        "protocol_context": "jwt",
+        "confidence": "direct",
+        "evidence": "Line 6: jwt.encode consumes tracked RSA key 'key' with algorithm 'rs256'.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "transport-001",
+      "split": "dev",
+      "category": "key_transport",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "key_transport"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "key_transport",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 7: RSA key 'recipient' encrypts tracked session secret 'session_secret' generated on line 6.",
+        "evidence_line": 7
+      },
+      "mismatches": []
+    },
+    {
+      "id": "transport-002",
+      "split": "test",
+      "category": "key_transport",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "key_transport"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "key_transport",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 7: RSA key 'recipient' encrypts tracked session secret 'session_secret' generated on line 6.",
+        "evidence_line": 7
+      },
+      "mismatches": []
+    },
+    {
+      "id": "transport-003",
+      "split": "train",
+      "category": "key_transport",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "key_transport"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "key_transport",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 7: RSA key 'recipient' encrypts tracked session secret 'session_secret' generated on line 6.",
+        "evidence_line": 7
+      },
+      "mismatches": []
+    },
+    {
+      "id": "transport-004",
+      "split": "train",
+      "category": "key_transport",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "key_transport"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "key_transport",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 7: RSA key 'recipient' encrypts tracked session secret 'session_secret' generated on line 6.",
+        "evidence_line": 7
+      },
+      "mismatches": []
+    },
+    {
+      "id": "transport-005",
+      "split": "train",
+      "category": "key_transport",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "key_transport"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "key_transport",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 7: RSA key 'recipient' encrypts tracked session secret 'session_secret' generated on line 6.",
+        "evidence_line": 7
+      },
+      "mismatches": []
+    },
+    {
+      "id": "transport-006",
+      "split": "train",
+      "category": "key_transport",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "key_transport"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "key_transport",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 7: RSA key 'recipient' encrypts tracked session secret 'session_secret' generated on line 6.",
+        "evidence_line": 7
+      },
+      "mismatches": []
+    },
+    {
+      "id": "transport-007",
+      "split": "dev",
+      "category": "key_transport",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "key_transport"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "key_transport",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 7: RSA key 'recipient' encrypts tracked session secret 'session_secret' generated on line 6.",
+        "evidence_line": 7
+      },
+      "mismatches": []
+    },
+    {
+      "id": "transport-008",
+      "split": "test",
+      "category": "key_transport",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "key_transport"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "key_transport",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 7: RSA key 'recipient' encrypts tracked session secret 'session_secret' generated on line 6.",
+        "evidence_line": 7
+      },
+      "mismatches": []
+    },
+    {
+      "id": "transport-009",
+      "split": "train",
+      "category": "key_transport",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "key_transport"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "key_transport",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 7: RSA key 'recipient' encrypts tracked session secret 'session_secret' generated on line 6.",
+        "evidence_line": 7
+      },
+      "mismatches": []
+    },
+    {
+      "id": "transport-010",
+      "split": "train",
+      "category": "key_transport",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "key_transport"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "key_transport",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 7: RSA key 'recipient' encrypts tracked session secret 'session_secret' generated on line 6.",
+        "evidence_line": 7
+      },
+      "mismatches": []
+    },
+    {
+      "id": "transport-011",
+      "split": "train",
+      "category": "key_transport",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "key_transport"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "key_transport",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 7: RSA key 'recipient' encrypts tracked session secret 'session_secret' generated on line 6.",
+        "evidence_line": 7
+      },
+      "mismatches": []
+    },
+    {
+      "id": "transport-012",
+      "split": "train",
+      "category": "key_transport",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "key_transport"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "key_transport",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "direct",
+        "evidence": "Line 7: RSA key 'recipient' encrypts tracked session secret 'session_secret' generated on line 6.",
+        "evidence_line": 7
+      },
+      "mismatches": []
+    },
+    {
+      "id": "encryption-001",
+      "split": "dev",
+      "category": "asymmetric_encryption",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "inferred",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "encryption",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "inferred",
+        "evidence": "Line 6: RSA key 'key' encrypts data whose session-key purpose is unresolved.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "encryption-002",
+      "split": "test",
+      "category": "asymmetric_encryption",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "inferred",
+        "is_operation": true,
+        "operation": "decrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "encryption",
+        "operation": "decrypt",
+        "protocol_context": "unknown",
+        "confidence": "inferred",
+        "evidence": "Line 6: RSA key 'key' decrypts data; transport purpose is unresolved.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "encryption-003",
+      "split": "train",
+      "category": "asymmetric_encryption",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "inferred",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "encryption",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "inferred",
+        "evidence": "Line 6: RSA key 'key' encrypts data whose session-key purpose is unresolved.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "encryption-004",
+      "split": "train",
+      "category": "asymmetric_encryption",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "inferred",
+        "is_operation": true,
+        "operation": "decrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "encryption",
+        "operation": "decrypt",
+        "protocol_context": "unknown",
+        "confidence": "inferred",
+        "evidence": "Line 6: RSA key 'key' decrypts data; transport purpose is unresolved.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "encryption-005",
+      "split": "train",
+      "category": "asymmetric_encryption",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "inferred",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "encryption",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "inferred",
+        "evidence": "Line 6: RSA key 'key' encrypts data whose session-key purpose is unresolved.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "encryption-006",
+      "split": "train",
+      "category": "asymmetric_encryption",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "inferred",
+        "is_operation": true,
+        "operation": "decrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "encryption",
+        "operation": "decrypt",
+        "protocol_context": "unknown",
+        "confidence": "inferred",
+        "evidence": "Line 6: RSA key 'key' decrypts data; transport purpose is unresolved.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "encryption-007",
+      "split": "dev",
+      "category": "asymmetric_encryption",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "inferred",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "encryption",
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "confidence": "inferred",
+        "evidence": "Line 6: RSA key 'key' encrypts data whose session-key purpose is unresolved.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "encryption-008",
+      "split": "test",
+      "category": "asymmetric_encryption",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "inferred",
+        "is_operation": true,
+        "operation": "decrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": true,
+        "role": "encryption",
+        "operation": "decrypt",
+        "protocol_context": "unknown",
+        "confidence": "inferred",
+        "evidence": "Line 6: RSA key 'key' decrypts data; transport purpose is unresolved.",
+        "evidence_line": 6
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-001",
+      "split": "dev",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-002",
+      "split": "test",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-003",
+      "split": "train",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-004",
+      "split": "train",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-005",
+      "split": "train",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-006",
+      "split": "train",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-007",
+      "split": "dev",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "Conflicting RSA roles observed: Line 6: jwt.encode consumes tracked RSA key 'key' with algorithm 'RS256'.; Line 8: RSA key 'key' encrypts tracked session secret 'secret' generated on line 7.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-008",
+      "split": "test",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-009",
+      "split": "train",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-010",
+      "split": "train",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-011",
+      "split": "train",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-012",
+      "split": "train",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-013",
+      "split": "dev",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-014",
+      "split": "test",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-015",
+      "split": "train",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "Conflicting RSA roles observed: Line 6: jwt.encode consumes tracked RSA key 'key' with algorithm 'RS256'.; Line 8: RSA key 'key' encrypts tracked session secret 'secret' generated on line 7.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "negative-016",
+      "split": "train",
+      "category": "negative_control",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "parse-failure-001",
+      "split": "dev",
+      "category": "parse_failure",
+      "accounting": "parse_failure",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "AST parsing failed: invalid syntax at line 1.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "parse-failure-002",
+      "split": "test",
+      "category": "parse_failure",
+      "accounting": "parse_failure",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "AST parsing failed: '(' was never closed at line 2.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "parse-failure-003",
+      "split": "train",
+      "category": "parse_failure",
+      "accounting": "parse_failure",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "AST parsing failed: invalid syntax at line 1.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "parse-failure-004",
+      "split": "train",
+      "category": "parse_failure",
+      "accounting": "parse_failure",
+      "gold": {
+        "confidence": "ambiguous",
+        "is_operation": false,
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "role": "unknown"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "AST parsing failed: '[' was never closed at line 2.",
+        "evidence_line": null
+      },
+      "mismatches": []
+    },
+    {
+      "id": "unsupported-valid-001",
+      "split": "dev",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-002",
+      "split": "test",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "verify",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-003",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-004",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "decrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-005",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-006",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-007",
+      "split": "dev",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-008",
+      "split": "test",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "verify",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-009",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-010",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "decrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-011",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "sign",
+        "protocol_context": "unknown",
+        "role": "signature"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    },
+    {
+      "id": "unsupported-valid-012",
+      "split": "train",
+      "category": "unsupported_valid_operation",
+      "accounting": "evaluated",
+      "gold": {
+        "confidence": "direct",
+        "is_operation": true,
+        "operation": "encrypt",
+        "protocol_context": "unknown",
+        "role": "encryption"
+      },
+      "predicted": {
+        "is_operation": false,
+        "role": "unknown",
+        "operation": "unknown",
+        "protocol_context": "unknown",
+        "confidence": "ambiguous",
+        "evidence": "No linked RSA operation was found.",
+        "evidence_line": null
+      },
+      "mismatches": [
+        "operation_presence",
+        "role",
+        "operation"
+      ]
+    }
+  ]
+}
