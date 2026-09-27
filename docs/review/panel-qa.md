@@ -26,7 +26,11 @@ The analyzer requires identity-linked use of the tracked key, includes negative 
 
 ## What are the present limitations?
 
-Python role inference covers a deliberately narrow RSA subset. Go detection remains regex-based. D9 exposes false negatives for parameter and alias flows. Independent benchmark adjudication, SARIF/CBOM export, isolated patch verification, and interoperability remain future milestones.
+Python role inference covers a deliberately narrow RSA subset. Go detection remains regex-based. D9 exposes false negatives for parameter and alias flows. Independent benchmark adjudication, downstream-platform export integration, isolated patch verification, and interoperability remain future milestones.
+
+## Can other security tools consume the result?
+
+PQMigrate emits SARIF 2.1.0 for code-scanning workflows and CycloneDX 1.7 CBOM for cryptographic inventory. Each document is validated against a pinned official schema before writing. D10 proves local schema conformance and traceable field mapping, not successful import into every downstream product.
 
 ## What do the D9 numbers prove?
 

@@ -3,7 +3,7 @@ PQC Migration Tool — CLI
 ==========================
 Usage:
   python3 cli.py scan <path>                        # scan local directory/file
-  python3 cli.py scan <path> --format json|md       # JSON or Markdown output
+  python3 cli.py scan <path> --format json|md|sarif|cbom
   python3 cli.py scan <path> --output out.md        # save report to file
   python3 cli.py scan <path> --show-safe --verbose
 
@@ -14,10 +14,12 @@ Usage:
   python3 cli.py repo paramiko/paramiko --branch main --keep
   python3 cli.py repo https://gitlab.com/foo/bar    # GitLab / self-hosted
 
+  python3 cli.py export report.json --format sarif|cbom
   python3 cli.py migration <primitive>              # show migration code example
   python3 cli.py list-patterns                      # list all detected patterns
 """
 
+import json
 import os
 import re
 import shutil
@@ -25,6 +27,7 @@ import subprocess
 import sys
 import tempfile
 import time
+from pathlib import Path
 
 # ── Path setup (allow running as python3 cli.py without installing) ──────────
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/..")
@@ -35,7 +38,8 @@ from pqc_migration_tool.scanner.go_scanner import (
 )
 from pqc_migration_tool.risk.scorer import score_system
 from pqc_migration_tool.report.generator import (
-    report_console, report_json, report_markdown
+    export_project_report, report_cbom, report_console, report_json,
+    report_markdown, report_sarif
 )
 from pqc_migration_tool.mapper.crypto_map import MIGRATION_MAP
 from pqc_migration_tool.scanner.patterns import IMPORT_PATTERNS, Risk
@@ -58,7 +62,7 @@ BANNER  = f"""
 
 def cmd_scan(args: list[str]):
     if not args:
-        print("Usage: python3 cli.py scan <path> [--format console|json|md] "
+        print("Usage: python3 cli.py scan <path> [--format console|json|md|sarif|cbom] "
               "[--output file] [--show-safe] [--verbose]")
         sys.exit(1)
 
@@ -87,7 +91,7 @@ def cmd_repo(args: list[str]):
     if not args:
         print("Usage: python3 cli.py repo <owner/repo | git-url> [options]")
         print("  --branch <name>   Clone a specific branch (default: default branch)")
-        print("  --format  json|md|console")
+        print("  --format  json|md|sarif|cbom|console")
         print("  --output  <file>  Save report to file")
         print("  --keep            Don't delete the cloned repo after scanning")
         print("  --show-safe       Include PQC-safe findings in output")
@@ -220,6 +224,14 @@ def _run_scan(path: str, fmt: str, output: str | None,
         out = report_json(summary, output_path=output)
         if not output:
             print(out)
+    elif fmt == "sarif":
+        out = report_sarif(summary, output_path=output)
+        if not output:
+            print(out)
+    elif fmt == "cbom":
+        out = report_cbom(summary, output_path=output)
+        if not output:
+            print(out)
     elif fmt in ("md", "markdown"):
         out = report_markdown(summary, output_path=output)
         if not output:
@@ -312,6 +324,36 @@ def cmd_list_rules(args: list[str]):
     print()
 
 
+def cmd_export(args: list[str]):
+    """Convert a canonical ProjectReport JSON file to SARIF or CycloneDX CBOM."""
+    if not args:
+        print("Usage: python3 cli.py export <report.json> --format sarif|cbom [--output file]")
+        sys.exit(1)
+
+    input_path = Path(args[0])
+    export_format = _get_flag(args, "--format", None)
+    output = _get_flag(args, "--output", None)
+    if export_format not in {"sarif", "cbom"}:
+        print("Error: --format must be sarif or cbom")
+        sys.exit(1)
+    if not input_path.is_file():
+        print(f"Error: report not found: {input_path}")
+        sys.exit(1)
+
+    try:
+        report = json.loads(input_path.read_text(encoding="utf-8"))
+        out = export_project_report(report, export_format, output_path=output)
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        print(f"Export failed: {exc}")
+        sys.exit(1)
+
+    if output:
+        label = "SARIF 2.1.0" if export_format == "sarif" else "CycloneDX 1.7 CBOM"
+        print(f"  {label} report saved → {output}")
+    else:
+        print(out)
+
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # Helpers
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -372,6 +414,7 @@ def main():
         print("Commands:")
         print("  scan   <path>              Scan a local file or directory")
         print("  repo   <owner/repo|url>    Clone & scan any git repository")
+        print("  export <report.json>       Convert JSON to SARIF 2.1.0 or CycloneDX 1.7 CBOM")
         print("  migration <primitive>      Show migration code example")
         print("  list-patterns             List all detectable patterns")
         print("  list-rules [yaml-path]    Validate and list D7 rules")
@@ -381,6 +424,7 @@ def main():
         print("  python3 cli.py repo paramiko/paramiko")
         print("  python3 cli.py repo pyca/cryptography --format md --output report.md")
         print("  python3 cli.py repo https://github.com/ansible/ansible")
+        print("  python3 cli.py export report.json --format sarif --output report.sarif.json")
         print("  python3 cli.py repo django/django --branch stable/4.2.x --keep")
         print("  python3 cli.py migration X25519")
         print("  python3 cli.py list-patterns")
@@ -394,10 +438,10 @@ def main():
         if not args:
             print("Usage: python3 cli.py patch <report_v2.json> [--verify]")
             sys.exit(1)
-        
+
         report_file = args[0]
         do_verify = "--verify" in args
-        
+
         from pqc_migration_tool.patcher.engine import PatcherEngine
         engine = PatcherEngine(report_file)
         engine.verify = do_verify
@@ -407,6 +451,7 @@ def main():
         "scan":          cmd_scan,
         "repo":          cmd_repo,
         "patch":         cmd_patch,
+        "export":        cmd_export,
         "migration":     cmd_migration,
         "list-patterns": cmd_list_patterns,
         "list-rules":    cmd_list_rules,

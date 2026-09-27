@@ -57,7 +57,38 @@ assert any(record["plan"]["decision_trace"]["outcome"] == "abstain" for record i
 print("Validated role coverage, D8 decision traces, priority axes, and advisory-only plans.")
 PY
 
-git diff --check
+"$python_bin" cli.py export "$artifact_dir/three-fixture-report.json" \
+  --format sarif \
+  --output "$artifact_dir/three-fixture.sarif.json"
+"$python_bin" cli.py export "$artifact_dir/three-fixture-report.json" \
+  --format cbom \
+  --output "$artifact_dir/three-fixture.cdx.json"
+
+"$python_bin" - "$artifact_dir/three-fixture.sarif.json" "$artifact_dir/three-fixture.cdx.json" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path.cwd().parent))
+
+from pqc_migration_tool.exporters import validate_export
+
+sarif = json.load(open(sys.argv[1], encoding="utf-8"))
+cbom = json.load(open(sys.argv[2], encoding="utf-8"))
+validate_export(sarif, "sarif")
+validate_export(cbom, "cbom")
+assert sarif["version"] == "2.1.0"
+assert len(sarif["runs"][0]["results"]) == 4
+assert all(result["properties"]["patchAvailable"] is False for result in sarif["runs"][0]["results"])
+assert cbom["specVersion"] == "1.7"
+assert len(cbom["components"]) == 4
+assert all(component["type"] == "cryptographic-asset" for component in cbom["components"])
+assert cbom["compositions"][0]["aggregate"] == "incomplete"
+print("Validated SARIF 2.1.0 and CycloneDX 1.7 CBOM review artifacts.")
+PY
+
+# The two long-lived Python entry points retain the repository's CRLF convention.
+git -c core.whitespace=cr-at-eol diff --check
 {
   git rev-parse HEAD
   git status --short --branch

@@ -174,7 +174,8 @@ def _print_recommendations(summary: SystemSummary):
 
 # ── JSON reporter ─────────────────────────────────────────────────────────────
 
-def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
+def build_project_report(summary: SystemSummary):
+    """Build the canonical ProjectReport shared by JSON, SARIF, and CBOM."""
     import hashlib
     from datetime import datetime, timezone
     import os
@@ -190,11 +191,11 @@ def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
         ProtocolContext,
         SecurityStatus,
     )
-    
+
     planner = MigrationPlanner()
     source_commit = _source_commit(summary.root)
     records = []
-    
+
     for fs in summary.file_summaries:
         for f in fs.findings:
             is_import = "import" in f.match_type.lower()
@@ -240,7 +241,7 @@ def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
                 elif "aes" in name_lower:
                     role = CryptoRole.ENCRYPTION
                     op = CryptoOperation.ENCRYPT
-                    
+
             status = SecurityStatus.QUANTUM_VULNERABLE
             if f.pattern.risk.value == "SAFE":
                 status = SecurityStatus.STANDARDIZED_PQC
@@ -248,7 +249,7 @@ def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
                 status = SecurityStatus.QUANTUM_SECURITY_REDUCED
             elif f.pattern.risk.value == "MEDIUM":
                 status = SecurityStatus.DEPRECATED_CLASSICALLY
-                
+
             finding_key = f"{f.filepath}:{f.line}:{f.pattern.name}:{role.value}:{op.value}"
             finding_id = hashlib.sha256(finding_key.encode("utf-8")).hexdigest()[:12]
             ir = CryptoIR(
@@ -269,7 +270,7 @@ def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
                 context_evidence=context_evidence,
             )
             records.append(planner.generate_plan(ir, source_commit=source_commit))
-            
+
     report = ProjectReport(
         project_name=os.path.basename(os.path.abspath(summary.root)),
         scan_timestamp=datetime.now(timezone.utc).isoformat(),
@@ -279,11 +280,60 @@ def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
         rules_version=planner.rules_version,
         source_commit=source_commit,
     )
-    
+
+    return report
+
+
+def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
+    report = build_project_report(summary)
     out = report.to_json()
     if output_path:
-        Path(output_path).write_text(out)
+        Path(output_path).write_text(out, encoding="utf-8")
         print(f"  JSON report (Schema v2.2) saved → {output_path}")
+    return out
+
+
+def _external_report(summary: SystemSummary, export_format: str, output_path: str | None) -> str:
+    from pqc_migration_tool.exporters import build_cbom, build_sarif, validate_export
+
+    report = build_project_report(summary).to_dict()
+    document = build_sarif(report) if export_format == "sarif" else build_cbom(report)
+    validate_export(document, export_format)
+    out = json.dumps(document, indent=2)
+    if output_path:
+        Path(output_path).write_text(out, encoding="utf-8")
+        label = "SARIF 2.1.0" if export_format == "sarif" else "CycloneDX 1.7 CBOM"
+        print(f"  {label} report saved → {output_path}")
+    return out
+
+
+def report_sarif(summary: SystemSummary, output_path: str | None = None) -> str:
+    return _external_report(summary, "sarif", output_path)
+
+
+def report_cbom(summary: SystemSummary, output_path: str | None = None) -> str:
+    return _external_report(summary, "cbom", output_path)
+
+
+def export_project_report(
+    report: dict,
+    export_format: str,
+    output_path: str | None = None,
+) -> str:
+    """Convert an existing canonical JSON report to a validated external format."""
+    from pqc_migration_tool.exporters import build_cbom, build_sarif, validate_export
+
+    normalized = export_format.lower()
+    if normalized == "sarif":
+        document = build_sarif(report)
+    elif normalized == "cbom":
+        document = build_cbom(report)
+    else:
+        raise ValueError(f"Unsupported export format: {export_format}")
+    validate_export(document, normalized)
+    out = json.dumps(document, indent=2)
+    if output_path:
+        Path(output_path).write_text(out, encoding="utf-8")
     return out
 
 

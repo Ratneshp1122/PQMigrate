@@ -17,6 +17,7 @@ The current Python path uses bounded AST dataflow to distinguish selected RSA si
 3. **Versioned rule planning (`/knowledge`)**: Loads validated YAML rules with rule IDs, blocker codes, standards references, and advisory-only decisions.
 4. **Assurance interface (`/backend` and `/frontend`)**: Stores and displays scan evidence. The CLI remains the primary verified review path.
 5. **Pilot evaluation (`/benchmarks`)**: Runs a versioned 72-case synthetic Python RSA benchmark with held-out splits, raw predictions, metrics, and error cases.
+6. **Standards export (`/exporters`)**: Emits schema-validated SARIF 2.1.0 and CycloneDX 1.7 CBOM without source snippets or automatic-patch claims.
 
 ---
 
@@ -29,6 +30,8 @@ graph LR
     C --> D[YAML Rule Planner]
     D --> E[JSON Schema 2.2]
     E --> F[CLI or React Dashboard]
+    E --> G[SARIF 2.1.0]
+    E --> H[CycloneDX 1.7 CBOM]
 ```
 
 ---
@@ -70,6 +73,19 @@ scripts/run_benchmark.sh
 ```
 
 The generated metrics apply only to the committed single-author synthetic Python RSA pilot. They are not product-wide or publication-quality accuracy claims.
+
+### 6. Export SARIF and CBOM
+
+Export directly during a scan, or convert one canonical JSON report into both formats:
+
+```bash
+python3 cli.py scan demo/ --format sarif --output report.sarif.json
+python3 cli.py scan demo/ --format cbom --output report.cdx.json
+python3 cli.py export report_v2.json --format sarif --output report.sarif.json
+python3 cli.py export report_v2.json --format cbom --output report.cdx.json
+```
+
+Exports are validated offline against pinned official schemas before being written. See `docs/review/d10-standards-exports.md` for field mappings and limitations.
 
 ---
 

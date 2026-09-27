@@ -8,7 +8,7 @@ git status --short --branch
 git rev-parse --short HEAD
 ```
 
-Keep `review-artifacts/latest/three-fixture-report.json` available as the backup result.
+Keep `review-artifacts/latest/three-fixture-report.json`, `three-fixture.sarif.json`, and `three-fixture.cdx.json` available as backup results.
 
 ## 0:00–0:50 — Problem
 
@@ -61,9 +61,13 @@ Mention the unrelated-key and conflicting-role tests. These prevent proximity-on
 
 Show `review-artifacts/latest/d9-benchmark-results.json`: 72 total cases, four separately counted parse failures, and 12 retained false negatives for parameter/alias flows. State the measured values only with the phrase “on this single-author synthetic Python RSA pilot.”
 
-## 7:45–8:00 — Next measured milestones
+## 7:45–7:55 — Standards export
 
-State that the next milestones are independent benchmark labelling/real-project cases, standard exports, and isolated migration assurance. Ask the reviewer to confirm the ground-truth labelling rules and the contexts that deserve priority.
+Show the preserved SARIF 2.1.0 and CycloneDX 1.7 CBOM artifacts. State that both were validated against pinned official schemas, include trace IDs and advisory-only state, and exclude source snippets. Do not claim downstream-platform import testing.
+
+## 7:55–8:00 — Next measured milestones
+
+State that the next milestones are independent benchmark labelling/real-project cases, downstream integration, and isolated migration assurance. Ask the reviewer to confirm the ground-truth labelling rules and the contexts that deserve priority.
 
 ## Failure fallback
 
