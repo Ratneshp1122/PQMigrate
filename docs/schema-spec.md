@@ -1,4 +1,4 @@
-# Output JSON Schema Specification
+# Output JSON Schema Specification (v2.2)
 
 ## 1. Overview
 The PQC Migration Tool generates a structured JSON output utilizing the `ProjectReport` root object. This output is designed to be directly ingested by the React/TypeScript dashboard defined in the research roadmap.
@@ -36,11 +36,57 @@ If a `CryptoIR` is well-understood (e.g., Confidence is `direct` or `inferred`),
   "patch_available": true,
   "requires_manual_intervention": false,
   "intervention_reason": null,
-  "estimated_effort": "low"
+  "estimated_effort": "high",
+  "rule_id": "RSA-SIGNATURE-001",
+  "rule_version": "2026.09.26-d7.1",
+  "blocker_codes": ["SIGNATURE_FORMAT", "VERIFIER_SUPPORT"],
+  "standard_refs": ["NIST FIPS 204"],
+  "priority": {
+    "cryptographic_urgency": "high",
+    "evidence_strength": "inferred",
+    "migration_effort": "high",
+    "data_exposure": "unknown",
+    "overall_review_priority": "high",
+    "basis": ["status=quantum_vulnerable", "confidence=inferred"]
+  },
+  "decision_trace": { /* DecisionTrace object */ }
 }
 ```
 
-### 2.3 AssuranceRecord
+All plans remain advisory in D8: `patch_available` is false and the knowledge-base loader rejects rules that attempt to enable it.
+
+### 2.3 DecisionTrace
+Each plan carries a deterministic trace from the source observation to the decision. The identifier excludes run IDs and timestamps, so equivalent pinned input and rule versions produce the same trace ID.
+
+```json
+{
+  "trace_id": "34d18cc648d14dd2",
+  "finding_id": "e3b0c44298fc",
+  "outcome": "recommend",
+  "source_ref": {"file_path": "auth/signer.py", "line_number": 4, "column": 0, "source_commit": "..."},
+  "steps": [
+    {"stage": "detection", "result": "observed", "explanation": "...", "facts": {}},
+    {"stage": "role_inference", "result": "resolved", "explanation": "...", "facts": {}},
+    {"stage": "rule_match", "result": "matched", "explanation": "...", "facts": {}},
+    {"stage": "blocker_assessment", "result": "blocked", "explanation": "...", "facts": {}},
+    {"stage": "decision", "result": "recommend", "explanation": "...", "facts": {}}
+  ],
+  "unresolved_fields": ["protocol_context"]
+}
+```
+
+The trace does not duplicate source snippets. It carries the source span, typed facts, rule version, blocker codes and decision. `unresolved_fields` makes missing semantics explicit.
+
+### 2.4 Multi-axis priority
+Priority is categorical and explainable. It is not a calibrated probability or a scalar risk score:
+
+- `cryptographic_urgency` derives from the finding security status.
+- `evidence_strength` preserves the direct/inferred/ambiguous confidence class.
+- `migration_effort` comes from the matched versioned rule.
+- `data_exposure` stays `unknown` because the scanner does not infer business sensitivity or retention.
+- `overall_review_priority` is `manual_review` for abstentions; otherwise it follows cryptographic urgency.
+
+### 2.5 AssuranceRecord
 Wraps a finding with its plan, enabling test-driven verification marking.
 
 ```json

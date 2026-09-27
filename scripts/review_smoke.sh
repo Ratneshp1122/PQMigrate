@@ -39,13 +39,19 @@ import json
 import sys
 
 report = json.load(open(sys.argv[1], encoding="utf-8"))
-assert report["schema_version"] == "2.1"
+assert report["schema_version"] == "2.2"
 assert report["rules_version"] == "2026.09.26-d7.1"
+assert len(report["source_commit"]) == 40
 roles = {record["finding"]["role"] for record in report["records"]}
 assert {"signature", "key_transport", "unknown"}.issubset(roles)
 assert all(record["plan"]["patch_available"] is False for record in report["records"])
 assert all(record["plan"]["rule_id"] for record in report["records"])
-print("Validated role coverage and advisory-only plans.")
+assert all(record["plan"]["decision_trace"]["trace_id"] for record in report["records"])
+assert all(record["plan"]["decision_trace"]["source_ref"]["source_commit"] == report["source_commit"] for record in report["records"])
+assert all(len(record["plan"]["decision_trace"]["steps"]) == 5 for record in report["records"])
+assert all(record["plan"]["priority"]["data_exposure"] == "unknown" for record in report["records"])
+assert any(record["plan"]["decision_trace"]["outcome"] == "abstain" for record in report["records"])
+print("Validated role coverage, D8 decision traces, priority axes, and advisory-only plans.")
 PY
 
 git diff --check

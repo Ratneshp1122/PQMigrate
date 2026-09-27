@@ -57,6 +57,19 @@ def test_planner_uses_role_specific_yaml_rule_metadata() -> None:
     assert "VERIFIER_SUPPORT" in record.plan.blocker_codes
     assert record.plan.standard_refs
     assert record.plan.patch_available is False
+    assert record.plan.decision_trace is not None
+    assert record.plan.decision_trace.outcome.value == "recommend"
+    assert [step.stage for step in record.plan.decision_trace.steps] == [
+        "detection",
+        "role_inference",
+        "rule_match",
+        "blocker_assessment",
+        "decision",
+    ]
+    assert record.plan.priority is not None
+    assert record.plan.priority.cryptographic_urgency.value == "high"
+    assert record.plan.priority.overall_review_priority.value == "high"
+    assert record.plan.priority.data_exposure.value == "unknown"
 
 
 def test_ambiguous_finding_abstains_before_rule_matching() -> None:
@@ -68,6 +81,32 @@ def test_ambiguous_finding_abstains_before_rule_matching() -> None:
     assert record.plan is not None
     assert record.plan.rule_id == "ABSTAIN-AMBIGUOUS"
     assert record.plan.blocker_codes == ["ROLE_UNKNOWN"]
+    assert record.plan.decision_trace is not None
+    assert record.plan.decision_trace.outcome.value == "abstain"
+    assert "role" in record.plan.decision_trace.unresolved_fields
+    assert record.plan.priority is not None
+    assert record.plan.priority.overall_review_priority.value == "manual_review"
+
+
+def test_decision_trace_id_is_deterministic_for_equivalent_input() -> None:
+    planner = MigrationPlanner()
+
+    first = planner.generate_plan(_finding(CryptoRole.SIGNATURE))
+    second = planner.generate_plan(_finding(CryptoRole.SIGNATURE))
+
+    assert first.plan is not None and first.plan.decision_trace is not None
+    assert second.plan is not None and second.plan.decision_trace is not None
+    assert first.plan.decision_trace.trace_id == second.plan.decision_trace.trace_id
+
+
+def test_trace_id_changes_when_semantic_decision_input_changes() -> None:
+    planner = MigrationPlanner()
+    signature = planner.generate_plan(_finding(CryptoRole.SIGNATURE))
+    transport = planner.generate_plan(_finding(CryptoRole.KEY_TRANSPORT))
+
+    assert signature.plan is not None and signature.plan.decision_trace is not None
+    assert transport.plan is not None and transport.plan.decision_trace is not None
+    assert signature.plan.decision_trace.trace_id != transport.plan.decision_trace.trace_id
 
 
 def test_duplicate_rule_ids_are_rejected(tmp_path: Path) -> None:
@@ -109,6 +148,8 @@ def test_classical_signature_rule_does_not_match_standardized_ml_dsa() -> None:
     assert record.plan is not None
     assert record.plan.rule_id == "ABSTAIN-NO-RULE"
     assert record.plan.target_algorithm == "Manual Review"
+    assert record.plan.decision_trace is not None
+    assert "matching_rule" in record.plan.decision_trace.unresolved_fields
 
 
 def test_environment_can_select_an_alternate_valid_rule_file(tmp_path: Path, monkeypatch) -> None:

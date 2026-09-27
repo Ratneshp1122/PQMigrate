@@ -60,7 +60,7 @@ class TestSchemaValidation(unittest.TestCase):
         out_json = report.to_json()
 
         self.assertEqual(out_dict['project_name'], "test-project")
-        self.assertEqual(out_dict['schema_version'], "2.1")
+        self.assertEqual(out_dict['schema_version'], "2.2")
         self.assertTrue(out_dict['scan_id'])
         self.assertEqual(out_dict['scanner_version'], "0.3.0")
         self.assertEqual(out_dict['rules_version'], "unknown")

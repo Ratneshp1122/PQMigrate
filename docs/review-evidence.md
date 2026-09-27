@@ -22,6 +22,8 @@ This record verifies the repository against `PQMigrate_48h_Review_Packet_SRS_Mod
 | Planner safety | **Verified** | Every review fixture has `patch_available=false`. Signature and key-transport recommendations require manual protocol and deployment review. |
 | D7 YAML knowledge base | **Verified** | Nine versioned rules load from `knowledge/migration_rules.yaml`. Duplicate IDs, unsupported roles, and automatic-patch rules fail validation. |
 | Rule provenance | **Verified** | Plans contain `rule_id`, `rule_version`, blocker codes, and standards references. Reports carry rules version `2026.09.26-d7.1`. |
+| Decision trace | **Verified** | Schema v2.2 plans contain deterministic trace IDs and five stages: detection, role inference, rule match, blocker assessment, and decision. |
+| Multi-axis priority | **Verified** | Plans expose cryptographic urgency, evidence strength, migration effort, data exposure, and overall review priority; exposure remains explicitly `unknown`. |
 | Versioned JSON | **Verified** | Schema 2.1 includes scan ID, scanner version, rules version, timestamp, coverage counts, findings, plans, and errors. Finding IDs are deterministic for the same finding tuple. |
 | Spring backend | **Verified at unit/build level** | Five Maven tests pass. Scan list/detail/delete operations are owner-scoped. Missing or invalid worker JSON cannot become `COMPLETE`. |
 | Frontend production build | **Verified with warning** | `npm run build` passes. The main JavaScript chunk remains above Vite's 500 kB warning threshold. |

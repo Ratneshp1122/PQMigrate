@@ -50,6 +50,17 @@ class ConfidenceLevel(str, Enum):
     INFERRED = "inferred"
     AMBIGUOUS = "ambiguous"
 
+class DecisionOutcome(str, Enum):
+    RECOMMEND = "recommend"
+    ABSTAIN = "abstain"
+
+class PriorityBand(str, Enum):
+    HIGH = "high"
+    MEDIUM = "medium"
+    LOW = "low"
+    MANUAL_REVIEW = "manual_review"
+    UNKNOWN = "unknown"
+
 @dataclass
 class CodeLocation:
     file_path: str
@@ -83,6 +94,56 @@ class CryptoIR:
         return d
 
 @dataclass
+class PriorityAssessment:
+    """Transparent D8 priority axes; this is not a probability or risk score."""
+    cryptographic_urgency: PriorityBand
+    evidence_strength: ConfidenceLevel
+    migration_effort: str
+    data_exposure: PriorityBand
+    overall_review_priority: PriorityBand
+    basis: List[str] = field(default_factory=list)
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            'cryptographic_urgency': self.cryptographic_urgency.value,
+            'evidence_strength': self.evidence_strength.value,
+            'migration_effort': self.migration_effort,
+            'data_exposure': self.data_exposure.value,
+            'overall_review_priority': self.overall_review_priority.value,
+            'basis': list(self.basis),
+        }
+
+@dataclass
+class DecisionTraceStep:
+    stage: str
+    result: str
+    explanation: str
+    facts: Dict[str, Any] = field(default_factory=dict)
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+
+@dataclass
+class DecisionTrace:
+    """Deterministic provenance from source observation to advisory decision."""
+    trace_id: str
+    finding_id: str
+    outcome: DecisionOutcome
+    source_ref: Dict[str, Any]
+    steps: List[DecisionTraceStep] = field(default_factory=list)
+    unresolved_fields: List[str] = field(default_factory=list)
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            'trace_id': self.trace_id,
+            'finding_id': self.finding_id,
+            'outcome': self.outcome.value,
+            'source_ref': dict(self.source_ref),
+            'steps': [step.to_dict() for step in self.steps],
+            'unresolved_fields': list(self.unresolved_fields),
+        }
+
+@dataclass
 class MigrationPlan:
     """A proposed change to migrate a CryptoIR to PQC."""
     target_algorithm: str
@@ -97,9 +158,14 @@ class MigrationPlan:
     rule_version: Optional[str] = None
     blocker_codes: List[str] = field(default_factory=list)
     standard_refs: List[str] = field(default_factory=list)
+    priority: Optional[PriorityAssessment] = None
+    decision_trace: Optional[DecisionTrace] = None
 
     def to_dict(self) -> Dict[str, Any]:
-        return asdict(self)
+        data = asdict(self)
+        data['priority'] = self.priority.to_dict() if self.priority else None
+        data['decision_trace'] = self.decision_trace.to_dict() if self.decision_trace else None
+        return data
 
 @dataclass
 class AssuranceRecord:
@@ -123,7 +189,7 @@ class ProjectReport:
     files_scanned: int
     total_findings: int
     records: List[AssuranceRecord] = field(default_factory=list)
-    schema_version: str = "2.1"
+    schema_version: str = "2.2"
     scan_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     scanner_version: str = "0.3.0"
     rules_version: str = "unknown"

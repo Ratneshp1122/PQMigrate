@@ -64,8 +64,9 @@ def test_json_output_is_written_once(tmp_path: Path) -> None:
     assert result.returncode == 1
     assert result.stdout.count("PQC Migration Scanner") == 1
     report = json.loads(output.read_text(encoding="utf-8"))
-    assert report["schema_version"] == "2.1"
+    assert report["schema_version"] == "2.2"
     assert report["scan_id"]
+    assert len(report["source_commit"]) == 40
     assert report["files_scanned"] == 1
     assert report["total_findings"] > 0
     assert len(report["records"]) == report["total_findings"]
@@ -115,6 +116,11 @@ def test_review_fixtures_produce_role_aware_advisory_plans(tmp_path: Path) -> No
     assert jwt["plan"]["rule_version"] == "2026.09.26-d7.1"
     assert jwt["plan"]["standard_refs"]
     assert jwt["plan"]["patch_available"] is False
+    assert jwt["plan"]["decision_trace"]["outcome"] == "recommend"
+    assert jwt["plan"]["decision_trace"]["source_ref"]["line_number"] > 0
+    assert jwt["plan"]["decision_trace"]["source_ref"]["source_commit"] == report["source_commit"]
+    assert jwt["plan"]["priority"]["overall_review_priority"] == "high"
+    assert jwt["plan"]["priority"]["data_exposure"] == "unknown"
 
     assert transport["finding"]["role"] == "key_transport"
     assert transport["plan"]["target_standard"] == "FIPS 203"
@@ -125,3 +131,6 @@ def test_review_fixtures_produce_role_aware_advisory_plans(tmp_path: Path) -> No
     assert import_only["finding"]["role"] == "unknown"
     assert import_only["plan"]["target_algorithm"] == "UNKNOWN"
     assert import_only["plan"]["patch_available"] is False
+    assert import_only["plan"]["decision_trace"]["outcome"] == "abstain"
+    assert "role" in import_only["plan"]["decision_trace"]["unresolved_fields"]
+    assert import_only["plan"]["priority"]["overall_review_priority"] == "manual_review"

@@ -29,6 +29,20 @@ classDiagram
       +boolean requiresManualIntervention
       +String interventionReason
     }
+    class DecisionTrace {
+      trace_id
+      outcome
+      source_ref
+      steps
+      unresolved_fields
+    }
+    class PriorityAssessment {
+      cryptographic_urgency
+      evidence_strength
+      migration_effort
+      data_exposure
+      overall_review_priority
+    }
     class AssuranceRecord {
       +boolean testsPassed
       +boolean verifiedByHuman
@@ -44,6 +58,8 @@ classDiagram
     ProjectReport "1" --> "0..*" AssuranceRecord
     AssuranceRecord "1" --> "1" CryptoIR
     AssuranceRecord "1" --> "0..1" MigrationPlan
+    MigrationPlan "1" --> "1" DecisionTrace
+    MigrationPlan "1" --> "1" PriorityAssessment
 ```
 
 ## Current CLI sequence

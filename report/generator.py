@@ -8,6 +8,7 @@ Three output formats:
 """
 
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -46,6 +47,22 @@ RISK_ICON = {
     Risk.MEDIUM:   "~",
     Risk.SAFE:     "✓",
 }
+
+
+def _source_commit(root: str) -> str | None:
+    """Return the containing Git commit without treating a non-repository as an error."""
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(Path(root).resolve()), "rev-parse", "HEAD"],
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=3,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    commit = result.stdout.strip()
+    return commit if result.returncode == 0 and len(commit) == 40 else None
 
 
 # ── Console reporter ──────────────────────────────────────────────────────────
@@ -175,6 +192,7 @@ def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
     )
     
     planner = MigrationPlanner()
+    source_commit = _source_commit(summary.root)
     records = []
     
     for fs in summary.file_summaries:
@@ -250,7 +268,7 @@ def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
                 protocol_context=protocol_context,
                 context_evidence=context_evidence,
             )
-            records.append(planner.generate_plan(ir))
+            records.append(planner.generate_plan(ir, source_commit=source_commit))
             
     report = ProjectReport(
         project_name=os.path.basename(os.path.abspath(summary.root)),
@@ -259,12 +277,13 @@ def report_json(summary: SystemSummary, output_path: str | None = None) -> str:
         total_findings=summary.total_findings,
         records=records,
         rules_version=planner.rules_version,
+        source_commit=source_commit,
     )
     
     out = report.to_json()
     if output_path:
         Path(output_path).write_text(out)
-        print(f"  JSON report (Schema v2) saved → {output_path}")
+        print(f"  JSON report (Schema v2.2) saved → {output_path}")
     return out
 
 

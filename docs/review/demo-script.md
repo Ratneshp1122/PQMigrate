@@ -46,6 +46,8 @@ Exit code 1 is expected because the policy found vulnerable cryptography. Show t
 
 For each plan, show `rule_id`, `rule_version`, blocker codes, and standards references from the D7 YAML knowledge base.
 
+Then expand `decision_trace`: follow the five ordered stages from the source span to the advisory result. Compare the stable `trace_id` across two equivalent scans. Show the multi-axis `priority` object and call out that `data_exposure` is `unknown`, not guessed.
+
 ## 6:45–7:25 — Negative evidence
 
 ```bash
