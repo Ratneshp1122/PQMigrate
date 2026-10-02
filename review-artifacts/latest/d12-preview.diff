@@ -1,0 +1,8 @@
+--- a/d12_direct_md5.py
++++ b/d12_direct_md5.py
+@@ -2,4 +2,4 @@
+ 
+ label = "hashlib.md5(b'not code')"
+ # hashlib.md5(b"comment") must remain unchanged.
+-digest = hashlib.md5(b"review fixture").hexdigest()
++digest = hashlib.sha256(b"review fixture").hexdigest()

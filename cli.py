@@ -15,6 +15,7 @@ Usage:
   python3 cli.py repo https://gitlab.com/foo/bar    # GitLab / self-hosted
 
   python3 cli.py export report.json --format sarif|cbom
+  python3 cli.py preview file.py --expected-sha256 HASH --line N
   python3 cli.py migration <primitive>              # show migration code example
   python3 cli.py list-patterns                      # list all detected patterns
 """
@@ -403,6 +404,93 @@ def _get_flag(args: list[str], flag: str, default):
         return default
 
 
+def cmd_preview(args: list[str]):
+    """Generate D12 review evidence and an exact diff without editing source."""
+    if not args:
+        print("Usage: python3 cli.py preview <file.py> --expected-sha256 HASH --line N "
+              "[--output preview.json] [--diff-output preview.diff]")
+        sys.exit(1)
+
+    from pqc_migration_tool.patcher.preview import PreviewRequest, preview_md5_to_sha256
+
+    source = Path(args[0])
+    expected = _get_flag(args, "--expected-sha256", None)
+    raw_line = _get_flag(args, "--line", None)
+    output = _get_flag(args, "--output", None)
+    diff_output = _get_flag(args, "--diff-output", None)
+    if expected is None or raw_line is None:
+        print("Error: --expected-sha256 and --line are required")
+        sys.exit(1)
+    try:
+        line_number = int(raw_line)
+    except ValueError:
+        print("Error: --line must be an integer")
+        sys.exit(1)
+
+    result = preview_md5_to_sha256(PreviewRequest(source, expected, line_number))
+    evidence = result.to_dict()
+    rendered = json.dumps(evidence, indent=2, sort_keys=True) + "\n"
+    if output:
+        output_path = Path(output)
+        if output_path.resolve() == source.resolve():
+            print("Error: evidence output must not overwrite source")
+            sys.exit(1)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(rendered, encoding="utf-8")
+    if diff_output:
+        diff_path = Path(diff_output)
+        if diff_path.resolve() == source.resolve():
+            print("Error: diff output must not overwrite source")
+            sys.exit(1)
+        diff_path.parent.mkdir(parents=True, exist_ok=True)
+        diff_path.write_text(result.diff, encoding="utf-8")
+    print(rendered, end="")
+    if result.status != "generated":
+        sys.exit(2)
+
+
+def cmd_verify_preview(args: list[str]):
+    """Run D13 bounded verification in a disposable filesystem copy."""
+    if not args:
+        print("Usage: python3 cli.py verify-preview <file.py> --project-root DIR "
+              "--expected-sha256 HASH --line N [--timeout SEC] [--output evidence.json]")
+        sys.exit(1)
+    from pqc_migration_tool.verification.isolated import (
+        IsolatedVerificationRequest,
+        verify_preview_in_isolation,
+    )
+
+    source = Path(args[0])
+    root = _get_flag(args, "--project-root", None)
+    expected = _get_flag(args, "--expected-sha256", None)
+    raw_line = _get_flag(args, "--line", None)
+    raw_timeout = _get_flag(args, "--timeout", "10")
+    output = _get_flag(args, "--output", None)
+    if root is None or expected is None or raw_line is None:
+        print("Error: --project-root, --expected-sha256, and --line are required")
+        sys.exit(1)
+    try:
+        line_number = int(raw_line)
+        timeout_seconds = int(raw_timeout)
+    except ValueError:
+        print("Error: --line and --timeout must be integers")
+        sys.exit(1)
+    evidence = verify_preview_in_isolation(IsolatedVerificationRequest(
+        Path(root), source, expected, line_number, timeout_seconds
+    ))
+    rendered = json.dumps(evidence, indent=2, sort_keys=True) + "\n"
+    if output:
+        output_path = Path(output)
+        if output_path.resolve() == source.resolve():
+            print("Error: evidence output must not overwrite source")
+            sys.exit(1)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(rendered, encoding="utf-8")
+    print(rendered, end="")
+    if evidence["status"] != "verified_bounded":
+        sys.exit(2)
+
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # main
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -415,6 +503,8 @@ def main():
         print("  scan   <path>              Scan a local file or directory")
         print("  repo   <owner/repo|url>    Clone & scan any git repository")
         print("  export <report.json>       Convert JSON to SARIF 2.1.0 or CycloneDX 1.7 CBOM")
+        print("  preview <file.py>          Generate a hash-bound D12 diff; never edits source")
+        print("  verify-preview <file.py>   Verify D12 preview in a disposable copy")
         print("  migration <primitive>      Show migration code example")
         print("  list-patterns             List all detectable patterns")
         print("  list-rules [yaml-path]    Validate and list D7 rules")
@@ -425,6 +515,8 @@ def main():
         print("  python3 cli.py repo pyca/cryptography --format md --output report.md")
         print("  python3 cli.py repo https://github.com/ansible/ansible")
         print("  python3 cli.py export report.json --format sarif --output report.sarif.json")
+        print("  python3 cli.py preview sample.py --expected-sha256 HASH --line 12")
+        print("  python3 cli.py verify-preview sample.py --project-root . --expected-sha256 HASH --line 12")
         print("  python3 cli.py repo django/django --branch stable/4.2.x --keep")
         print("  python3 cli.py migration X25519")
         print("  python3 cli.py list-patterns")
@@ -451,6 +543,8 @@ def main():
         "scan":          cmd_scan,
         "repo":          cmd_repo,
         "patch":         cmd_patch,
+        "preview":       cmd_preview,
+        "verify-preview": cmd_verify_preview,
         "export":        cmd_export,
         "migration":     cmd_migration,
         "list-patterns": cmd_list_patterns,

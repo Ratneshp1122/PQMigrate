@@ -1,0 +1,81 @@
+{
+  "blocker_codes": [],
+  "checks": {
+    "ast_rescan": true,
+    "isolated_copy_removed": true,
+    "isolated_syntax_check": true,
+    "original_source_unchanged": true,
+    "preview_generated": true
+  },
+  "eligible_for_apply": false,
+  "isolated_mutation_performed": true,
+  "limitations": [
+    "Isolation is a disposable filesystem copy, not an OS container or network sandbox.",
+    "Only Python syntax and the selected AST replacement are checked.",
+    "Project tests, runtime behavior, digest-size compatibility, and peers remain unverified."
+  ],
+  "line_number": 5,
+  "mutation_performed": false,
+  "preview": {
+    "blocker_codes": [
+      "D12_APPLY_NOT_AUTHORIZED",
+      "D12_INTEROPERABILITY_UNVERIFIED"
+    ],
+    "candidate_count": 1,
+    "compatibility_warning": "SHA-256 changes digest length and may break protocols, schemas, stored values, wire formats, peers, and tests. D12 does not establish interoperability.",
+    "diff": "--- a/d12_direct_md5.py\n+++ b/d12_direct_md5.py\n@@ -2,4 +2,4 @@\n \n label = \"hashlib.md5(b'not code')\"\n # hashlib.md5(b\"comment\") must remain unchanged.\n-digest = hashlib.md5(b\"review fixture\").hexdigest()\n+digest = hashlib.sha256(b\"review fixture\").hexdigest()\n",
+    "eligible_for_apply": false,
+    "expected_sha256": "a4e7339146d4b4c535ea86bcea95f8ad0e832eb91045dd8c6f592aae5a03c10a",
+    "explanation": "Preview generated from one exact AST-selected call; source was not modified.",
+    "line_number": 5,
+    "mutation_performed": false,
+    "mutation_policy": {
+      "blocker_codes": [
+        "PATCH_SUPPORTED_CONSTRUCTION_UNKNOWN",
+        "PATCH_INTEROPERABLE_PEERS_UNKNOWN",
+        "PATCH_TESTS_AVAILABLE_UNKNOWN",
+        "PATCH_OPERATOR_AUTHORIZED_UNKNOWN"
+      ],
+      "conditions": {
+        "interoperable_peers": "unknown",
+        "known_role": "true",
+        "operator_authorized": "unknown",
+        "supported_construction": "unknown",
+        "tests_available": "unknown"
+      },
+      "eligible": false,
+      "explanation": "Automatic mutation refused because at least one required condition is false or unknown.",
+      "policy_version": "2026.09.27-d11.1"
+    },
+    "preview_sha256": "a7fdaaa74ec1d24f0d89d21aedc3ae738d4cbdb5ca5f6d20983c95a8d87a0e97",
+    "schema_version": "2026.10.02-d12.1",
+    "selected_span": {
+      "end_column_utf8": 20,
+      "end_line": 5,
+      "start_column_utf8": 9,
+      "start_line": 5
+    },
+    "source_path": "/home/ratneshp0411/pqc_migration_tool/tests/fixtures/d12_direct_md5.py",
+    "source_sha256": "a4e7339146d4b4c535ea86bcea95f8ad0e832eb91045dd8c6f592aae5a03c10a",
+    "status": "generated",
+    "transformation_id": "python.hashlib.md5-to-sha256.preview-v1"
+  },
+  "preview_schema_version": "2026.10.02-d12.1",
+  "preview_sha256": "a7fdaaa74ec1d24f0d89d21aedc3ae738d4cbdb5ca5f6d20983c95a8d87a0e97",
+  "project_root": "/home/ratneshp0411/pqc_migration_tool",
+  "schema_version": "2026.10.02-d13.1",
+  "source_path": "/home/ratneshp0411/pqc_migration_tool/tests/fixtures/d12_direct_md5.py",
+  "source_sha256_after": "a4e7339146d4b4c535ea86bcea95f8ad0e832eb91045dd8c6f592aae5a03c10a",
+  "source_sha256_before": "a4e7339146d4b4c535ea86bcea95f8ad0e832eb91045dd8c6f592aae5a03c10a",
+  "status": "verified_bounded",
+  "test_command": [
+    "/home/ratneshp0411/venv/bin/python3",
+    "-m",
+    "py_compile",
+    "<isolated>/tests/fixtures/d12_direct_md5.py"
+  ],
+  "test_exit_code": 0,
+  "test_stderr": "",
+  "test_stdout": "",
+  "timeout_seconds": 10
+}
