@@ -8,14 +8,14 @@
 
 New to the project? Open [`START_HERE.md`](START_HERE.md), then [`PQMIGRATE_FULL_GUIDE.md`](PQMIGRATE_FULL_GUIDE.md) for the original-prototype history, current pipeline, worked examples, mathematical model, complexity analysis, commands, outputs, and limitations.
 
-The current Python path uses bounded AST dataflow to distinguish selected RSA signing and key-transport cases from unresolved imports. A versioned YAML knowledge base produces advisory plans with blocker codes and standards references. The planner abstains when evidence is missing or conflicting and does not treat role inference as authorization to patch.
+The Python and Go paths use bounded syntax-tree dataflow to distinguish selected RSA signing and key-transport cases from unresolved imports. Go discovery remains regex-based, but D4 role inference is Tree-sitter-backed and alias-aware. A versioned YAML knowledge base produces advisory plans with blocker codes and standards references. The planner abstains when evidence is missing or conflicting and does not treat role inference as authorization to patch.
 
 ---
 
 ## ✨ Key Capabilities
 
-1. **AST discovery (`/scanner`)**: Detects supported Python operations and inventory leads. Go support remains regex-based.
-2. **Bounded role inference (`/resolver`)**: Links selected same-scope RSA key uses and explicitly abstains on unrelated, absent, or conflicting evidence.
+1. **Syntax-aware discovery (`/scanner`)**: Detects supported Python operations and inventory leads; Go inventory discovery uses bounded regex patterns.
+2. **Bounded role inference (`/resolver`)**: Links selected same-scope Python and Go RSA key uses. The Go path uses Tree-sitter and explicitly handles aliases, shadowing, malformed source, unrelated keys, absent use and conflicting evidence.
 3. **Versioned rule planning (`/knowledge`)**: Loads validated YAML rules with rule IDs, blocker codes, standards references, and advisory-only decisions.
 4. **Assurance interface (`/backend` and `/frontend`)**: Stores and displays scan evidence. The CLI remains the primary verified review path.
 5. **Pilot evaluation (`/benchmarks`)**: Runs a versioned 72-case synthetic Python RSA benchmark with held-out splits, raw predictions, metrics, and error cases.
@@ -105,7 +105,7 @@ The audit checks all 243 assignments of the five three-valued conditions. Exactl
 scripts/validate_d0_d11.sh
 ```
 
-This runs the complete test/build/export/audit path and writes a machine-readable milestone matrix under `review-artifacts/latest/`. The accurate current outcome is `PASS_WITH_DECLARED_PARTIAL`: D4 still has Go regex detection, not the planned Go AST/dataflow resolver. See `docs/D0-D11_REPRODUCIBILITY.md` before preparing review media.
+This runs the complete test/build/export/audit path and writes a machine-readable milestone matrix under `review-artifacts/latest/`. The accurate bounded result is `PASS`: D4 now includes Tree-sitter Go parsing and same-function RSA role inference. See `docs/D0-D11_REPRODUCIBILITY.md` for the exact claim boundary.
 
 ---
 

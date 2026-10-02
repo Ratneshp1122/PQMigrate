@@ -180,6 +180,7 @@ def build_project_report(summary: SystemSummary):
     from datetime import datetime, timezone
     import os
     from pqc_migration_tool.resolver.context_inference import infer_rsa_usage
+    from pqc_migration_tool.resolver.go_semantic import infer_go_rsa_usage
     from pqc_migration_tool.resolver.planner import MigrationPlanner
     from pqc_migration_tool.schema.models import (
         CodeLocation,
@@ -207,11 +208,32 @@ def build_project_report(summary: SystemSummary):
             detection_type = "import_lead" if is_import else "operation_candidate"
 
             name_lower = f.pattern.name.lower()
+            is_go_rsa = f.filepath.lower().endswith(".go") and "rsa" in name_lower
+            semantic_role_checked = False
+
+            # D4: Go source is parsed into a concrete syntax tree and analyzed
+            # without compilation or execution.  The bounded resolver recognizes
+            # only evidence-linked RSA roles and otherwise returns UNKNOWN.
+            if is_go_rsa:
+                semantic_role_checked = True
+                try:
+                    source = Path(f.filepath).read_text(encoding="utf-8", errors="replace")
+                    inference = infer_go_rsa_usage(source, f.filepath)
+                    context_evidence = inference.evidence
+                    if inference.role != CryptoRole.UNKNOWN:
+                        role = inference.role
+                        op = inference.operation
+                        protocol_context = inference.protocol_context
+                        confidence = inference.confidence
+                        detection_type = "linked_operation"
+                except OSError as exc:
+                    context_evidence = f"Source could not be read for Go role inference: {exc}."
 
             # D6: use bounded, same-scope dataflow for RSA. Merely importing an
             # RSA module remains an inventory lead when no linked operation is
             # proven. Target source is parsed but never imported or executed.
-            if is_import and "rsa" in name_lower:
+            elif is_import and "rsa" in name_lower:
+                semantic_role_checked = True
                 try:
                     source = Path(f.filepath).read_text(encoding="utf-8", errors="replace")
                     inference = infer_rsa_usage(source, f.filepath)
@@ -225,7 +247,7 @@ def build_project_report(summary: SystemSummary):
                 except OSError as exc:
                     context_evidence = f"Source could not be read for role inference: {exc}."
 
-            if not is_import:
+            if not is_import and not semantic_role_checked:
                 if any(x in name_lower for x in ["sign", "ecdsa", "ed25519", "dsa"]):
                     role = CryptoRole.SIGNATURE
                     op = CryptoOperation.SIGN

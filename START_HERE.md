@@ -12,4 +12,4 @@ Run the complete validation from this directory:
 scripts/validate_d0_d11.sh
 ```
 
-The current honest result is `PASS_WITH_DECLARED_PARTIAL`: D4 Go regex detection works, but the planned Go AST/dataflow resolver is not implemented.
+The current bounded result is `PASS`: D4 combines Go regex inventory discovery with Tree-sitter-backed, alias-aware same-function RSA role inference. Unsupported flows still return `UNKNOWN`.

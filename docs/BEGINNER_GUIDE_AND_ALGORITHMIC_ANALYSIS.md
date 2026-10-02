@@ -58,7 +58,7 @@ It was preserved and constrained, not discarded.
 | Initial component | What happened |
 |---|---|
 | Python scanner | Kept; AST-aware discovery and bounded role analysis were added |
-| Go scanner | Kept; still regex-based and therefore explicitly marked partial |
+| Go scanner | Kept for regex inventory discovery; D4 adds Tree-sitter-backed bounded RSA role inference |
 | CLI | Kept and expanded with versioned JSON, SARIF, CBOM, and rule inspection |
 | Risk score/grade | Still visible as a legacy summary; it is not treated as a calibrated scientific probability |
 | Spring backend | Kept; unit tests verify owner-scoped scan operations and worker failure handling |
@@ -77,7 +77,7 @@ The current project asks for evidence before making a stronger statement. When e
 | D1 | Define the research question, threat model, and honest claim boundary | Pass |
 | D2 | Define typed objects for findings, plans, traces, and reports | Pass |
 | D3 | Add bounded Python AST role analysis | Pass |
-| D4 | Add Go semantic/AST resolution | **Partial: regex detection only** |
+| D4 | Add Go semantic/syntax-tree resolution | Pass for bounded same-function RSA cases |
 | D5 | Track selected local key and secret flows | Pass for the bounded Python cases |
 | D6 | Infer selected protocol context, especially linked JWT signing | Pass for the bounded cases |
 | D7 | Move migration knowledge into validated YAML rules | Pass |
@@ -86,7 +86,7 @@ The current project asks for evidence before making a stronger statement. When e
 | D10 | Export standard SARIF and CycloneDX CBOM documents | Pass locally against pinned schemas |
 | D11 | Define and enforce a fail-closed patch policy | Pass; no transformation is approved |
 
-The overall status is `PASS_WITH_DECLARED_PARTIAL` because D4 is not complete.
+The overall bounded status is `PASS`. General cross-file and interprocedural Go analysis remains outside the D4 claim.
 
 ## 6. Current architecture
 
@@ -94,10 +94,10 @@ The overall status is `PASS_WITH_DECLARED_PARTIAL` because D4 is not complete.
 flowchart LR
     A[Owned source tree] --> B[File enumeration]
     B --> C[Python AST scanner]
-    B --> D[Go regex scanner]
+    B --> D[Go regex inventory scanner]
     C --> E[Primitive findings]
     D --> E
-    E --> F[Bounded Python role and context resolver]
+    E --> F[Bounded Python and Go role resolver]
     F --> G[Versioned YAML planner]
     G --> H[Decision trace and priority axes]
     H --> I[Canonical JSON 2.2]
@@ -290,7 +290,8 @@ Define:
 | Reading source | `O(B)` | up to file size | Source is read, not executed |
 | Python parse and AST traversal | approximately `O(N)` | `O(N)` | Build and walk each AST |
 | Bounded Python role inference | `O(N + D)` with indexed variable sets | `O(N + D)` | Track selected names and supported calls in local scopes |
-| Go regex detection | approximately `O(P × B_go)` for ordinary bounded patterns | dependent on matches | No general linear-time or semantic-resolution claim |
+| Go regex inventory detection | approximately `O(P × B_go)` for ordinary bounded patterns | dependent on matches | Produces inventory leads, not roles |
+| Tree-sitter Go parsing and bounded role inference | approximately `O(N_go + D_go)` | `O(N_go + D_go)` | Alias-aware, same-function RSA cases; unsupported flow abstains |
 | Rule planning | `O(F × R)` | `O(F)` | With nine rules, effectively bounded but still expressed honestly |
 | Trace/report construction | `O(F)` plus serialized output size | `O(F)` | One assurance record per finding |
 | SARIF/CBOM mapping | `O(F)` before schema validation | `O(F)` | Convert the canonical report |
@@ -460,10 +461,10 @@ scripts/validate_d0_d11.sh
 Expected overall result:
 
 ```text
-PASS_WITH_DECLARED_PARTIAL
+PASS
 ```
 
-The declared partial is D4 Go semantic analysis.
+All declared D0–D11 milestones pass their bounded acceptance checks.
 
 ## 17. Backend and dashboard
 
@@ -476,6 +477,7 @@ The frontend build currently reports a non-fatal warning because the main JavaSc
 ## 18. What works today
 
 - Python source discovery and supported AST detections;
+- Go inventory discovery and bounded Tree-sitter RSA role inference;
 - bounded same-scope RSA key tracking;
 - linked JWT signing classification;
 - linked generated-session-key transport classification;
@@ -490,7 +492,7 @@ The frontend build currently reports a non-fatal warning because the main JavaSc
 
 ## 19. What does not work yet
 
-- Go AST/dataflow role inference;
+- general cross-file, interprocedural, interface and wrapper-aware Go role inference;
 - general interprocedural or cross-file Python dataflow;
 - broad alias and parameter-flow handling;
 - independent benchmark labelling or real-project generalization;
@@ -528,9 +530,4 @@ If asked whether the mathematical model proves patches secure, answer:
 
 ## 22. Recommended next decision
 
-Before producing PDFs or presentations, choose one of two honest positions:
-
-1. Accept D4 as declared partial and present the review as a bounded Python-first prototype; or
-2. Complete and evaluate Go AST/dataflow resolution before claiming full D0–D11 implementation.
-
-The first option is valid for a review if the limitation is visible. The second option is required before saying every planned D0–D11 milestone is fully implemented.
+The next engineering decision is whether to expand the Go resolver beyond its bounded same-function RSA scope or begin D12 real-project evaluation. Do not describe the current D4 pass as general Go program understanding.

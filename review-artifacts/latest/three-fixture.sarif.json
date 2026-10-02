@@ -82,10 +82,10 @@
         {
           "executionSuccessful": true,
           "properties": {
-            "scanId": "8f051963-5f2e-46b2-94ea-ada649ed80dc",
+            "scanId": "3d0729fb-7eea-4af9-b24c-cb2dc6380d81",
             "schemaVersion": "2.2",
             "rulesVersion": "2026.09.26-d7.1",
-            "sourceCommit": "a809d3b6fe83148ac8616881be534413245b88e3"
+            "sourceCommit": "6ab2fe444c863783fb88d7af530a180b283a0764"
           }
         }
       ],
@@ -138,7 +138,7 @@
             "confidence": "ambiguous",
             "detectionType": "import_lead",
             "protocolContext": "unknown",
-            "traceId": "c77ec0711e587810",
+            "traceId": "e51c84167d8d67b5",
             "decisionOutcome": "abstain",
             "ruleVersion": "2026.09.26-d7.1",
             "blockerCodes": "ROLE_UNKNOWN",
@@ -174,7 +174,7 @@
             "confidence": "direct",
             "detectionType": "linked_operation",
             "protocolContext": "jwt",
-            "traceId": "d3d9e466bebc3fba",
+            "traceId": "ae497f42a229d951",
             "decisionOutcome": "recommend",
             "ruleVersion": "2026.09.26-d7.1",
             "blockerCodes": "SIGNATURE_FORMAT, VERIFIER_SUPPORT, KEY_LIFECYCLE, PROTOCOL_COMPATIBILITY",
@@ -210,7 +210,7 @@
             "confidence": "direct",
             "detectionType": "linked_operation",
             "protocolContext": "unknown",
-            "traceId": "22b10c04f5c40d8f",
+            "traceId": "239ecf7d0f7ec876",
             "decisionOutcome": "recommend",
             "ruleVersion": "2026.09.26-d7.1",
             "blockerCodes": "RECIPIENT_COMPATIBILITY, DATA_FORMAT, DECRYPT_PATH, KEY_LIFECYCLE",
@@ -246,7 +246,7 @@
             "confidence": "direct",
             "detectionType": "linked_operation",
             "protocolContext": "unknown",
-            "traceId": "35d8e0d89979af97",
+            "traceId": "396182e619ec2996",
             "decisionOutcome": "recommend",
             "ruleVersion": "2026.09.26-d7.1",
             "blockerCodes": "RECIPIENT_COMPATIBILITY, DATA_FORMAT, DECRYPT_PATH, KEY_LIFECYCLE",

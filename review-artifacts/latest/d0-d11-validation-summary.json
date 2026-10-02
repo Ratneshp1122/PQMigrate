@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-09-27T13:03:10.561660+00:00",
-  "source_commit": "a809d3b6fe83148ac8616881be534413245b88e3",
-  "overall_status": "pass_with_declared_partial",
-  "pass_count": 11,
-  "partial_count": 1,
+  "generated_at": "2026-10-02T04:48:01.053194+00:00",
+  "source_commit": "6ab2fe444c863783fb88d7af530a180b283a0764",
+  "overall_status": "pass",
+  "pass_count": 12,
+  "partial_count": 0,
   "fail_count": 0,
   "milestones": [
     {
@@ -28,8 +28,8 @@
     },
     {
       "id": "D4",
-      "status": "partial",
-      "evidence": "Go regex detection passes; planned Go AST/dataflow resolver is not implemented"
+      "status": "pass_bounded",
+      "evidence": "Tree-sitter Go parsing, alias-aware same-function RSA role inference, and fail-closed tests"
     },
     {
       "id": "D5",

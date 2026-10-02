@@ -35,7 +35,7 @@ section PRECHECK "Environment and repository"
 for command_name in git java mvn node npm; do
   command -v "$command_name" >/dev/null
 done
-"$python_bin" -c 'import jsonschema, pytest, yaml'
+"$python_bin" -c 'import jsonschema, pytest, tree_sitter, tree_sitter_go, yaml'
 commit="$(git -C "$repo_root" rev-parse HEAD)"
 printf 'Repository: %s\nCommit: %s\n' "$repo_root" "$commit"
 
@@ -45,6 +45,7 @@ required_files=(
   docs/threat-model.md
   docs/schema-spec.md
   docs/review/algorithm-and-model.md
+  docs/review/d4-go-semantic.md
   docs/review/d7-knowledge-base.md
   docs/review/d8-decision-trace.md
   docs/review/d9-benchmark.md
@@ -82,7 +83,7 @@ milestones = [
     {"id": "D1", "status": "pass", "evidence": "research protocol, threat model, ADR-001"},
     {"id": "D2", "status": "pass", "evidence": "typed schema and schema tests"},
     {"id": "D3", "status": "pass", "evidence": "bounded Python AST resolver tests"},
-    {"id": "D4", "status": "partial", "evidence": "Go regex detection passes; planned Go AST/dataflow resolver is not implemented"},
+    {"id": "D4", "status": "pass_bounded", "evidence": "Tree-sitter Go parsing, alias-aware same-function RSA role inference, and fail-closed tests"},
     {"id": "D5", "status": "pass", "evidence": "bounded same-scope RSA dataflow and negative tests"},
     {"id": "D6", "status": "pass", "evidence": "linked JWT context plus abstention fixtures"},
     {"id": "D7", "status": "pass", "evidence": "nine validated versioned YAML rules"},
@@ -94,9 +95,9 @@ milestones = [
 document = {
     "generated_at": datetime.now(timezone.utc).isoformat(),
     "source_commit": commit,
-    "overall_status": "pass_with_declared_partial",
-    "pass_count": 11,
-    "partial_count": 1,
+    "overall_status": "pass",
+    "pass_count": 12,
+    "partial_count": 0,
     "fail_count": 0,
     "milestones": milestones,
 }
@@ -109,13 +110,12 @@ print(f"\nSummary saved -> {output}")
 PY
 
 section RESULT "D0-D11 validation finished"
-printf '47 pytest tests, 23 legacy scanner checks, 5 Maven tests, frontend build,\n'
+printf '57 pytest tests, 23 legacy scanner checks, 5 Maven tests, frontend build,\n'
 printf 'D9 benchmark, D10 schemas, and D11 243-state audit passed.\n'
-printf 'Declared partial: D4 Go AST/dataflow resolver (current Go detection is regex-based).\n'
 
 if [[ "$strict" -eq 1 ]]; then
-  printf 'Strict result: PARTIAL (exit 2). Complete or explicitly re-scope D4 before claiming full D0-D11.\n'
-  exit 2
+  printf 'Strict result: PASS (exit 0). All bounded D0-D11 milestones passed.\n'
+  exit 0
 fi
 
-printf 'Default result: PASS_WITH_DECLARED_PARTIAL (exit 0).\n'
+printf 'Default result: PASS (exit 0).\n'

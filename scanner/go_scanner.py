@@ -3,21 +3,14 @@ Go Language Crypto Scanner
 ============================
 Scans Go source files (.go) for quantum-vulnerable crypto primitives.
 
-HOW IT WORKS — WHY REGEX INSTEAD OF AST:
-─────────────────────────────────────────
-Python has a built-in `ast` module for parsing Python. Go does not have
-one accessible from Python. Options are:
-
-  1. Regex               ← what we use
-  2. Spawn `go/ast`      — requires Go installed, slow per-file
-  3. Tree-sitter         — needs C binding, complex setup
-  4. gopls LSP           — heavyweight
-
-For Go crypto scanning, regex is the right choice because:
-  - Go import paths are 100% regular: always `"full/package/path"`
-  - No relative imports, no dynamic imports, no conditional imports
-  - A Go file that imports "crypto/rsa" IS using RSA — no ambiguity
-  - Accuracy is 99%+ for real-world Go codebases
+TWO-LAYER GO ANALYSIS:
+──────────────────────
+This module retains lightweight regex discovery for inventory coverage.  D4
+adds a separate Tree-sitter Go syntax-tree resolver in resolver/go_semantic.py.
+An import proves only that a package is present; it does not prove whether an
+RSA key signs, verifies, encrypts a generated session secret, or is unused.
+The semantic resolver therefore links supported same-function key flows and
+returns UNKNOWN when evidence is absent, malformed, shadowed, or conflicting.
 
 TWO SCAN PHASES:
 ─────────────────

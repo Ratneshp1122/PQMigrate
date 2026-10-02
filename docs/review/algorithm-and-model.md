@@ -10,11 +10,13 @@ PQMigrate separates primitive discovery from semantic role inference. A source i
 SCAN(source tree, rule registry):
   enumerate supported source files without executing them
   parse each Python file into an AST
+  discover Go inventory leads with bounded patterns
+  parse Go RSA candidates with the Tree-sitter Go grammar
   emit primitive inventory leads and supported direct call findings
   for each RSA lead:
     partition observations by module or function scope
-    record variables assigned by rsa.generate_private_key
-    record variables assigned by os.urandom or secrets token generation
+    record variables assigned by supported RSA key-generation calls
+    record variables assigned or filled by supported secure-random calls
     link a tracked RSA key to a later operation in the same scope
     if jwt.encode consumes that exact key with an RS* algorithm:
       return SIGNATURE, JWT, and the call-line evidence
@@ -43,10 +45,10 @@ rho(x) = UNKNOWN
   when neither condition holds or observed roles conflict
 ```
 
-The current implementation proves two review cases:
+The current implementation proves corresponding bounded Python and Go cases:
 
 - `jwt.encode(payload, signing_key, algorithm="RS256")` is a signature only when `signing_key` is the tracked generated RSA key.
-- RSA encryption is key transport only when the encrypted argument is a tracked session secret produced by `os.urandom` or a supported `secrets` call.
+- RSA encryption is key transport only when the encrypted argument is a tracked session secret produced by a supported secure-random call.
 
 Same-function proximity alone does not satisfy either rule.
 
@@ -65,13 +67,14 @@ The conjunction uses three-valued logic. `unknown` prevents automatic mutation. 
 
 ## Complexity
 
-Let `N` be parsed AST nodes, `F` emitted findings, `D` bounded dataflow links, `P` regex patterns, and `B` Go source bytes.
+Let `N_py` and `N_go` be parsed Python and Go syntax nodes, `F` emitted findings, `D` bounded dataflow links, `P` regex patterns, and `B_go` Go source bytes.
 
-- Python parsing and traversal: approximately `O(N)`.
-- Bounded role inference: `O(N)` per analyzed file with indexed variable sets.
+- Python parsing and traversal: approximately `O(N_py)`.
+- Go inventory discovery: approximately `O(P × B_go)` for ordinary bounded patterns.
+- Tree-sitter Go parsing and bounded traversal: approximately `O(N_go)` under ordinary parser behavior.
+- Bounded role inference: `O(N_py + N_go + D)` across parsed candidates with indexed variable sets.
 - Report construction: `O(F)` beyond parsing and inference.
-- In-memory Python analysis: `O(N + F + D)`.
-- Current Go regex scan: approximately `O(PB)` for ordinary bounded patterns. No general linear-time claim is made.
+- In-memory syntax analysis: `O(N_py + N_go + F + D)`.
 
 ## Verified review cases
 

@@ -10,6 +10,7 @@ build/
 .tox/
 .venv/
 venv/
+.venv-d4/
 .mypy_cache/
 .pytest_cache/
 .hypothesis/
