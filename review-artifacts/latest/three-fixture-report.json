@@ -1,11 +1,11 @@
 {
   "schema_version": "2.2",
-  "scan_id": "3d0729fb-7eea-4af9-b24c-cb2dc6380d81",
+  "scan_id": "03c8168c-2936-4ac9-a1bd-534e3deef1af",
   "scanner_version": "0.3.0",
   "rules_version": "2026.09.26-d7.1",
-  "source_commit": "6ab2fe444c863783fb88d7af530a180b283a0764",
+  "source_commit": "3bce1cdf573e474f4f2a5de6516aabb7f1bc0c71",
   "project_name": "review",
-  "scan_timestamp": "2026-10-02T04:47:58.399827+00:00",
+  "scan_timestamp": "2026-10-02T07:19:47.600824+00:00",
   "files_scanned": 3,
   "skipped_files": 0,
   "total_findings": 4,
@@ -56,14 +56,14 @@
           ]
         },
         "decision_trace": {
-          "trace_id": "e51c84167d8d67b5",
+          "trace_id": "bed1709276d31639",
           "finding_id": "8cb763802590",
           "outcome": "abstain",
           "source_ref": {
             "file_path": "tests/fixtures/review/review_rsa_import_only.py",
             "line_number": 3,
             "column": 0,
-            "source_commit": "6ab2fe444c863783fb88d7af530a180b283a0764"
+            "source_commit": "3bce1cdf573e474f4f2a5de6516aabb7f1bc0c71"
           },
           "steps": [
             {
@@ -77,7 +77,7 @@
                   "file_path": "tests/fixtures/review/review_rsa_import_only.py",
                   "line_number": 3,
                   "column": 0,
-                  "source_commit": "6ab2fe444c863783fb88d7af530a180b283a0764"
+                  "source_commit": "3bce1cdf573e474f4f2a5de6516aabb7f1bc0c71"
                 }
               }
             },
@@ -183,14 +183,14 @@
           ]
         },
         "decision_trace": {
-          "trace_id": "ae497f42a229d951",
+          "trace_id": "dd5a1aa620c44d72",
           "finding_id": "4a2c2c871088",
           "outcome": "recommend",
           "source_ref": {
             "file_path": "tests/fixtures/review/review_rsa_jwt_signing.py",
             "line_number": 7,
             "column": 0,
-            "source_commit": "6ab2fe444c863783fb88d7af530a180b283a0764"
+            "source_commit": "3bce1cdf573e474f4f2a5de6516aabb7f1bc0c71"
           },
           "steps": [
             {
@@ -204,7 +204,7 @@
                   "file_path": "tests/fixtures/review/review_rsa_jwt_signing.py",
                   "line_number": 7,
                   "column": 0,
-                  "source_commit": "6ab2fe444c863783fb88d7af530a180b283a0764"
+                  "source_commit": "3bce1cdf573e474f4f2a5de6516aabb7f1bc0c71"
                 }
               }
             },
@@ -309,14 +309,14 @@
           ]
         },
         "decision_trace": {
-          "trace_id": "239ecf7d0f7ec876",
+          "trace_id": "180b273066f4f122",
           "finding_id": "8477083d34c8",
           "outcome": "recommend",
           "source_ref": {
             "file_path": "tests/fixtures/review/review_rsa_key_transport.py",
             "line_number": 9,
             "column": 0,
-            "source_commit": "6ab2fe444c863783fb88d7af530a180b283a0764"
+            "source_commit": "3bce1cdf573e474f4f2a5de6516aabb7f1bc0c71"
           },
           "steps": [
             {
@@ -330,7 +330,7 @@
                   "file_path": "tests/fixtures/review/review_rsa_key_transport.py",
                   "line_number": 9,
                   "column": 0,
-                  "source_commit": "6ab2fe444c863783fb88d7af530a180b283a0764"
+                  "source_commit": "3bce1cdf573e474f4f2a5de6516aabb7f1bc0c71"
                 }
               }
             },
@@ -437,14 +437,14 @@
           ]
         },
         "decision_trace": {
-          "trace_id": "396182e619ec2996",
+          "trace_id": "ec4f502ef7541543",
           "finding_id": "c74a9bcb0014",
           "outcome": "recommend",
           "source_ref": {
             "file_path": "tests/fixtures/review/review_rsa_key_transport.py",
             "line_number": 9,
             "column": 0,
-            "source_commit": "6ab2fe444c863783fb88d7af530a180b283a0764"
+            "source_commit": "3bce1cdf573e474f4f2a5de6516aabb7f1bc0c71"
           },
           "steps": [
             {
@@ -458,7 +458,7 @@
                   "file_path": "tests/fixtures/review/review_rsa_key_transport.py",
                   "line_number": 9,
                   "column": 0,
-                  "source_commit": "6ab2fe444c863783fb88d7af530a180b283a0764"
+                  "source_commit": "3bce1cdf573e474f4f2a5de6516aabb7f1bc0c71"
                 }
               }
             },

@@ -491,6 +491,47 @@ def cmd_verify_preview(args: list[str]):
         sys.exit(2)
 
 
+def cmd_interop_lab(args: list[str]):
+    from pqc_migration_tool.lab.d14_interop import run_interop_lab
+    try:
+        report = run_interop_lab(int(_get_flag(args, "--repeats", "20")))
+    except ValueError as exc:
+        print(f"Error: {exc}"); sys.exit(1)
+    rendered = json.dumps(report, indent=2, sort_keys=True) + "\n"
+    output = _get_flag(args, "--output", None)
+    if output:
+        path = Path(output); path.parent.mkdir(parents=True, exist_ok=True); path.write_text(rendered, encoding="utf-8")
+    print(rendered, end="")
+    if report["status"] != "pass_bounded": sys.exit(2)
+
+
+def cmd_dashboard(args: list[str]):
+    if not args:
+        print("Usage: python3 cli.py dashboard --input scan.json [--compare PREVIOUS.json] [--source-root DIR] [--bind 127.0.0.1] [--port 8765] [--check]"); sys.exit(1)
+    from pqc_migration_tool.dashboard.local_server import create_server, load_manifest, manifest_summary
+    manifest_arg = _get_flag(args, "--input", None)
+    if manifest_arg is None:
+        print("Error: --input is required"); sys.exit(1)
+    manifest_path = Path(manifest_arg); root_arg = _get_flag(args, "--source-root", None)
+    try:
+        manifest = load_manifest(manifest_path); summary = manifest_summary(manifest)
+        if "--check" in args:
+            rendered = json.dumps(summary, indent=2, sort_keys=True) + "\n"; output = _get_flag(args, "--output", None)
+            if output: Path(output).write_text(rendered, encoding="utf-8")
+            print(rendered, end=""); return
+        compare_arg = _get_flag(args, "--compare", None)
+        server = create_server(manifest_path, Path(root_arg) if root_arg else None,
+                               _get_flag(args, "--bind", "127.0.0.1"), int(_get_flag(args, "--port", "8765")),
+                               Path(compare_arg) if compare_arg else None)
+    except (ValueError, OSError, json.JSONDecodeError) as exc:
+        print(f"Error: {exc}"); sys.exit(1)
+    print(f"Read-only dashboard: http://{server.server_address[0]}:{server.server_port}")
+    print("Press Ctrl+C to stop. No source is uploaded.")
+    try: server.serve_forever()
+    except KeyboardInterrupt: pass
+    finally: server.server_close()
+
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # main
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -505,6 +546,8 @@ def main():
         print("  export <report.json>       Convert JSON to SARIF 2.1.0 or CycloneDX 1.7 CBOM")
         print("  preview <file.py>          Generate a hash-bound D12 diff; never edits source")
         print("  verify-preview <file.py>   Verify D12 preview in a disposable copy")
+        print("  interop-lab                Run the bounded D14 compatibility matrix")
+        print("  dashboard --input FILE     Serve the read-only D15/D16 local workbench")
         print("  migration <primitive>      Show migration code example")
         print("  list-patterns             List all detectable patterns")
         print("  list-rules [yaml-path]    Validate and list D7 rules")
@@ -545,6 +588,8 @@ def main():
         "patch":         cmd_patch,
         "preview":       cmd_preview,
         "verify-preview": cmd_verify_preview,
+        "interop-lab":    cmd_interop_lab,
+        "dashboard":      cmd_dashboard,
         "export":        cmd_export,
         "migration":     cmd_migration,
         "list-patterns": cmd_list_patterns,

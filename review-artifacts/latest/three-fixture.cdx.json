@@ -2,10 +2,10 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:3d0729fb-7eea-4af9-b24c-cb2dc6380d81",
+  "serialNumber": "urn:uuid:03c8168c-2936-4ac9-a1bd-534e3deef1af",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-10-02T04:47:58.399827+00:00",
+    "timestamp": "2026-10-02T07:19:47.600824+00:00",
     "tools": {
       "components": [
         {
@@ -19,7 +19,7 @@
       "type": "application",
       "bom-ref": "application:review",
       "name": "review",
-      "version": "6ab2fe444c86"
+      "version": "3bce1cdf573e"
     }
   },
   "components": [
@@ -83,7 +83,7 @@
         },
         {
           "name": "pqmigrate:trace-id",
-          "value": "e51c84167d8d67b5"
+          "value": "bed1709276d31639"
         },
         {
           "name": "pqmigrate:decision-outcome",
@@ -167,7 +167,7 @@
         },
         {
           "name": "pqmigrate:trace-id",
-          "value": "ae497f42a229d951"
+          "value": "dd5a1aa620c44d72"
         },
         {
           "name": "pqmigrate:decision-outcome",
@@ -251,7 +251,7 @@
         },
         {
           "name": "pqmigrate:trace-id",
-          "value": "239ecf7d0f7ec876"
+          "value": "180b273066f4f122"
         },
         {
           "name": "pqmigrate:decision-outcome",
@@ -335,7 +335,7 @@
         },
         {
           "name": "pqmigrate:trace-id",
-          "value": "396182e619ec2996"
+          "value": "ec4f502ef7541543"
         },
         {
           "name": "pqmigrate:decision-outcome",
@@ -401,7 +401,7 @@
   "properties": [
     {
       "name": "pqmigrate:scan-id",
-      "value": "3d0729fb-7eea-4af9-b24c-cb2dc6380d81"
+      "value": "03c8168c-2936-4ac9-a1bd-534e3deef1af"
     },
     {
       "name": "pqmigrate:schema-version",
@@ -417,7 +417,7 @@
     },
     {
       "name": "pqmigrate:source-commit",
-      "value": "6ab2fe444c863783fb88d7af530a180b283a0764"
+      "value": "3bce1cdf573e474f4f2a5de6516aabb7f1bc0c71"
     },
     {
       "name": "pqmigrate:scope-note",

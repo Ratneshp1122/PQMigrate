@@ -110,7 +110,8 @@ print(f"\nSummary saved -> {output}")
 PY
 
 section RESULT "D0-D11 validation finished"
-printf '57 pytest tests, 23 legacy scanner checks, 5 Maven tests, frontend build,\n'
+_pytest_count=$(python3 -m pytest --collect-only -q 2>/dev/null | grep -E '^[0-9]+ test' | awk '{print $1}')
+printf "${_pytest_count:-89} pytest tests, 23 legacy scanner checks, 5 Maven tests, frontend build,\n"
 printf 'D9 benchmark, D10 schemas, and D11 243-state audit passed.\n'
 
 if [[ "$strict" -eq 1 ]]; then
