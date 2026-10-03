@@ -1,0 +1,32 @@
+{
+  "artifact_sha256": {
+    "d0-d11-validation-summary.json": "8d89f9a0252228e37c140236cacd8aec4079be3295b246a4399c8664ddc66567",
+    "d12-preview.json": "bb85dc43cad8c9f04711e74d456fcb25fd39c7cf5eb723f9428cfbca5a6ba350",
+    "d13-verification.json": "fe0f733eb860e488a60ffc709317fef8fd1503078fa78eff571647cdef141048",
+    "d14-interoperability.json": "ad851715bbc301b9a27ddf9326f61584dda58756bf555af770ccff6f497f104f",
+    "d15-dashboard-check.json": "a3a8d255a9170f2adde0f3cd61a95c7004c7280fa83f56bc4e6addc2fc52ea11",
+    "d16-dashboard-check.json": "a3a8d255a9170f2adde0f3cd61a95c7004c7280fa83f56bc4e6addc2fc52ea11",
+    "d17-website-check.json": "083c7c54f74958030af40d79d4553293eeee4360046625e4a8b02c39a9e8c295",
+    "d18-baselines.json": "149bba671506abe6d0f6f7bd67488042870dbd9fd74da01a07bacade06bdbc60",
+    "d19-release-readiness.json": "5be4b3b9f629a1192d6bd80cb49687e302a665932166fbae2e7572de84caa191"
+  },
+  "claim_boundaries": [
+    "Automatic mutation remains disabled.",
+    "D14 is digest-contract evidence, not PQC/hybrid interoperability.",
+    "D9/D18 use a single-author synthetic Python RSA pilot.",
+    "Passing this gate is not production security certification."
+  ],
+  "deployment": {
+    "cli": "local_wsl_validated",
+    "dashboard": "loopback_only",
+    "public_hosting": "not_deployed",
+    "public_site": "local_static_preview",
+    "react_frontend": "production_build_only",
+    "spring_backend": "tests_only"
+  },
+  "generated_at": "2026-10-03T12:40:17.904247+00:00",
+  "schema_version": "2026.10.03-d20.1",
+  "source_commit": "519a99dd3da6d16d6551bd8c97b18279bb520a04",
+  "status": "pass",
+  "validated_range": "D0-D20"
+}

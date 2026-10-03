@@ -110,8 +110,8 @@ print(f"\nSummary saved -> {output}")
 PY
 
 section RESULT "D0-D11 validation finished"
-_pytest_count=$(python3 -m pytest --collect-only -q 2>/dev/null | grep -E '^[0-9]+ test' | awk '{print $1}')
-printf "${_pytest_count:-89} pytest tests, 23 legacy scanner checks, 5 Maven tests, frontend build,\n"
+pytest_count="$($python_bin -m pytest --collect-only -q "$repo_root/tests" 2>/dev/null | awk '/tests collected/{print $1}' | tail -1)"
+printf '%s pytest tests, 23 legacy scanner checks, 5 Maven tests, frontend build,\n' "${pytest_count:-unknown}"
 printf 'D9 benchmark, D10 schemas, and D11 243-state audit passed.\n'
 
 if [[ "$strict" -eq 1 ]]; then

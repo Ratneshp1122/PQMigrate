@@ -1,0 +1,17 @@
+{
+  "blocker_codes": [
+    "D19_WORKTREE_NOT_CLEAN",
+    "D19_V0_1_TAG_NOT_CREATED"
+  ],
+  "dirty_path_count": 31,
+  "generated_at": "2026-10-03T12:40:17.864681+00:00",
+  "missing_files": [],
+  "packet_ready": true,
+  "release_eligible": false,
+  "schema_version": "2026.10.03-d19.1",
+  "source_commit": "519a99dd3da6d16d6551bd8c97b18279bb520a04",
+  "status": "packet_ready_release_pending",
+  "tag_created": false,
+  "tag_name": "v0.1.0",
+  "tag_target": null
+}

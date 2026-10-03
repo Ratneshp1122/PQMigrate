@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
+python3 scripts/sync_sample_summary.py
 python3 -m pytest -q tests/test_d17_website.py
 node --check website/app.js
 python3 - <<'PY'

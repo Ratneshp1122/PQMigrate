@@ -5,7 +5,7 @@
     "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.42",
     "python": "3.13.12"
   },
-  "generated_at": "2026-10-02T07:19:51.833834+00:00",
+  "generated_at": "2026-10-03T12:40:14.928714+00:00",
   "not_claimed": [
     "PQC or hybrid KEM interoperability",
     "TLS, SSH, JWT, certificate, database, or external-provider compatibility",
@@ -17,7 +17,7 @@
   "samples": [
     {
       "digest_bytes": 16,
-      "duration_ns": 986200,
+      "duration_ns": 895100,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -30,7 +30,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 938800,
+      "duration_ns": 706200,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -43,7 +43,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 626400,
+      "duration_ns": 854500,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -56,7 +56,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 750200,
+      "duration_ns": 1007200,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -69,7 +69,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 609800,
+      "duration_ns": 606300,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -82,7 +82,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 747500,
+      "duration_ns": 561200,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -95,7 +95,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 687500,
+      "duration_ns": 639500,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -108,7 +108,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 642900,
+      "duration_ns": 508300,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -121,7 +121,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 611400,
+      "duration_ns": 586100,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -134,7 +134,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 732500,
+      "duration_ns": 515400,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -147,7 +147,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 602600,
+      "duration_ns": 515200,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -160,7 +160,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 667600,
+      "duration_ns": 585400,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -173,7 +173,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 619800,
+      "duration_ns": 628800,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -186,7 +186,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 740600,
+      "duration_ns": 526400,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -199,7 +199,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 650401,
+      "duration_ns": 529600,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -212,7 +212,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 554300,
+      "duration_ns": 546300,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -225,7 +225,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 534700,
+      "duration_ns": 430300,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -238,7 +238,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 801800,
+      "duration_ns": 408300,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -251,7 +251,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 661400,
+      "duration_ns": 450800,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -264,7 +264,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 931200,
+      "duration_ns": 428800,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -277,7 +277,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 885600,
+      "duration_ns": 424300,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -290,7 +290,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 903100,
+      "duration_ns": 435300,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -303,7 +303,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 956700,
+      "duration_ns": 473600,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -316,7 +316,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 922900,
+      "duration_ns": 463100,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -329,7 +329,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 684000,
+      "duration_ns": 419700,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -342,7 +342,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 922100,
+      "duration_ns": 416700,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -355,7 +355,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 678000,
+      "duration_ns": 445900,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -368,7 +368,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 680300,
+      "duration_ns": 435200,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -381,7 +381,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 685300,
+      "duration_ns": 447300,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -394,7 +394,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 685600,
+      "duration_ns": 889300,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -407,7 +407,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 720400,
+      "duration_ns": 822900,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -420,7 +420,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 697700,
+      "duration_ns": 584000,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -433,7 +433,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 688200,
+      "duration_ns": 617900,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -446,7 +446,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 860800,
+      "duration_ns": 794200,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -459,7 +459,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 685801,
+      "duration_ns": 637100,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -472,7 +472,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 658400,
+      "duration_ns": 565300,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -485,7 +485,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 765500,
+      "duration_ns": 837100,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -498,7 +498,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 684700,
+      "duration_ns": 452500,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -511,7 +511,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 695000,
+      "duration_ns": 447100,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -524,7 +524,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 754100,
+      "duration_ns": 706400,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -537,7 +537,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 791000,
+      "duration_ns": 481000,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -550,7 +550,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 1028701,
+      "duration_ns": 466600,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -563,7 +563,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 844200,
+      "duration_ns": 684500,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -576,7 +576,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 737400,
+      "duration_ns": 497400,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -589,7 +589,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 669300,
+      "duration_ns": 491700,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -602,7 +602,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 764600,
+      "duration_ns": 656900,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -615,7 +615,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 815800,
+      "duration_ns": 433600,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -628,7 +628,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 688400,
+      "duration_ns": 440500,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -641,7 +641,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 666601,
+      "duration_ns": 906100,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -654,7 +654,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 685900,
+      "duration_ns": 467000,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -667,7 +667,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 914300,
+      "duration_ns": 448400,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -680,7 +680,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 807400,
+      "duration_ns": 640400,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -693,7 +693,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 767900,
+      "duration_ns": 453600,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -706,7 +706,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 677000,
+      "duration_ns": 422600,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -719,7 +719,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 687000,
+      "duration_ns": 1320200,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -732,7 +732,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 867601,
+      "duration_ns": 841800,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -745,7 +745,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 703500,
+      "duration_ns": 573700,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -758,7 +758,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 711100,
+      "duration_ns": 1190500,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -771,7 +771,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 691700,
+      "duration_ns": 561800,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -784,7 +784,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 679000,
+      "duration_ns": 599500,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": true,
@@ -797,7 +797,7 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 665100,
+      "duration_ns": 680200,
       "expectation_met": true,
       "expected_mode": "md5",
       "expected_success": true,
@@ -810,307 +810,307 @@
     },
     {
       "digest_bytes": 16,
-      "duration_ns": 853800,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 1,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 774200,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 2,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 876801,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 3,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 1054200,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 4,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 967300,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 5,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 937800,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 6,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 766600,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 7,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 756800,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 8,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 799501,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 9,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 771800,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 10,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 806800,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 11,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 741400,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 12,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 991200,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 13,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 774200,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 14,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 766500,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 15,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 908900,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 16,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 750500,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 17,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 792500,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 18,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 16,
-      "duration_ns": 828200,
-      "expectation_met": true,
-      "expected_mode": "md5",
-      "expected_success": true,
-      "sample_index": 19,
-      "scenario_id": "transitional_legacy_fallback",
-      "selected_mode": "md5",
-      "status": "accepted",
-      "success": true,
-      "wire_bytes": 161
-    },
-    {
-      "digest_bytes": 0,
-      "duration_ns": 565000,
-      "expectation_met": true,
-      "expected_mode": null,
-      "expected_success": false,
-      "sample_index": 0,
-      "scenario_id": "mismatched_peers",
-      "selected_mode": null,
-      "status": "no_common_mode",
-      "success": false,
-      "wire_bytes": 67
-    },
-    {
-      "digest_bytes": 0,
-      "duration_ns": 545200,
-      "expectation_met": true,
-      "expected_mode": null,
-      "expected_success": false,
-      "sample_index": 1,
-      "scenario_id": "mismatched_peers",
-      "selected_mode": null,
-      "status": "no_common_mode",
-      "success": false,
-      "wire_bytes": 67
-    },
-    {
-      "digest_bytes": 0,
-      "duration_ns": 669200,
-      "expectation_met": true,
-      "expected_mode": null,
-      "expected_success": false,
-      "sample_index": 2,
-      "scenario_id": "mismatched_peers",
-      "selected_mode": null,
-      "status": "no_common_mode",
-      "success": false,
-      "wire_bytes": 67
-    },
-    {
-      "digest_bytes": 0,
-      "duration_ns": 779301,
-      "expectation_met": true,
-      "expected_mode": null,
-      "expected_success": false,
-      "sample_index": 3,
-      "scenario_id": "mismatched_peers",
-      "selected_mode": null,
-      "status": "no_common_mode",
-      "success": false,
-      "wire_bytes": 67
-    },
-    {
-      "digest_bytes": 0,
       "duration_ns": 607700,
       "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 1,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 625200,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 2,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 535500,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 3,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 615600,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 4,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 606400,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 5,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 553500,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 6,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 570800,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 7,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 539300,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 8,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 502600,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 9,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 507700,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 10,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 809500,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 11,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 644600,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 12,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 782000,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 13,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 715300,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 14,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 639000,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 15,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 1810200,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 16,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 618500,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 17,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 711200,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 18,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 16,
+      "duration_ns": 906800,
+      "expectation_met": true,
+      "expected_mode": "md5",
+      "expected_success": true,
+      "sample_index": 19,
+      "scenario_id": "transitional_legacy_fallback",
+      "selected_mode": "md5",
+      "status": "accepted",
+      "success": true,
+      "wire_bytes": 161
+    },
+    {
+      "digest_bytes": 0,
+      "duration_ns": 481400,
+      "expectation_met": true,
+      "expected_mode": null,
+      "expected_success": false,
+      "sample_index": 0,
+      "scenario_id": "mismatched_peers",
+      "selected_mode": null,
+      "status": "no_common_mode",
+      "success": false,
+      "wire_bytes": 67
+    },
+    {
+      "digest_bytes": 0,
+      "duration_ns": 624300,
+      "expectation_met": true,
+      "expected_mode": null,
+      "expected_success": false,
+      "sample_index": 1,
+      "scenario_id": "mismatched_peers",
+      "selected_mode": null,
+      "status": "no_common_mode",
+      "success": false,
+      "wire_bytes": 67
+    },
+    {
+      "digest_bytes": 0,
+      "duration_ns": 910500,
+      "expectation_met": true,
+      "expected_mode": null,
+      "expected_success": false,
+      "sample_index": 2,
+      "scenario_id": "mismatched_peers",
+      "selected_mode": null,
+      "status": "no_common_mode",
+      "success": false,
+      "wire_bytes": 67
+    },
+    {
+      "digest_bytes": 0,
+      "duration_ns": 638700,
+      "expectation_met": true,
+      "expected_mode": null,
+      "expected_success": false,
+      "sample_index": 3,
+      "scenario_id": "mismatched_peers",
+      "selected_mode": null,
+      "status": "no_common_mode",
+      "success": false,
+      "wire_bytes": 67
+    },
+    {
+      "digest_bytes": 0,
+      "duration_ns": 639200,
+      "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
       "sample_index": 4,
@@ -1122,7 +1122,7 @@
     },
     {
       "digest_bytes": 0,
-      "duration_ns": 523300,
+      "duration_ns": 651900,
       "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
@@ -1135,7 +1135,7 @@
     },
     {
       "digest_bytes": 0,
-      "duration_ns": 571900,
+      "duration_ns": 445900,
       "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
@@ -1148,7 +1148,7 @@
     },
     {
       "digest_bytes": 0,
-      "duration_ns": 613700,
+      "duration_ns": 401900,
       "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
@@ -1161,7 +1161,7 @@
     },
     {
       "digest_bytes": 0,
-      "duration_ns": 517200,
+      "duration_ns": 811400,
       "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
@@ -1174,7 +1174,7 @@
     },
     {
       "digest_bytes": 0,
-      "duration_ns": 548100,
+      "duration_ns": 423600,
       "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
@@ -1187,7 +1187,7 @@
     },
     {
       "digest_bytes": 0,
-      "duration_ns": 667500,
+      "duration_ns": 529900,
       "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
@@ -1200,7 +1200,7 @@
     },
     {
       "digest_bytes": 0,
-      "duration_ns": 562601,
+      "duration_ns": 667000,
       "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
@@ -1213,7 +1213,7 @@
     },
     {
       "digest_bytes": 0,
-      "duration_ns": 605300,
+      "duration_ns": 428300,
       "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
@@ -1226,7 +1226,7 @@
     },
     {
       "digest_bytes": 0,
-      "duration_ns": 674500,
+      "duration_ns": 413500,
       "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
@@ -1239,7 +1239,7 @@
     },
     {
       "digest_bytes": 0,
-      "duration_ns": 572300,
+      "duration_ns": 538500,
       "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
@@ -1252,7 +1252,7 @@
     },
     {
       "digest_bytes": 0,
-      "duration_ns": 564100,
+      "duration_ns": 429500,
       "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
@@ -1265,7 +1265,7 @@
     },
     {
       "digest_bytes": 0,
-      "duration_ns": 638500,
+      "duration_ns": 469500,
       "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
@@ -1278,7 +1278,7 @@
     },
     {
       "digest_bytes": 0,
-      "duration_ns": 609100,
+      "duration_ns": 442500,
       "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
@@ -1291,7 +1291,7 @@
     },
     {
       "digest_bytes": 0,
-      "duration_ns": 516600,
+      "duration_ns": 561300,
       "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
@@ -1304,7 +1304,7 @@
     },
     {
       "digest_bytes": 0,
-      "duration_ns": 513900,
+      "duration_ns": 585400,
       "expectation_met": true,
       "expected_mode": null,
       "expected_success": false,
@@ -1317,7 +1317,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 906101,
+      "duration_ns": 885800,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1330,7 +1330,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 930900,
+      "duration_ns": 705300,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1343,7 +1343,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 749900,
+      "duration_ns": 973300,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1356,7 +1356,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 787100,
+      "duration_ns": 1190200,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1369,7 +1369,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 804800,
+      "duration_ns": 899000,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1382,7 +1382,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 917800,
+      "duration_ns": 1262001,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1395,7 +1395,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 1030801,
+      "duration_ns": 710800,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1408,7 +1408,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 839600,
+      "duration_ns": 653700,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1421,7 +1421,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 804500,
+      "duration_ns": 666900,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1434,7 +1434,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 743500,
+      "duration_ns": 734300,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1447,7 +1447,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 844400,
+      "duration_ns": 675700,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1460,7 +1460,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 810600,
+      "duration_ns": 636100,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1473,7 +1473,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 740800,
+      "duration_ns": 660100,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1486,7 +1486,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 761201,
+      "duration_ns": 629600,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1499,7 +1499,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 740100,
+      "duration_ns": 654700,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1512,7 +1512,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 841000,
+      "duration_ns": 553600,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1525,7 +1525,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 769500,
+      "duration_ns": 615600,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1538,7 +1538,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 742800,
+      "duration_ns": 672900,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1551,7 +1551,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 778300,
+      "duration_ns": 589700,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1564,7 +1564,7 @@
     },
     {
       "digest_bytes": 32,
-      "duration_ns": 740700,
+      "duration_ns": 743000,
       "expectation_met": true,
       "expected_mode": "sha256",
       "expected_success": false,
@@ -1585,9 +1585,9 @@
         "md5"
       ],
       "duration_ns": {
-        "max": 986200,
-        "median": 664500,
-        "min": 534700
+        "max": 1007200,
+        "median": 553750,
+        "min": 408300
       },
       "expectations_met": true,
       "expected_mode": "md5",
@@ -1609,9 +1609,9 @@
         "sha256"
       ],
       "duration_ns": {
-        "max": 956700,
-        "median": 696350,
-        "min": 658400
+        "max": 889300,
+        "median": 468350,
+        "min": 416700
       },
       "expectations_met": true,
       "expected_mode": "sha256",
@@ -1634,9 +1634,9 @@
         "md5"
       ],
       "duration_ns": {
-        "max": 1028701,
-        "median": 724250,
-        "min": 666601
+        "max": 1320200,
+        "median": 529600,
+        "min": 422600
       },
       "expectations_met": true,
       "expected_mode": "sha256",
@@ -1660,9 +1660,9 @@
         "md5"
       ],
       "duration_ns": {
-        "max": 1054200,
-        "median": 796000,
-        "min": 665100
+        "max": 1810200,
+        "median": 621850,
+        "min": 502600
       },
       "expectations_met": true,
       "expected_mode": "md5",
@@ -1684,9 +1684,9 @@
         "md5"
       ],
       "duration_ns": {
-        "max": 779301,
-        "median": 572100,
-        "min": 513900
+        "max": 910500,
+        "median": 534200,
+        "min": 401900
       },
       "expectations_met": true,
       "expected_mode": null,
@@ -1708,9 +1708,9 @@
         "sha256"
       ],
       "duration_ns": {
-        "max": 1030801,
-        "median": 795800,
-        "min": 740100
+        "max": 1262001,
+        "median": 674300,
+        "min": 553600
       },
       "expectations_met": true,
       "expected_mode": "sha256",
