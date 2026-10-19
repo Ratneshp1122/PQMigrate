@@ -1,6 +1,6 @@
 # PQMigrate: Evidence-Driven and Abstention-Aware Planning for Post-Quantum Cryptographic Migration
 
-> Internal draft scaffold — 4 October 2026. Bracketed text is unfinished and must not be presented as a result.
+> Historical scaffold — superseded on 4 October 2026 by `PQMIGRATE_RESEARCH_PAPER_IEEE.md`, with matching `.tex` and `.pdf` files in this folder. Use the full manuscript for review. The scaffold below is retained for planning history and contains unfinished placeholders.
 
 ## Abstract
 
