@@ -1,31 +1,27 @@
 # PQMigrate: Evidence-Driven and Abstention-Aware Planning for Post-Quantum Cryptographic Migration
 
-> Revised 21 October 2026. The completed study is a single-author synthetic pilot. Real-code evaluation is ongoing. The supplied Draft 3 manuscript is revised separately under `revision/`; all historical result tables are unchanged.
+Dr. Deepak Uplaonkar, Ratnesh Patnaik, Saravanan Kumar, Vaibhavi Shah, and Prince Ostwal
 
-## Abstract
+**Abstract.** PQMigrate is a bounded source-analysis and advisory-planning prototype. Its completed quantitative study is a single-author synthetic pilot of 72 Python RSA snippets, not an independent real-code evaluation. The historical results describe an authored mixture of supported operations, unsupported operations, negative controls and malformed inputs. They establish neither generalization nor migration safety. This revision separates source-level operations from application roles, relates the implementation to cryptographic inventory and API-misuse analysis, and specifies an independent evaluation protocol. Real-code annotation and the external Semgrep comparison remain ongoing and unscored. Historical performance results are omitted; the evaluation status and protocol are reported instead. Planner recommendation correctness, Go accuracy, deployed interoperability and PQC transformations have not been evaluated by this pilot.
 
-Migrating software to post-quantum cryptography requires more than locating cryptographic names: the same primitive may implement signatures, general encryption, key transport, or protocol-specific behavior with different migration constraints. We present PQMigrate, a bounded static-analysis and planning system that links source evidence to operation roles, versioned migration knowledge, explicit blockers, and an abstention outcome when required context is unresolved. The current implementation analyzes Python and Go, emits traceable JSON, SARIF, and CycloneDX CBOM evidence, and enforces a fail-closed mutation policy. On a 72-case single-author synthetic Python RSA pilot, the full bounded pipeline achieved operation-detection precision 1.00, recall 0.769, and F1 0.870, while answering 40 of 52 gold operations with 1.00 role accuracy among answered cases. These preliminary figures are not product-wide accuracy results. Independent real-code annotation and external baseline comparison are ongoing and unscored. Our results motivate evaluating migration planners using both answer coverage and unsafe-recommendation rate rather than detection accuracy alone.
+**Index terms:** post-quantum cryptography, cryptographic inventory, static analysis, role inference, selective prediction, reproducibility.
 
-## 1. Introduction
+## I. Introduction
 
-ML-KEM and ML-DSA standardize different functions [1], [2]. A signature interface and key-transport interface therefore require different migration evidence. A KEM establishes shared secrets rather than replacing arbitrary-message encryption. Dependencies and coordinated change matter [3], [4]. Protocol identifiers [7] do not establish deployed support.
+NIST FIPS 203 defines ML-KEM for key encapsulation; FIPS 204 defines ML-DSA for signatures [1], [2]. FIPS 205 defines the hash-based signature standard SLH-DSA [5]. These functions are distinct. Replacing an RSA signature interface and redesigning an RSA key-transport interface require different evidence about key formats, peers, message sizes and failure handling. A KEM establishes a shared secret and does not offer arbitrary-message encryption as a drop-in replacement [1]. Finding an algorithm name is consequently an inventory lead, not a complete migration decision.
 
-### Contributions
+Cryptographic-agility work treats dependency management and coordinated change as research problems [3], [4]. NIST's NCCoE migration project separates cryptographic discovery from interoperability work [8]. PQMigrate addresses part of the evidence-management problem: observations link to source locations, bounded inference attempts to resolve their use, and an advisory planner records conditions and blockers. It does not establish that suggested replacements will interoperate or be secure in the target application.
 
-1. A typed, evidence-linked intermediate representation for cryptographic observations, operation roles and migration decisions.
-2. Bounded Python and Go semantic inference that distinguishes confirmed operations from inventory leads and explicitly abstains on unsupported or conflicting evidence.
-3. A versioned migration knowledge base and deterministic decision trace with blocker-aware, fail-closed patch eligibility.
-4. A reproducible evaluation framework with same-corpus baselines, feature ablations, raw failure accounting and standards-based exports.
+Standards and deployment status must be dated. At the verification date, 21 October 2026, NIST lists Falcon and HQC standardization as ongoing [6]. RFC 9964 specifies ML-DSA identifiers for JOSE and COSE [7]. This protocol specification is not evidence that a particular dependency, peer or deployment supports those identifiers. No JOSE/PQC integration or transformation is evaluated here.
 
-## 2. Research questions
+## II. Contribution and evidence boundary
 
-- RQ1: How accurately does bounded semantic analysis distinguish operations from inventory-only evidence?
-- RQ2: How accurately does it resolve migration-relevant roles?
-- RQ3: What is the contribution of identity flow, session-secret evidence and protocol context?
-- RQ4: How does abstention trade coverage for fewer unsafe recommendations?
-- RQ5: Are decisions traceable and reproducible at an exact source commit?
+The contribution is an inspectable prototype, an evidence-linked representation of observations and conditional advice, and a reproducible evaluation design. Python and Go parsing support is an implementation capability; the completed numerical pilot evaluates only synthetic Python RSA snippets. A source-level invocation is not proof that a production execution reached it. Test files may contain real crypto invocations, while an import, comment or algorithm descriptor alone is not an operation.
 
-## 3. Related work
+The paper asks whether bounded evidence can distinguish inventory leads, operations and application roles, and how unresolved evidence should be reported. It does not answer whether the prototype is accurate across repositories or whether its advice reduces migration risk. The present manuscript reports the system design, evaluation methodology and limitations. Historical performance tables and numerical findings have been removed. No replacement accuracy estimates are available before independent gold labels and operation-unit definitions are locked.
+
+
+## III. Related work
 
 **Discovery and migration dependencies.** Cryptoscope describes compiler-based analysis using control and data flow to identify cryptographic usage [9]. Hasan et al. model security dependencies and present migration case studies [4]. These works motivate connecting inventory entries to use and dependencies. PQMigrate's bounded heuristics are not equivalent to whole-program compiler analysis, and this pilot provides no shared-corpus comparison or performance ranking against these systems.
 
@@ -37,23 +33,59 @@ ML-KEM and ML-DSA standardize different functions [1], [2]. A signature interfac
 
 **External rule-engine baseline.** Semgrep runs published source patterns through its analysis engine [26]. The separate baseline implementation pins engine version, rules, source hashes and execution limits. Custom rules define the evaluated detector; results cannot be generalized to all Semgrep rule sets or commercial capabilities. Its execution ledger is not an accuracy evaluation. Native spans must be aligned to locked operation units before comparison.
 
-## 4. System design
+## IV. System model and inference
 
-### 4.1 Threat model and scope
+Discovery produces source-linked leads, inference attempts identity and role resolution, and the intermediate representation links findings to a versioned migration knowledge base. The planner exposes advice with conditions, evidence and blockers. JSON, SARIF and CBOM exports serialize observations; they are not additional evidence about the target's behavior [17], [18], [24]. Scanned source is treated as input rather than imported or executed.
 
-PQMigrate treats scanned repositories as untrusted input and does not execute target source during analysis. Its bounded inference is not whole-program proof. Unknown identity, role, compatibility, tests or authorization causes abstention or patch refusal.
+For the inspected Python resolver, assignment collection tracks selected RSA key-generation calls and selected random-byte sources. A subsequent pass associates calls with tracked names in a bounded scope. This is name-based evidence, not a general points-to analysis. Imports, assignments, wrappers, mutation and branch conditions may invalidate the inferred association. A role assigned from such evidence remains a fallible inference [24].
 
-### 4.2 Evidence pipeline
+An encryption of bytes from a tracked random source is a heuristic proxy used by the historical implementation for key transport. Randomness does not establish that those bytes are key material. The reviewer SOP instead requires evidence of their application use. This limitation requires application-level evidence before assigning key transport.
 
-Discovery yields source-linked leads; bounded inference attempts operation and role resolution; CryptoIR links evidence to the versioned knowledge base and conditional plans. SARIF and CBOM exports serialize this evidence [17], [18]. Schema validity does not establish semantic correctness or downstream ingestion. Selected name/assignment heuristics and the random-byte key-transport proxy are fallible [24].
+## V. Methodology and interpretation
 
-### 4.3 Abstention and patch policy
+**Synthetic pilot and current study.** PQMigrateBench v0.1 is a single-author synthetic pilot of 72 Python RSA snippets, covering operations, negative controls and malformed inputs. The same developer authored and labeled the examples. These deliberately constructed families are not a random sample of real software and cannot establish generalization [24]. Historical performance scores, result tables, plots and numerical findings are excluded from this manuscript.
 
-Patch eligibility requires known role, supported construction, interoperability evidence, adequate tests and explicit operator authorization. Any false or unknown condition refuses mutation. The current paper evaluates planning and preview evidence; it does not claim automatic PQC transformation.
+The inspected implementation revision is bcfb5e40fbc8eb74e1c919114f54031d03ab44e9 [24]. Source and corpus identity are recorded in the reproducibility audit. Source inspection supports implementation statements, but externally held historical gate logs were not independently verified. No historical gate-run outcome is claimed here.
 
-## 5. Dataset and annotation methodology
+**Units and coupled outputs.** The pilot's scoring unit is a snippet, whereas the real-code protocol uses source-level invocation units. A key may be generated, loaded, used to sign and serialized in one function: those invocations must not silently become one scored call. Historic coupled presence/known-role outputs must be distinguished from operation detection independent of role. An unresolved receiver is not a proven negative. A valid but unsupported operation remains eligible for annotation and failure accounting.
 
-The completed study uses 72 single-author synthetic Python RSA snippets: 52 operations, 16 negative controls and four malformed inputs. Historical detection/role scores use 68 parseable snippets. Unsupported valid operations remain in the denominator. The pilot is not independent repository validation.
+**JWT and aggregation limits.** Source inspection shows a literal RS-prefixed algorithm check for recognized JWT encoding. RFC 7518 defines PS256 as an RSA-PSS algorithm [22], so an RS-only check does not cover all RSA JWT signatures. This is an implementation-coverage limitation, not a new measured performance estimate. Mixed roles, wrappers, cross-scope flow, aliasing, reassignment and dynamic behavior can defeat bounded inference. The implementation's ordering and aggregation choices are not a soundness proof [24].
+
+**Output masks.** The session-secret and protocol variants in the pilot mask information in existing outputs. They demonstrate consequences for the reported fields; they are not independent implementations that disable analysis features. Such masks must not be presented as independently implemented feature-removal ablations. A causal claim about a separately implemented analyzer would require a new experiment.
+
+**Mutation policy.** The inspected policy checks role, construction support, interoperability evidence, tests and operator authorization, refusing mutation when requirements are false or unknown [24]. That control-flow property does not establish correct recommendations or secure transformed code. Tests, schema validity, source preservation, peer compatibility and cryptographic correctness are different obligations. Planner advice and unsafe-recommendation rates require separate independently adjudicated outcomes; this pilot supplies none.
+
+**Statistical scope.** Correctness among selected answered cases does not establish reliability for a target population. Reject-option literature motivates joint coverage/error reporting but supplies no bound for this authored sample [19]-[21]. Zero observed events would not establish zero underlying risk [23]. No real-code precision, recall, TPR, agreement or confidence interval is asserted here.
+
+The study's next stage is independent source annotation. The following sections distinguish implementation and execution status from accuracy evidence, then specify limitations and the ongoing review protocol.
+
+## VI. Evaluation status and reproducibility
+
+Independent real-code evaluation is ongoing. The candidate-selected packet and the separate ordinary-source/independent-search packet serve different purposes: reviewing discovered candidates can assess candidate validity, whereas investigating missed operations requires an independent search design. The assigned production units, reviewer submissions and adjudicated gold must be frozen and traceable before scoring.
+
+The separate Semgrep baseline implementation pins Community Edition 1.181.0, custom Python/Go rules, full repository commits, whole-file hashes, dependency versions and execution limits. It includes source-only manifests, engineering tests, a per-input ledger, and lossless raw stdout/stderr archives. Setup, key-loading and streaming stages must follow the SOP unit definitions rather than being silently merged with calls that consume their outputs. Its exact rule set defines the baseline [26].
+
+Static baseline runs have been preserved for the synthetic pilot and pinned candidate-containing source files. These are unscored execution artifacts. Successful execution, raw finding counts and passing engineering tests do not establish precision, recall, TPR, operation-role accuracy or agreement. No result is substituted for the removed historical tables.
+
+Every input remains accounted for, including unavailable sources, malformed inputs, partial parsing, timeouts and crashes. The runner preserves findings from incomplete scans without converting those scans into clean negatives. Duplicate and nested findings retain their native spans for a later, frozen alignment procedure. Target source is neither imported nor executed. Hash verification checks the source bytes and analysis artifacts, not the correctness of an inferred application role.
+
+The revised manuscript and its source are part of the Paper PR; the baseline rules, runner and raw archives are supplied in the separate Baseline PR. Reproduction requires the corresponding branch and pinned dependencies. Independent labels remain outside these artifacts, and no A/B submissions are used for rule tuning or manuscript accuracy claims.
+
+## VII. Discussion and limitations
+
+The synthetic pilot diagnoses what the bounded resolver can and cannot express. It cannot support claims of superiority over external tools, real-code accuracy, reduced migration effort or safer recommendations. Better detection F1 can coexist with worse role assignment; conversely, selective non-answers can inflate correctness among answered cases while leaving useful operations unresolved. Any future performance report must state the task and denominator explicitly.
+
+**Internal and construct validity.** A single author selected examples, defined labels and implemented the analyzer. Repeated scenario templates and a deliberately supported/unsupported mixture can favor the implementation. Snippet presence was historically coupled to a known role for some systems. Call-level operation presence, application role and planner advice are distinct constructs. Masking outputs is not a feature-removal experiment. Neither non-execution nor passing syntax/schema checks establishes semantic correctness. The random-byte key-transport proxy is specifically insufficient under the reviewer SOP.
+
+**External validity.** The completed numerical evidence is Python/RSA-specific and synthetic. It does not establish Go performance, wrapper resolution, package-boundary behavior, protocol coverage or operational deployment characteristics. The 500 candidate-selected anchors focus on scanner-discoverable locations; even complete annotation of them cannot reveal all missed operations. The separate ordinary-source/independent-search packet is needed to study omissions. Whole-file Semgrep scans provide more context than isolated snippets but do not solve sampling bias or establish whole-repository coverage.
+
+**Statistical validity.** Correlated examples, author selection and few repository families limit inference. No significance test, real-code confidence interval or inter-annotator agreement result is available. Once units and gold are locked, report raw denominators, label prevalence, undefined metrics and repository dependence alongside any interval. A planned repository bootstrap is not automatically reliable with few independent clusters; resampling must preserve paired systems and repository families. Favorable and unfavorable outcomes must be reported under the same frozen evaluation protocol.
+
+**Reproducibility and standards drift.** Pin the code, corpus, rule files, mapping, dependencies and standards access date. Mutable product documentation is evidence of documented capabilities at access time, not of a frozen tool's measured behavior. The inspected source and corpus are available at [24]; externally stored historical gate logs remain a verification gap. The IEEE-formatted bibliography identifies primary sources and versions; the accompanying audit distinguishes standards, author manuscripts, documentation, repository evidence and publisher metadata.
+
+**Planning and security validity.** A resolved role is necessary evidence for some migration advice, not sufficient evidence of a correct redesign. KEM selection does not itself settle key confirmation, authentication, serialization, failure handling or protocol integration [1], [4]. ML-DSA identifiers in a protocol specification do not prove deployment readiness [7]. No cryptographic security proof, verified PQC transformation, production interoperability measurement or user study is contributed here. Separate proposed cryptography investigations contribute no result to this paper.
+
+## VIII. Ongoing real-code evaluation protocol
 
 The 19-23 October 2026 annotation window is an organizational schedule, not evidence of completion. Reviewer eligibility requires not having built the scanner/resolver or seen predictions for the target repositories. Both reviewers independently receive the same 500 anchors, not disjoint halves. No A/B submissions were inspected for this revision or the baseline work. Reviewer interaction about individual cases remains prohibited until both packets are submitted and locked.
 
@@ -73,62 +105,11 @@ After the first wave, the separate 240-anchor independent-search/ordinary-source
 
 **Baseline and failure accounting.** The Semgrep comparison uses the same pinned Python/Go source revisions, published custom rules and the SOP vocabulary [26]. Preserve native findings and spans, raw stdout/stderr, exact versions, input/rule hashes, runtime limits and failure ledgers. Parse failures, timeouts, crashes, skipped files and unavailable sources must remain visible. A partial scan may contain findings and still be incomplete; neither a failure nor a no-match is automatically a gold negative. Duplicate/nested findings require a prespecified alignment policy, not favorable post hoc matching.
 
-Do not tune rules from A/B submissions. Gold must be locked before accuracy calculations, and reporting must include unfavorable results and missingness. The current revision contains no Semgrep accuracy estimate, no real-code precision/recall/TPR, and no inter-annotator agreement. Future table changes require an auditable, comparable experiment and a transparent version note rather than a rule that only better outcomes are published.
+Do not tune rules from A/B submissions. Gold must be locked before accuracy calculations, and reporting must include unfavorable results and missingness. The current revision contains no Semgrep accuracy estimate, no real-code precision/recall/TPR, and no inter-annotator agreement. Future performance reporting requires an auditable, comparable experiment and a transparent version note.
 
-## 6. Baselines and ablations
+## IX. Conclusion
 
-- Primitive/import lookup.
-- Regex call matching.
-- AST method matching.
-- Full PQMigrate.
-- Pinned Semgrep Community Edition with published rules.
-- No-session-secret-flow and no-protocol-context ablations.
-
-The future scored comparison requires identical locked cases, gold definitions, denominators and explicit failure policies. Semgrep is currently an unscored external-engine baseline with custom rules [26]. Historical output masks are not independently implemented feature-removal ablations.
-
-## 7. Preliminary pilot results
-
-| System | Operation F1 | End-to-end role accuracy | Error count |
-|---|---:|---:|---:|
-| Primitive lookup | 0.741 | 0.000 | 68 |
-| AST method only | 0.880 | 0.615 | 24 |
-| No session-secret flow | 0.870 | 0.538 | 24 |
-| No protocol context | 0.870 | 0.769 | 20 |
-| Full pipeline | 0.870 | 0.769 | 12 |
-
-These results use the 72-case single-author synthetic Python RSA pilot. The AST-only baseline has higher operation F1 than the full pipeline, illustrating why detection F1 alone does not measure role correctness or safety. No real-code accuracy, TPR, agreement or new confidence intervals are available. Historical numbers must not be replaced merely because a new outcome is better.
-
-## 8. Error analysis
-
-The supplied manuscript records a PS256 JWT non-coverage probe and two random-value encryptions incorrectly inferred as key transport. RFC 7518 confirms PS256 is an RSA-PSS algorithm [22]. These are supplementary diagnostic counterexamples, not an independent test-set estimate. Name tracking, scope boundaries and output aggregation require further evaluation [24].
-
-## 9. Discussion
-
-Report answered-case correctness with coverage; selective-prediction research motivates these separate quantities [19]-[21] but does not provide guarantees for this heuristic resolver. A role non-answer is distinct from planner abstention. Advice correctness and unsafe-recommendation rates remain unmeasured.
-
-## 10. Threats to validity
-
-The synthetic pilot diagnoses what the bounded resolver can and cannot express. It cannot support claims of superiority over external tools, real-code accuracy, reduced migration effort or safer recommendations. Better detection F1 can coexist with worse role assignment; conversely, selective non-answers can inflate correctness among answered cases while leaving useful operations unresolved. The historical table must be interpreted with both the task and denominator visible.
-
-**Internal and construct validity.** A single author selected examples, defined labels and implemented the analyzer. Repeated scenario templates and a deliberately supported/unsupported mixture can favor the implementation. Snippet presence was historically coupled to a known role for some systems. Call-level operation presence, application role and planner advice are distinct constructs. Masking outputs is not a feature-removal experiment. Neither non-execution nor passing syntax/schema checks establishes semantic correctness. The random-byte key-transport proxy is specifically insufficient under the reviewer SOP.
-
-**External validity.** The completed numerical evidence is Python/RSA-specific and synthetic. It does not establish Go performance, wrapper resolution, package-boundary behavior, protocol coverage or operational deployment characteristics. The 500 candidate-selected anchors focus on scanner-discoverable locations; even complete annotation of them cannot reveal all missed operations. The separate ordinary-source/independent-search packet is needed to study omissions. Whole-file Semgrep scans provide more context than isolated snippets but do not solve sampling bias or establish whole-repository coverage.
-
-**Statistical validity.** Correlated examples, author selection and few repository families limit inference. No significance test, real-code confidence interval or inter-annotator agreement result is available. Once units and gold are locked, report raw denominators, label prevalence, undefined metrics and repository dependence alongside any interval. A planned repository bootstrap is not automatically reliable with few independent clusters; resampling must preserve paired systems and repository families. There is no statistical basis for selectively publishing only improvements over the historical table.
-
-**Reproducibility and standards drift.** Pin the code, corpus, rule files, mapping, dependencies and standards access date. Mutable product documentation is evidence of documented capabilities at access time, not of a frozen tool's measured behavior. The inspected source and corpus are available at [24]; externally stored historical gate logs remain a verification gap. The IEEE-formatted bibliography identifies primary sources and versions; the accompanying audit distinguishes standards, author manuscripts, documentation, repository evidence and publisher metadata.
-
-**Planning and security validity.** A resolved role is necessary evidence for some migration advice, not sufficient evidence of a correct redesign. KEM selection does not itself settle key confirmation, authentication, serialization, failure handling or protocol integration [1], [4]. ML-DSA identifiers in a protocol specification do not prove deployment readiness [7]. No cryptographic security proof, verified PQC transformation, production interoperability measurement or user study is contributed here. Separate proposed cryptography investigations contribute no result to this paper.
-
-The current pilot is synthetic, single-author, Python/RSA-specific and correlated by scenario family. The implemented analysis is bounded and does not establish whole-program behavior. Standards-valid exports do not prove downstream ingestion, and digest-contract interoperability does not establish ML-KEM, ML-DSA, TLS or production compatibility.
-
-## 11. Reproducibility
-
-The historical manuscript reports two clean D0–D20 gate runs at `bcfb5e40fbc8eb74e1c919114f54031d03ab44e9` [24]. The source revision and corpus are inspectable, but the externally held full gate logs were not independently verified for this revision. See `revision/README.md`, `references.json` and `build-audit.json` for source, citation and unchanged-page verification. No target code was executed for annotation or manuscript source inspection.
-
-## 12. Conclusion
-
-The prototype and synthetic pilot expose evidence and reporting limits. Independent real-code annotation, external comparison and validated transformations remain ongoing; no generalization or migration-safety claim follows from the pilot.
+PQMigrate provides an inspectable bounded resolver within an advisory-planning prototype. The 72-case Python RSA study is a single-author synthetic pilot; its historical numerical results are omitted from this manuscript. Independent real-code annotation, operation-unit adjudication and an unscored reproducible Semgrep baseline are ongoing. Stronger accuracy, safety, interoperability and transformation claims require separate evidence.
 
 ## References
 

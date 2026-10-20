@@ -1,26 +1,9 @@
 {
   "original_sha256": "6cde5495e7cc16b88c274e78a6f75e244401465c894f52f61dff4e61fbbaf2d7",
-  "revised_sha256": "044754fce2d8285268589b3020631c2f808306953251943f440263a5cddcb79f",
-  "protected_pages": [
-    {
-      "page": 4,
-      "content_sha256": "d19198bb35fcab385737153324b8165a6dd3ac8898e8eeefa034e52c76c14fe6",
-      "text_sha256": "7226966cdb78c49520df1327df2a74432cb9cacfaf30bc10c3075532caef78ab"
-    },
-    {
-      "page": 5,
-      "content_sha256": "0b02359cdd8ce431c40d3eb6652eb6c56f198547961cd7617193c0b39d76b34a",
-      "text_sha256": "9835388f8758d8e22287821564d6d779d22d8d09e69c0d8884184a30bd115334"
-    },
-    {
-      "page": 6,
-      "content_sha256": "d40ce735d316050f46231580e3ba998693e7f8a0022959a4f1fc0329237c6275",
-      "text_sha256": "3e51ede9bb413f08441294a8624d5bd13efe246cd4913577fcc49252c225b06e"
-    }
-  ],
-  "page_count": 9,
+  "revised_sha256": "f4eabe0f28d1d004558ee29cee65100cb5f9f361cf9cfa036c6beea234e49c39",
+  "page_count": 5,
   "citation_count": 26,
   "verification_date": "2026-10-21",
-  "result_tables_changed": false,
-  "note": "Verbatim original pages 4-6, including tables II-V and historical Draft 3 headers. No new accuracy calculated."
+  "historical_result_pages_removed": true,
+  "note": "One integrated manuscript; historical performance tables, plots and numerical findings removed at author request. No replacement accuracy calculated."
 }

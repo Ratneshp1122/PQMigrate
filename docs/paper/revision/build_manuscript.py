@@ -1,4 +1,4 @@
-"""Build revised prose around verbatim original result pages. No target code runs."""
+"""Build one integrated manuscript without historical performance result pages."""
 from pathlib import Path
 import argparse
 import hashlib
@@ -33,7 +33,7 @@ def prose(markdown, output, offset=0):
 
     def decorate(canvas, doc):
         canvas.setFont('Times-Roman', 8)
-        canvas.drawString(43, 770, 'PQMigrate | Research Paper Draft 4 | 21 October 2026')
+        canvas.drawString(43, 770, 'PQMigrate | Research Paper Draft 5 | 21 October 2026')
         canvas.drawRightString(569, 770, str(doc.page+offset))
         canvas.setStrokeColorRGB(.7, .7, .7)
         canvas.line(43, 761, 569, 761)
@@ -62,39 +62,35 @@ def prose(markdown, output, offset=0):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--original', type=Path, default=HERE/'source/Draft3.pdf')
-    parser.add_argument('--output', type=Path, default=HERE.parent/'output/pdf/PQMigrate_Draft4.pdf')
+    parser.add_argument('--output', type=Path, default=HERE.parent/'output/pdf/PQMigrate_ResearchPaper_Updated.pdf')
     args=parser.parse_args()
-    original=PdfReader(args.original)
     refs=json.loads((HERE/'references.json').read_text(encoding='utf-8'))
     reference_md='## References\n\n'+'\n\n'.join(
         f"[{r['id']}] {r['citation']} [Online]. Available: {r['url']}" for r in refs)
-    front=io.BytesIO(); back=io.BytesIO()
-    prose((HERE/'front.md').read_text(encoding='utf-8'),front)
-    fp=PdfReader(front)
-    if len(fp.pages)!=3:
-        raise ValueError(f'Expected three front pages, got {len(fp.pages)}')
-    prose((HERE/'back.md').read_text(encoding='utf-8')+'\n<!-- PAGE -->\n'+reference_md,back,offset=6)
-    bp=PdfReader(back)
+    manuscript=((HERE/'front.md').read_text(encoding='utf-8').strip()+'\n\n'+
+                (HERE/'back.md').read_text(encoding='utf-8').strip()+'\n\n')
+    (HERE/'manuscript.md').write_text(manuscript+reference_md+'\n',encoding='utf-8')
+    (HERE.parent/'PQMIGRATE_PAPER_DRAFT_V0_1.md').write_text(manuscript+reference_md+'\n',encoding='utf-8')
+    rendered=io.BytesIO()
+    prose(manuscript+'\n<!-- PAGE -->\n'+reference_md,rendered)
     writer=PdfWriter()
-    for p in fp.pages: writer.add_page(p)
-    for p in original.pages[3:6]: writer.add_page(p)
-    for p in bp.pages: writer.add_page(p)
+    for p in PdfReader(rendered).pages: writer.add_page(p)
     writer.add_metadata({'/Title':'PQMigrate: Evidence-Driven and Abstention-Aware Planning for Post-Quantum Cryptographic Migration',
-                         '/Subject':'Draft 4; synthetic pilot; real-code evaluation ongoing; result pages preserved'})
+                         '/Subject':'Draft 5; integrated revision; historical performance results removed; real-code evaluation ongoing'})
     args.output.parent.mkdir(parents=True,exist_ok=True)
     with args.output.open('wb') as f: writer.write(f)
     result=PdfReader(args.output)
-    protected=[]
-    for i in range(3,6):
-        assert result.pages[i].extract_text()==original.pages[i].extract_text()
-        assert result.pages[i].get_contents().get_data()==original.pages[i].get_contents().get_data()
-        protected.append(dict(page=i+1,content_sha256=sha(original.pages[i].get_contents().get_data()),
-                              text_sha256=sha(original.pages[i].extract_text().encode())))
+    text='\n'.join(p.extract_text() for p in result.pages)
+    for old_marker in ['Table II.', 'Table III.', 'Table IV.', 'Table V.',
+                       '40/52', '40/40', '0.870', '0.769', 'Draft 3', 'Draft 4']:
+        assert old_marker not in text, old_marker
+    for number in range(1,len(refs)+1):
+        assert f'[{number}]' in text
     audit=dict(original_sha256=sha(args.original.read_bytes()),revised_sha256=sha(args.output.read_bytes()),
-        protected_pages=protected,page_count=len(result.pages),citation_count=len(refs),
-        verification_date='2026-10-21',result_tables_changed=False,
-        note='Verbatim original pages 4-6, including tables II-V and historical Draft 3 headers. No new accuracy calculated.')
-    (HERE/'build-audit.json').write_text(json.dumps(audit,indent=2)+'\n')
+        page_count=len(result.pages),citation_count=len(refs),
+        verification_date='2026-10-21',historical_result_pages_removed=True,
+        note='One integrated manuscript; historical performance tables, plots and numerical findings removed at author request. No replacement accuracy calculated.')
+    (HERE/'build-audit.json').write_text(json.dumps(audit,indent=2)+'\n',newline='\n')
     print(json.dumps(audit,indent=2))
 
 
