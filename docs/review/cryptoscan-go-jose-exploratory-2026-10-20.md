@@ -12,10 +12,10 @@ these labels and must not see tool predictions while labeling.
 - CryptoScan: official v1.4.0 Linux AMD64 release (`11f0e46`), archive SHA-256
   `49aa043bd3f46927efa8ee89a2344d30f2ec351ae9e0cf2791ac8206b45be19d`,
   matched against the release API digest before extraction. No system install.
-- PQMigrate: engineering branch after the bounded Go typed-field and decrypt
-  candidate changes. The report records the target source commit; it does not
-  itself record the PQMigrate implementation commit until these changes are
-  committed.
+- PQMigrate implementation: engineering commit
+  `31eb56175f88537fa6bfc9db1aa96d9a5ad9670e`. The JSON report records
+  the target source commit, not the PQMigrate implementation commit, so both
+  identities are stated here.
 
 ```bash
 SRC=/home/ratneshp0411/pqmigrate-real-code-study/repositories/go-jose__go-jose
