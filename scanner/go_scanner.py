@@ -49,6 +49,7 @@ from pathlib import Path
 from .python_scanner import Finding  # reuse same Finding dataclass
 from .go_patterns import GO_IMPORT_PATTERNS, GO_CALL_PATTERNS
 from .patterns import RISK_ORDER
+from ..resolver.go_semantic import infer_go_rsa_operations
 
 
 # ── Compiled regex patterns for Go import syntax ──────────────────────────────
@@ -115,6 +116,22 @@ def scan_go_file(filepath: str) -> list[Finding]:
                             match_text=display,
                             pattern=pattern,
                         ))
+
+    # Keep the import as an inventory lead and each proven operation as its
+    # own observation.  A regex call candidate is never promoted by proximity.
+    if '"crypto/rsa"' in content:
+        rsa_pattern = GO_IMPORT_PATTERNS["crypto/rsa"]
+        for result in infer_go_rsa_operations(content, filepath):
+            if result.evidence_line is None or result.evidence_col is None:
+                continue
+            findings.append(Finding(
+                filepath=filepath,
+                line=result.evidence_line,
+                col=result.evidence_col,
+                match_type="linked_call",
+                match_text=result.call_text or "RSA call",
+                pattern=rsa_pattern,
+            ))
 
     return sorted(findings,
                   key=lambda f: (RISK_ORDER[f.pattern.risk], f.line))

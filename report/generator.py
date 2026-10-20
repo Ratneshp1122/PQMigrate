@@ -180,7 +180,7 @@ def build_project_report(summary: SystemSummary):
     from datetime import datetime, timezone
     import os
     from pqc_migration_tool.resolver.context_inference import infer_rsa_operations
-    from pqc_migration_tool.resolver.go_semantic import infer_go_rsa_usage
+    from pqc_migration_tool.resolver.go_semantic import infer_go_rsa_operations
     from pqc_migration_tool.resolver.planner import MigrationPlanner
     from pqc_migration_tool.schema.models import (
         CodeLocation,
@@ -197,6 +197,7 @@ def build_project_report(summary: SystemSummary):
     source_commit = _source_commit(summary.root)
     records = []
     rsa_operations_by_file = {}
+    go_rsa_operations_by_file = {}
 
     for fs in summary.file_summaries:
         for f in fs.findings:
@@ -221,18 +222,29 @@ def build_project_report(summary: SystemSummary):
             # only evidence-linked RSA roles and otherwise returns UNKNOWN.
             if is_go_rsa:
                 semantic_role_checked = True
-                try:
-                    source = Path(f.filepath).read_text(encoding="utf-8", errors="replace")
-                    inference = infer_go_rsa_usage(source, f.filepath)
-                    context_evidence = inference.evidence
-                    if inference.role != CryptoRole.UNKNOWN:
+                if f.match_type == "linked_call":
+                    if f.filepath not in go_rsa_operations_by_file:
+                        try:
+                            source = Path(f.filepath).read_text(encoding="utf-8", errors="replace")
+                            go_rsa_operations_by_file[f.filepath] = infer_go_rsa_operations(source, f.filepath)
+                        except OSError:
+                            go_rsa_operations_by_file[f.filepath] = []
+                    matching = [
+                        result for result in go_rsa_operations_by_file[f.filepath]
+                        if result.evidence_line == f.line and result.evidence_col == f.col
+                    ]
+                    if len(matching) == 1 and matching[0].role != CryptoRole.UNKNOWN:
+                        inference = matching[0]
                         role = inference.role
                         op = inference.operation
                         protocol_context = inference.protocol_context
                         confidence = inference.confidence
+                        context_evidence = inference.evidence
                         detection_type = "linked_operation"
-                except OSError as exc:
-                    context_evidence = f"Source could not be read for Go role inference: {exc}."
+                    else:
+                        context_evidence = "No unique Go RSA inference matches this call site."
+                elif is_import:
+                    context_evidence = "RSA import is an inventory lead, not an observed operation."
 
             # Python imports remain inventory leads. Only the separate,
             # evidence-linked call observation can carry an inferred RSA role.

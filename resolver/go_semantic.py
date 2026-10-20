@@ -68,6 +68,10 @@ def _line(node: "Node") -> int:
     return node.start_point[0] + 1
 
 
+def _column(node: "Node") -> int:
+    return node.start_point[1]
+
+
 def _identifier(text: str) -> str | None:
     value = text.strip().lstrip("&*").strip()
     return value if _IDENTIFIER.fullmatch(value) else None
@@ -171,6 +175,14 @@ class GoRoleAnalyzer:
                 if node.type == "short_var_declaration":
                     shadowed_aliases.update(set(left_names) & rsa_aliases)
 
+                # A later write invalidates earlier identity or secret evidence.
+                # Re-establish tracking below only for a recognized new value.
+                for name in left_names:
+                    private_keys.pop(name, None)
+                    public_keys.pop(name, None)
+                    byte_buffers.pop(name, None)
+                    session_secrets.pop(name, None)
+
                 if not left_names or not right_values:
                     continue
                 first_name = left_names[0]
@@ -222,6 +234,8 @@ class GoRoleAnalyzer:
                             confidence=ConfidenceLevel.DIRECT,
                             evidence=f"Line {line}: {function} consumes tracked RSA private key '{key_name}'.",
                             evidence_line=line,
+                            evidence_col=_column(node),
+                            call_text=f"{function}()",
                         ), key_name))
                     continue
 
@@ -234,6 +248,8 @@ class GoRoleAnalyzer:
                             confidence=ConfidenceLevel.DIRECT,
                             evidence=f"Line {line}: {function} consumes tracked RSA public key '{key_name}'.",
                             evidence_line=line,
+                            evidence_col=_column(node),
+                            call_text=f"{function}()",
                         ), key_name))
                     continue
 
@@ -260,6 +276,8 @@ class GoRoleAnalyzer:
                                 f"'{plaintext}' filled from crypto/rand on line {session_secrets[plaintext]}."
                             ),
                             evidence_line=line,
+                            evidence_col=_column(node),
+                            call_text=f"{function}()",
                         )
                     else:
                         result = InferenceResult(
@@ -270,6 +288,8 @@ class GoRoleAnalyzer:
                                 f"Line {line}: {function} encrypts data whose session-key purpose is unresolved."
                             ),
                             evidence_line=line,
+                            evidence_col=_column(node),
+                            call_text=f"{function}()",
                         )
                     operations.append(_Operation(result, key_name or "<expression>"))
                     continue
@@ -292,6 +312,8 @@ class GoRoleAnalyzer:
                     confidence=ConfidenceLevel.DIRECT,
                     evidence=f"Line {line}: tracked RSA private key '{key_name}' is used by .Sign().",
                     evidence_line=line,
+                    evidence_col=_column(node),
+                    call_text=f"{function}()",
                 )
             else:
                 result = InferenceResult(
@@ -303,10 +325,32 @@ class GoRoleAnalyzer:
                         "transport purpose is unresolved."
                     ),
                     evidence_line=line,
+                    evidence_col=_column(node),
+                    call_text=f"{function}()",
                 )
             operations.append(_Operation(result, key_name))
 
         return operations
+
+    def infer_rsa_operations(self) -> list[InferenceResult]:
+        """Return individually linked RSA calls; malformed or unresolved source abstains."""
+        if self.tree.root_node.has_error:
+            return []
+        rsa_aliases = self._rsa_import_aliases()
+        if not rsa_aliases:
+            return []
+        scopes = [
+            node for node in _walk(self.tree.root_node)
+            if node.type in {"function_declaration", "method_declaration"}
+        ]
+        operations = [
+            operation.result
+            for scope in scopes
+            for operation in self._analyze_scope(scope, rsa_aliases)
+        ]
+        return sorted(operations, key=lambda result: (
+            result.evidence_line or 0, result.evidence_col or 0
+        ))
 
     def infer_rsa_usage(self) -> InferenceResult:
         if self.tree.root_node.has_error:
@@ -346,3 +390,11 @@ def infer_go_rsa_usage(source_code: str, filename: str = "<unknown>") -> Inferen
         return GoRoleAnalyzer(source_code, filename).infer_rsa_usage()
     except Exception as exc:  # Dependency/API failures must never produce a role guess.
         return InferenceResult(evidence=f"Go semantic analysis failed closed: {exc}")
+
+
+def infer_go_rsa_operations(source_code: str, filename: str = "<unknown>") -> list[InferenceResult]:
+    """Return linked Go RSA call observations, failing closed on parser errors."""
+    try:
+        return GoRoleAnalyzer(source_code, filename).infer_rsa_operations()
+    except Exception:
+        return []

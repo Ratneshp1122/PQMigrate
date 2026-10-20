@@ -3,6 +3,7 @@ from pathlib import Path
 from pqc_migration_tool.report.generator import build_project_report
 from pqc_migration_tool.resolver.go_semantic import (
     go_semantic_parser_available,
+    infer_go_rsa_operations,
     infer_go_rsa_usage,
 )
 from pqc_migration_tool.risk.scorer import score_system
@@ -164,6 +165,69 @@ func sign(digest []byte) ([]byte, error) {
         record for record in report.records
         if "rsa" in record.finding.primitive_name.lower()
     ]
+    assert len(rsa_records) == 2
+    import_record = next(record for record in rsa_records if record.finding.detection_type == "import_lead")
+    call_record = next(record for record in rsa_records if record.finding.detection_type == "linked_operation")
+    assert import_record.finding.role == CryptoRole.UNKNOWN
+    assert call_record.finding.role == CryptoRole.SIGNATURE
+    assert call_record.finding.location.line_number == 9
+    assert call_record.finding.location.column > 0
+
+
+def test_go_mixed_roles_are_separate_call_observations(tmp_path: Path) -> None:
+    source = r'''
+package demo
+import (
+    "crypto/rand"
+    "crypto/rsa"
+    "crypto/sha256"
+)
+func mixed(digest []byte) {
+    key, _ := rsa.GenerateKey(rand.Reader, 2048)
+    _, _ = rsa.SignPSS(rand.Reader, key, 0, digest, nil)
+    sessionKey := make([]byte, 32)
+    _, _ = rand.Read(sessionKey)
+    _, _ = rsa.EncryptOAEP(sha256.New(), rand.Reader, &key.PublicKey, sessionKey, nil)
+}
+'''
+    path = tmp_path / "mixed.go"
+    path.write_text(source, encoding="utf-8")
+    operations = infer_go_rsa_operations(source, str(path))
+    assert {(item.role, item.operation) for item in operations} == {
+        (CryptoRole.SIGNATURE, CryptoOperation.SIGN),
+        (CryptoRole.KEY_TRANSPORT, CryptoOperation.ENCRYPT),
+    }
+    findings = scan_go_file(str(path))
+    report = build_project_report(score_system(str(tmp_path), findings, files_scanned=1))
+    rsa_records = [record for record in report.records if "rsa" in record.finding.primitive_name.lower()]
+    assert sum(record.finding.detection_type == "import_lead" for record in rsa_records) == 1
+    assert {record.finding.role for record in rsa_records if record.finding.detection_type == "linked_operation"} == {
+        CryptoRole.SIGNATURE, CryptoRole.KEY_TRANSPORT
+    }
+
+
+def test_go_import_only_does_not_create_linked_operation(tmp_path: Path) -> None:
+    path = tmp_path / "unused.go"
+    path.write_text('package demo\nimport "crypto/rsa"\n', encoding="utf-8")
+    findings = scan_go_file(str(path))
+    report = build_project_report(score_system(str(tmp_path), findings, files_scanned=1))
+    rsa_records = [record for record in report.records if "rsa" in record.finding.primitive_name.lower()]
     assert len(rsa_records) == 1
-    assert rsa_records[0].finding.role == CryptoRole.SIGNATURE
-    assert rsa_records[0].finding.detection_type == "linked_operation"
+    assert rsa_records[0].finding.detection_type == "import_lead"
+    assert rsa_records[0].finding.role == CryptoRole.UNKNOWN
+
+
+def test_go_key_reassignment_invalidates_linked_role() -> None:
+    source = r'''
+package demo
+import (
+    "crypto/rand"
+    "crypto/rsa"
+)
+func sign(digest []byte, replacement interface{}) {
+    key, _ := rsa.GenerateKey(rand.Reader, 2048)
+    key = replacement
+    _, _ = rsa.SignPSS(rand.Reader, key, 0, digest, nil)
+}
+'''
+    assert infer_go_rsa_operations(source, "reassigned.go") == []
