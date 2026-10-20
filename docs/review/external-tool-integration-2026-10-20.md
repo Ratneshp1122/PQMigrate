@@ -10,10 +10,13 @@ SARIF 2.1.0 from independently run tools, aligns source locations with an
 optional PQMigrate JSON report, and marks every candidate
 `unverified_external_lead` and `planning_eligible: false`.
 
-This is the first integration boundary, not a claim that the external engines
-are installed, executed, or optimized here. In the WSL environment checked on
-20 October, `cryptoscan`, `semgrep`, `rea`, and `go` were absent; Node and npm
-were present. We did not run installers or alter the annotator packets.
+This is the first integration boundary, not a claim that all external engines
+are installed or optimized. At the initial WSL check on 20 October,
+`cryptoscan`, `semgrep`, `rea`, and `go` were absent; Node and npm were present.
+We subsequently ran a checksum-verified CryptoScan v1.4.0 binary from an
+isolated `/tmp` directory on one already-exposed development checkout. See
+[the pinned Go-JOSE comparison](cryptoscan-go-jose-exploratory-2026-10-20.md).
+Semgrep and REA were not installed or run, and annotator packets were not altered.
 
 ## Tools and placement
 
