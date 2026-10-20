@@ -1,0 +1,11 @@
+.source-cache/
+__pycache__/
+.source-cache/
+semgrep-settings.yml
+results/**/input.py
+results/**/input.go
+results/*/raw/
+results/*/ledger.jsonl
+results/*/manifest.json
+results/*/version.stdout.txt
+results/*/version.stderr.txt

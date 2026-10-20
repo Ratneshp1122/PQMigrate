@@ -1,0 +1,289 @@
+{
+  "pqmigrate.go.candidate-decapsulate": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.candidate-decrypt": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.candidate-ecdh": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.candidate-encapsulate": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.candidate-encrypt": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.candidate-generatekey": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.candidate-open": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.candidate-seal": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.candidate-sign": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.candidate-sum": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.candidate-verify": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.crypto-aes-other_crypto": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.crypto-cipher-other_crypto": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.crypto-ecdsa-key_generate": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.crypto-ed25519-key_generate": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.crypto-hmac-mac": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.crypto-md5-hash": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.crypto-rsa-decrypt": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.crypto-rsa-encrypt": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.crypto-rsa-key_generate": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.crypto-rsa-sign": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.crypto-rsa-verify": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.crypto-sha1-hash": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.crypto-sha256-hash": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.go.crypto-sha512-hash": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.python.candidate-decapsulate": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.python.candidate-decrypt": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.python.candidate-derive": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.python.candidate-digest": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.python.candidate-encapsulate": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.python.candidate-encrypt": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.python.candidate-exchange": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.python.candidate-finalize": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.python.candidate-hexdigest": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.python.candidate-sign": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.python.candidate-verify": {
+    "evidence_kind": "unresolved_call_syntax",
+    "operation": "uncertain",
+    "presence": "uncertain",
+    "role": "uncertain",
+    "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof."
+  },
+  "pqmigrate.python.hash-context": {
+    "evidence_kind": "qualified_api_syntax",
+    "operation": "hash",
+    "presence": "yes",
+    "role": "hash",
+    "uncertainty_reason": ""
+  },
+  "pqmigrate.python.hashlib": {
+    "evidence_kind": "qualified_api_syntax",
+    "operation": "hash",
+    "presence": "yes",
+    "role": "hash",
+    "uncertainty_reason": ""
+  },
+  "pqmigrate.python.hmac": {
+    "evidence_kind": "qualified_api_syntax",
+    "operation": "mac",
+    "presence": "yes",
+    "role": "mac",
+    "uncertainty_reason": ""
+  },
+  "pqmigrate.python.key-generation": {
+    "evidence_kind": "qualified_api_syntax",
+    "operation": "key_generate",
+    "presence": "yes",
+    "role": "key_management",
+    "uncertainty_reason": ""
+  },
+  "pqmigrate.python.key-loading": {
+    "evidence_kind": "qualified_api_syntax",
+    "operation": "other_crypto",
+    "presence": "yes",
+    "role": "key_management",
+    "uncertainty_reason": ""
+  }
+}

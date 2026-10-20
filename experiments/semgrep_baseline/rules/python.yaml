@@ -1,0 +1,359 @@
+{
+  "rules": [
+    {
+      "id": "pqmigrate.python.hashlib",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (hash); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "yes",
+        "operation": "hash",
+        "role": "hash",
+        "evidence_kind": "qualified_api_syntax",
+        "uncertainty_reason": "",
+        "candidate_operation": "hash"
+      },
+      "patterns": [
+        {
+          "pattern": "hashlib.$H(...)"
+        },
+        {
+          "metavariable-regex": {
+            "metavariable": "$H",
+            "regex": "^(md5|sha1|sha224|sha256|sha384|sha512|sha3_224|sha3_256|sha3_384|sha3_512|blake2b|blake2s|shake_128|shake_256|new)$"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.python.hmac",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (mac); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "yes",
+        "operation": "mac",
+        "role": "mac",
+        "evidence_kind": "qualified_api_syntax",
+        "uncertainty_reason": "",
+        "candidate_operation": "mac"
+      },
+      "pattern-either": [
+        {
+          "pattern": "hmac.new(...)"
+        },
+        {
+          "pattern": "hmac.digest(...)"
+        },
+        {
+          "pattern": "cryptography.hazmat.primitives.hmac.HMAC(...)"
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.python.key-generation",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (key_generate); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "yes",
+        "operation": "key_generate",
+        "role": "key_management",
+        "evidence_kind": "qualified_api_syntax",
+        "uncertainty_reason": "",
+        "candidate_operation": "key_generate"
+      },
+      "pattern-either": [
+        {
+          "pattern": "cryptography.hazmat.primitives.asymmetric.rsa.generate_private_key(...)"
+        },
+        {
+          "pattern": "cryptography.hazmat.primitives.asymmetric.ec.generate_private_key(...)"
+        },
+        {
+          "pattern": "cryptography.hazmat.primitives.asymmetric.dsa.generate_private_key(...)"
+        },
+        {
+          "pattern": "cryptography.hazmat.primitives.asymmetric.ed25519.Ed25519PrivateKey.generate(...)"
+        },
+        {
+          "pattern": "cryptography.hazmat.primitives.asymmetric.ed448.Ed448PrivateKey.generate(...)"
+        },
+        {
+          "pattern": "cryptography.hazmat.primitives.asymmetric.x25519.X25519PrivateKey.generate(...)"
+        },
+        {
+          "pattern": "cryptography.hazmat.primitives.asymmetric.x448.X448PrivateKey.generate(...)"
+        },
+        {
+          "pattern": "cryptography.hazmat.primitives.asymmetric.mlkem.MLKEM768PrivateKey.generate(...)"
+        },
+        {
+          "pattern": "cryptography.hazmat.primitives.asymmetric.mlkem.MLKEM1024PrivateKey.generate(...)"
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.python.key-loading",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (other_crypto); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "yes",
+        "operation": "other_crypto",
+        "role": "key_management",
+        "evidence_kind": "qualified_api_syntax",
+        "uncertainty_reason": "",
+        "candidate_operation": "other_crypto"
+      },
+      "pattern-either": [
+        {
+          "pattern": "cryptography.hazmat.primitives.serialization.load_pem_private_key(...)"
+        },
+        {
+          "pattern": "cryptography.hazmat.primitives.serialization.load_der_private_key(...)"
+        },
+        {
+          "pattern": "cryptography.hazmat.primitives.serialization.load_pem_public_key(...)"
+        },
+        {
+          "pattern": "cryptography.hazmat.primitives.serialization.load_der_public_key(...)"
+        },
+        {
+          "pattern": "cryptography.hazmat.primitives.serialization.load_ssh_private_key(...)"
+        },
+        {
+          "pattern": "cryptography.hazmat.primitives.serialization.load_ssh_public_key(...)"
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.python.hash-context",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (hash); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "yes",
+        "operation": "hash",
+        "role": "hash",
+        "evidence_kind": "qualified_api_syntax",
+        "uncertainty_reason": "",
+        "candidate_operation": "hash"
+      },
+      "pattern": "cryptography.hazmat.primitives.hashes.Hash(...)"
+    },
+    {
+      "id": "pqmigrate.python.candidate-sign",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (sign); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "sign"
+      },
+      "pattern": "$RECEIVER.sign(...)"
+    },
+    {
+      "id": "pqmigrate.python.candidate-verify",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (verify); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "verify"
+      },
+      "pattern": "$RECEIVER.verify(...)"
+    },
+    {
+      "id": "pqmigrate.python.candidate-encrypt",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (encrypt); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "encrypt"
+      },
+      "pattern": "$RECEIVER.encrypt(...)"
+    },
+    {
+      "id": "pqmigrate.python.candidate-decrypt",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (decrypt); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "decrypt"
+      },
+      "pattern": "$RECEIVER.decrypt(...)"
+    },
+    {
+      "id": "pqmigrate.python.candidate-exchange",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (key_establish); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "key_establish"
+      },
+      "pattern": "$RECEIVER.exchange(...)"
+    },
+    {
+      "id": "pqmigrate.python.candidate-encapsulate",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (key_establish); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "key_establish"
+      },
+      "pattern": "$RECEIVER.encapsulate(...)"
+    },
+    {
+      "id": "pqmigrate.python.candidate-decapsulate",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (key_establish); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "key_establish"
+      },
+      "pattern": "$RECEIVER.decapsulate(...)"
+    },
+    {
+      "id": "pqmigrate.python.candidate-digest",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (hash); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "hash"
+      },
+      "pattern": "$RECEIVER.digest(...)"
+    },
+    {
+      "id": "pqmigrate.python.candidate-hexdigest",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (hash); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "hash"
+      },
+      "pattern": "$RECEIVER.hexdigest(...)"
+    },
+    {
+      "id": "pqmigrate.python.candidate-finalize",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (uncertain); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "uncertain"
+      },
+      "pattern": "$RECEIVER.finalize(...)"
+    },
+    {
+      "id": "pqmigrate.python.candidate-derive",
+      "languages": [
+        "python"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (kdf); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "kdf"
+      },
+      "pattern": "$RECEIVER.derive(...)"
+    }
+  ]
+}

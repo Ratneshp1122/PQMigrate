@@ -1,0 +1,932 @@
+{
+  "rules": [
+    {
+      "id": "pqmigrate.go.crypto-rsa-key_generate",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (key_generate); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "key_generate"
+      },
+      "pattern-either": [
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport \"crypto/rsa\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "rsa.GenerateKey(...)"
+                },
+                {
+                  "pattern": "rsa.GenerateMultiPrimeKey(...)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport $PKG \"crypto/rsa\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "$PKG.GenerateKey(...)"
+                },
+                {
+                  "pattern": "$PKG.GenerateMultiPrimeKey(...)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.go.crypto-ecdsa-key_generate",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (key_generate); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "key_generate"
+      },
+      "pattern-either": [
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport \"crypto/ecdsa\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "ecdsa.GenerateKey(...)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport $PKG \"crypto/ecdsa\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "$PKG.GenerateKey(...)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.go.crypto-ed25519-key_generate",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (key_generate); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "key_generate"
+      },
+      "pattern-either": [
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport \"crypto/ed25519\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "ed25519.GenerateKey(...)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport $PKG \"crypto/ed25519\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "$PKG.GenerateKey(...)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.go.crypto-rsa-sign",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (sign); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "sign"
+      },
+      "pattern-either": [
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport \"crypto/rsa\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "rsa.SignPKCS1v15(...)"
+                },
+                {
+                  "pattern": "rsa.SignPSS(...)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport $PKG \"crypto/rsa\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "$PKG.SignPKCS1v15(...)"
+                },
+                {
+                  "pattern": "$PKG.SignPSS(...)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.go.crypto-rsa-verify",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (verify); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "verify"
+      },
+      "pattern-either": [
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport \"crypto/rsa\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "rsa.VerifyPKCS1v15(...)"
+                },
+                {
+                  "pattern": "rsa.VerifyPSS(...)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport $PKG \"crypto/rsa\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "$PKG.VerifyPKCS1v15(...)"
+                },
+                {
+                  "pattern": "$PKG.VerifyPSS(...)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.go.crypto-rsa-encrypt",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (encrypt); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "encrypt"
+      },
+      "pattern-either": [
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport \"crypto/rsa\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "rsa.EncryptPKCS1v15(...)"
+                },
+                {
+                  "pattern": "rsa.EncryptOAEP(...)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport $PKG \"crypto/rsa\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "$PKG.EncryptPKCS1v15(...)"
+                },
+                {
+                  "pattern": "$PKG.EncryptOAEP(...)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.go.crypto-rsa-decrypt",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (decrypt); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "decrypt"
+      },
+      "pattern-either": [
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport \"crypto/rsa\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "rsa.DecryptPKCS1v15(...)"
+                },
+                {
+                  "pattern": "rsa.DecryptPKCS1v15SessionKey(...)"
+                },
+                {
+                  "pattern": "rsa.DecryptOAEP(...)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport $PKG \"crypto/rsa\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "$PKG.DecryptPKCS1v15(...)"
+                },
+                {
+                  "pattern": "$PKG.DecryptPKCS1v15SessionKey(...)"
+                },
+                {
+                  "pattern": "$PKG.DecryptOAEP(...)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.go.crypto-aes-other_crypto",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (other_crypto); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "other_crypto"
+      },
+      "pattern-either": [
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport \"crypto/aes\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "aes.NewCipher(...)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport $PKG \"crypto/aes\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "$PKG.NewCipher(...)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.go.crypto-cipher-other_crypto",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (other_crypto); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "other_crypto"
+      },
+      "pattern-either": [
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport \"crypto/cipher\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "cipher.NewGCM(...)"
+                },
+                {
+                  "pattern": "cipher.NewGCMWithNonceSize(...)"
+                },
+                {
+                  "pattern": "cipher.NewGCMWithTagSize(...)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport $PKG \"crypto/cipher\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "$PKG.NewGCM(...)"
+                },
+                {
+                  "pattern": "$PKG.NewGCMWithNonceSize(...)"
+                },
+                {
+                  "pattern": "$PKG.NewGCMWithTagSize(...)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.go.crypto-hmac-mac",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (mac); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "mac"
+      },
+      "pattern-either": [
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport \"crypto/hmac\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "hmac.New(...)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport $PKG \"crypto/hmac\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "$PKG.New(...)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.go.crypto-sha256-hash",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (hash); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "hash"
+      },
+      "pattern-either": [
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport \"crypto/sha256\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "sha256.Sum256(...)"
+                },
+                {
+                  "pattern": "sha256.Sum224(...)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport $PKG \"crypto/sha256\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "$PKG.Sum256(...)"
+                },
+                {
+                  "pattern": "$PKG.Sum224(...)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.go.crypto-sha512-hash",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (hash); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "hash"
+      },
+      "pattern-either": [
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport \"crypto/sha512\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "sha512.Sum512(...)"
+                },
+                {
+                  "pattern": "sha512.Sum384(...)"
+                },
+                {
+                  "pattern": "sha512.Sum512_224(...)"
+                },
+                {
+                  "pattern": "sha512.Sum512_256(...)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport $PKG \"crypto/sha512\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "$PKG.Sum512(...)"
+                },
+                {
+                  "pattern": "$PKG.Sum384(...)"
+                },
+                {
+                  "pattern": "$PKG.Sum512_224(...)"
+                },
+                {
+                  "pattern": "$PKG.Sum512_256(...)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.go.crypto-sha1-hash",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (hash); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "hash"
+      },
+      "pattern-either": [
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport \"crypto/sha1\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "sha1.Sum(...)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport $PKG \"crypto/sha1\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "$PKG.Sum(...)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.go.crypto-md5-hash",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (hash); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "hash"
+      },
+      "pattern-either": [
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport \"crypto/md5\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "md5.Sum(...)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "patterns": [
+            {
+              "pattern-inside": "package $P\nimport $PKG \"crypto/md5\"\n..."
+            },
+            {
+              "pattern-either": [
+                {
+                  "pattern": "$PKG.Sum(...)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pqmigrate.go.candidate-sign",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (sign); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "sign"
+      },
+      "pattern": "$RECEIVER.Sign(...)"
+    },
+    {
+      "id": "pqmigrate.go.candidate-verify",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (verify); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "verify"
+      },
+      "pattern": "$RECEIVER.Verify(...)"
+    },
+    {
+      "id": "pqmigrate.go.candidate-encrypt",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (encrypt); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "encrypt"
+      },
+      "pattern": "$RECEIVER.Encrypt(...)"
+    },
+    {
+      "id": "pqmigrate.go.candidate-decrypt",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (decrypt); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "decrypt"
+      },
+      "pattern": "$RECEIVER.Decrypt(...)"
+    },
+    {
+      "id": "pqmigrate.go.candidate-generatekey",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (key_generate); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "key_generate"
+      },
+      "pattern": "$RECEIVER.GenerateKey(...)"
+    },
+    {
+      "id": "pqmigrate.go.candidate-ecdh",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (key_establish); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "key_establish"
+      },
+      "pattern": "$RECEIVER.ECDH(...)"
+    },
+    {
+      "id": "pqmigrate.go.candidate-encapsulate",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (key_establish); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "key_establish"
+      },
+      "pattern": "$RECEIVER.Encapsulate(...)"
+    },
+    {
+      "id": "pqmigrate.go.candidate-decapsulate",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (key_establish); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "key_establish"
+      },
+      "pattern": "$RECEIVER.Decapsulate(...)"
+    },
+    {
+      "id": "pqmigrate.go.candidate-sum",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (hash); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "hash"
+      },
+      "pattern": "$RECEIVER.Sum(...)"
+    },
+    {
+      "id": "pqmigrate.go.candidate-seal",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (encrypt); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "encrypt"
+      },
+      "pattern": "$RECEIVER.Seal(...)"
+    },
+    {
+      "id": "pqmigrate.go.candidate-open",
+      "languages": [
+        "go"
+      ],
+      "severity": "INFO",
+      "message": "Crypto API/candidate call (decrypt); source review required.",
+      "metadata": {
+        "baseline": "pqmigrate-semgrep-v1",
+        "presence": "uncertain",
+        "operation": "uncertain",
+        "role": "uncertain",
+        "evidence_kind": "unresolved_call_syntax",
+        "uncertainty_reason": "Receiver/provider identity is not established by this syntax-only rule. Method name is not cryptographic proof.",
+        "candidate_operation": "decrypt"
+      },
+      "pattern": "$RECEIVER.Open(...)"
+    }
+  ]
+}

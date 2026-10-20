@@ -1,0 +1,23 @@
+{
+  "actual_semgrep": "1.181.0",
+  "expected_semgrep": "1.181.0",
+  "limits": {
+    "max_memory_mb": 512,
+    "process_deadline_seconds": 120,
+    "rule_timeout_seconds": 30,
+    "semgrep_jobs": 1,
+    "workers": 4
+  },
+  "manifest_sha256": "1696ab07c385a94bd538a11062aaeca92a3bca4afd1f924a4a07cd033bf2fb55",
+  "mapping_issue": "https://github.com/Ratneshp1122/PQMigrate/issues/1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "policy_sha256": "b4d6500ad2a35710ad7fdd288848ee65fafca05abda56ec6445ebe4e2c2b5287",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "rule_sha256": {
+    "go.yaml": "9b0366f5d4a067d12615b89933a5136e735b894f9b0209d0c81c5304245372ed",
+    "python.yaml": "f127780f88e31072a0061ddf041cfc5af0345e999da03a9b009ee842d3ee3a0e"
+  },
+  "runner_sha256": "753f9a9b7b7609adec36837ce74c91f757b7e8fe17dbb793409cf856986e9e09",
+  "schema_version": "semgrep-baseline-1",
+  "scoring": "disabled; no gold labels are read; no accuracy comparison"
+}

@@ -1,0 +1,439 @@
+{
+  "schema_version": 1,
+  "provenance": "72 synthetic Python RSA pilot snippets, including malformed inputs; only id/language/source projected. Rules not tuned to labels.",
+  "original_corpus_sha256": "0c0e45bf84a05d414003685f70a98f305cadc8fdbde5748d24eb00a2fe522b57",
+  "cases": [
+    {
+      "case_id": "sig-direct-001",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n\ndef operation_0():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return key.sign(b'message', object())\n",
+      "source_sha256": "0ea323127a13655e64e1afede434e3d655e7464722c4c59a53f731ecba077775"
+    },
+    {
+      "case_id": "sig-direct-002",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa as asymmetric_rsa\n\ndef operation_1():\n    key = asymmetric_rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return key.public_key().verify(b'message', object())\n",
+      "source_sha256": "07167d8cb457f070de5cedc23e1686ecc56026fdb774cacfd776e4c99609d2e9"
+    },
+    {
+      "case_id": "sig-direct-003",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n\ndef operation_2():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return key.sign(b'message', object())\n",
+      "source_sha256": "b6eb07c06bb6f985efe7f471d66a7b8e63785e1b271209d23c1caed62d80378e"
+    },
+    {
+      "case_id": "sig-direct-004",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa as asymmetric_rsa\n\ndef operation_3():\n    key = asymmetric_rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return key.sign(b'message', object())\n",
+      "source_sha256": "daf64049fceb41972f91aef7b2370d5709c006cec030d61b547751fd13397182"
+    },
+    {
+      "case_id": "sig-direct-005",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n\ndef operation_4():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return key.public_key().verify(b'message', object())\n",
+      "source_sha256": "9398787bb5166d4bf31dcd67f8a49a1ae4e1570c056ef171b5ab264b146502f2"
+    },
+    {
+      "case_id": "sig-direct-006",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa as asymmetric_rsa\n\ndef operation_5():\n    key = asymmetric_rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return key.sign(b'message', object())\n",
+      "source_sha256": "48b178e096493771574690ca5a22a62f107fc93cb90e104e147ee8a216ac5e73"
+    },
+    {
+      "case_id": "sig-direct-007",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n\ndef operation_6():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return key.sign(b'message', object())\n",
+      "source_sha256": "714a2ac8abb02f1a12f084d9b839cff1b73df262af6a9bedc25eb233068e495d"
+    },
+    {
+      "case_id": "sig-direct-008",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa as asymmetric_rsa\n\ndef operation_7():\n    key = asymmetric_rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return key.public_key().verify(b'message', object())\n",
+      "source_sha256": "ac69696ba0f2f7cc5e643b6f8264ceb702caf9eef8cb7409609b7629b30c5dca"
+    },
+    {
+      "case_id": "sig-direct-009",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n\ndef operation_8():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return key.sign(b'message', object())\n",
+      "source_sha256": "8db881ed1366c4b56bbe2be998f4d0846612ca16d0bf396cefffb9e4924a044d"
+    },
+    {
+      "case_id": "sig-direct-010",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa as asymmetric_rsa\n\ndef operation_9():\n    key = asymmetric_rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return key.sign(b'message', object())\n",
+      "source_sha256": "d17f9f2b0ba8040279d290e6ed3fe1601e793977adb1316a23d22ac16381f3e0"
+    },
+    {
+      "case_id": "sig-direct-011",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n\ndef operation_10():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return key.public_key().verify(b'message', object())\n",
+      "source_sha256": "409028621d41f64976a310a1944ef8e48cdabd71b07e4b0565b3c60a03002118"
+    },
+    {
+      "case_id": "sig-direct-012",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa as asymmetric_rsa\n\ndef operation_11():\n    key = asymmetric_rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return key.sign(b'message', object())\n",
+      "source_sha256": "17275f05ac2d2c0af4e365dd465314d306344d38b978236c3fec4632b2179f77"
+    },
+    {
+      "case_id": "sig-jwt-001",
+      "language": "python",
+      "source": "import jwt\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef issue_0():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return jwt.encode({'sub': 'case-0'}, key, algorithm='RS256')\n",
+      "source_sha256": "09fbb9ef55899d02c61571982de37e008d9466ce11bf2ba1630593bda9b0f416"
+    },
+    {
+      "case_id": "sig-jwt-002",
+      "language": "python",
+      "source": "import jwt as tokenlib\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef issue_1():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return tokenlib.encode({'sub': 'case-1'}, key, algorithm='RS384')\n",
+      "source_sha256": "d951d227e0346b67f5f984574a7e6b800f2e5bf63531e1fa29858fe55577e059"
+    },
+    {
+      "case_id": "sig-jwt-003",
+      "language": "python",
+      "source": "from jwt import encode as issue\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef issue_2():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return issue({'sub': 'case-2'}, key, algorithm='RS512')\n",
+      "source_sha256": "acc2acf80e34de657850de77813d1a4ba49afbad66a41cdd389db0444fdd19d8"
+    },
+    {
+      "case_id": "sig-jwt-004",
+      "language": "python",
+      "source": "from jwt import encode\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef issue_3():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return encode({'sub': 'case-3'}, key, algorithm='rs256')\n",
+      "source_sha256": "beea60cfba2510e5239bcd5ca14d0178dfe93e636c060639eb1d164fc2886387"
+    },
+    {
+      "case_id": "sig-jwt-005",
+      "language": "python",
+      "source": "import jwt\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef issue_4():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return jwt.encode({'sub': 'case-4'}, key, algorithm='RS256')\n",
+      "source_sha256": "d0e5464aac8599186ae3fd0ef08aabf6372bbf30af900e2a3a71a7abecb6e8b8"
+    },
+    {
+      "case_id": "sig-jwt-006",
+      "language": "python",
+      "source": "import jwt as tokenlib\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef issue_5():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return tokenlib.encode({'sub': 'case-5'}, key, algorithm='RS384')\n",
+      "source_sha256": "e48b3d5c6d0aa3f50bb7005a99eb51c90555a5d948da83a62574610833cf22ce"
+    },
+    {
+      "case_id": "sig-jwt-007",
+      "language": "python",
+      "source": "from jwt import encode as issue\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef issue_6():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return issue({'sub': 'case-6'}, key, algorithm='RS512')\n",
+      "source_sha256": "21a5dabd28c3c170ddfa35bb0f7fc57d5c3d242004d17bc2757fb9927459b414"
+    },
+    {
+      "case_id": "sig-jwt-008",
+      "language": "python",
+      "source": "from jwt import encode\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef issue_7():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return encode({'sub': 'case-7'}, key, algorithm='rs256')\n",
+      "source_sha256": "8b5c3f0f56cf750c9008ff0249775cf854ac066d86d8222604ce9e175ef443ce"
+    },
+    {
+      "case_id": "transport-001",
+      "language": "python",
+      "source": "import os\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef wrap_0():\n    recipient = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    session_secret = os.urandom(32)\n    return recipient.public_key().encrypt(session_secret, object())\n",
+      "source_sha256": "934a14693b3815a208c4843e1add8b4180391131a0bd2751359259a4b7a9e4e7"
+    },
+    {
+      "case_id": "transport-002",
+      "language": "python",
+      "source": "import os as operating\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef wrap_1():\n    recipient = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    session_secret = operating.urandom(32)\n    return recipient.public_key().encrypt(session_secret, object())\n",
+      "source_sha256": "717536977677641dd1fb8d8ad537754072aa7ab36801665e2d2764ee0cb72bfb"
+    },
+    {
+      "case_id": "transport-003",
+      "language": "python",
+      "source": "import secrets\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef wrap_2():\n    recipient = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    session_secret = secrets.token_bytes(32)\n    return recipient.public_key().encrypt(session_secret, object())\n",
+      "source_sha256": "1efee75a48f9a01bcbd3b986c040ce40366348e4ab630d5f85fdb615cfa654ef"
+    },
+    {
+      "case_id": "transport-004",
+      "language": "python",
+      "source": "import secrets as secure\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef wrap_3():\n    recipient = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    session_secret = secure.token_bytes(24)\n    return recipient.public_key().encrypt(session_secret, object())\n",
+      "source_sha256": "0e81b599a950596e0414b44c8bd236dd71439a50ed60016fc12a65ce4895aef4"
+    },
+    {
+      "case_id": "transport-005",
+      "language": "python",
+      "source": "import os\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef wrap_4():\n    recipient = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    session_secret = os.urandom(32)\n    return recipient.public_key().encrypt(session_secret, object())\n",
+      "source_sha256": "22e6aa283da47ea2df182026c210a7bd92533ddc48303eb0a508f99e0facf8a5"
+    },
+    {
+      "case_id": "transport-006",
+      "language": "python",
+      "source": "import os as operating\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef wrap_5():\n    recipient = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    session_secret = operating.urandom(32)\n    return recipient.public_key().encrypt(session_secret, object())\n",
+      "source_sha256": "41a65773e7f45fef2295b1e38dff757653f26a369e95e9383fa80fcec8df6a68"
+    },
+    {
+      "case_id": "transport-007",
+      "language": "python",
+      "source": "import secrets\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef wrap_6():\n    recipient = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    session_secret = secrets.token_bytes(32)\n    return recipient.public_key().encrypt(session_secret, object())\n",
+      "source_sha256": "6ca4d2e1a23b4bf29eb58715c52e9fcc9440b8c7a0725a77734b2c9d79f09928"
+    },
+    {
+      "case_id": "transport-008",
+      "language": "python",
+      "source": "import secrets as secure\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef wrap_7():\n    recipient = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    session_secret = secure.token_bytes(24)\n    return recipient.public_key().encrypt(session_secret, object())\n",
+      "source_sha256": "87621178c5425350c077f7d45a1c94a7f404a4739d6bda7e981eed1bbf1b9354"
+    },
+    {
+      "case_id": "transport-009",
+      "language": "python",
+      "source": "import os\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef wrap_8():\n    recipient = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    session_secret = os.urandom(32)\n    return recipient.public_key().encrypt(session_secret, object())\n",
+      "source_sha256": "677e7ae9f9658bba451aaf9b565a2c1c38c117473400af08c1291a2484fa40fa"
+    },
+    {
+      "case_id": "transport-010",
+      "language": "python",
+      "source": "import os as operating\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef wrap_9():\n    recipient = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    session_secret = operating.urandom(32)\n    return recipient.public_key().encrypt(session_secret, object())\n",
+      "source_sha256": "7ea5aa616c6fedeb5e17ec3e10d6fa7c6d49ae85d691c08f0c7fa3a13f866b9a"
+    },
+    {
+      "case_id": "transport-011",
+      "language": "python",
+      "source": "import secrets\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef wrap_10():\n    recipient = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    session_secret = secrets.token_bytes(32)\n    return recipient.public_key().encrypt(session_secret, object())\n",
+      "source_sha256": "32b3312396e4f3884eea5968b89b75aa0c714523b46808e824514bea5b5bb1e8"
+    },
+    {
+      "case_id": "transport-012",
+      "language": "python",
+      "source": "import secrets as secure\nfrom cryptography.hazmat.primitives.asymmetric import rsa\n\ndef wrap_11():\n    recipient = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    session_secret = secure.token_bytes(24)\n    return recipient.public_key().encrypt(session_secret, object())\n",
+      "source_sha256": "11a950c045ed42897fb6becd701c87c8cdb7e6a7a9210b31a6498389d378caf5"
+    },
+    {
+      "case_id": "encryption-001",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n\ndef encrypt_0():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    payload = b'application-data'\n    return key.public_key().encrypt(payload, object())\n",
+      "source_sha256": "25088fd8435e50895d438894b23803354d6574c5be2925ec15cfe1589d3f8dbd"
+    },
+    {
+      "case_id": "encryption-002",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n\ndef encrypt_1():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    payload = b'application-data'\n    return key.decrypt(payload, object())\n",
+      "source_sha256": "3802b03d8f096844e7c244474a3508abc1d4c468fdcf36e15e2937b75ada8af1"
+    },
+    {
+      "case_id": "encryption-003",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n\ndef encrypt_2():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    document = b'application-data'\n    return key.public_key().encrypt(document, object())\n",
+      "source_sha256": "88aa15ed3dc5c49fd64fc154be2e20d0f94ba444dd598f58017a3b893a3ef7ba"
+    },
+    {
+      "case_id": "encryption-004",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n\ndef encrypt_3():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    document = b'application-data'\n    return key.decrypt(document, object())\n",
+      "source_sha256": "6a1d33a3221c35d62851f39ced3ca3ce6312436b274c659ba7d98686aaba156e"
+    },
+    {
+      "case_id": "encryption-005",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n\ndef encrypt_4():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    payload = b'application-data'\n    return key.public_key().encrypt(payload, object())\n",
+      "source_sha256": "af988b9d63c3a8432e8de33174cfd8ed698766e7a21a8e48e971ccc47c00ec1c"
+    },
+    {
+      "case_id": "encryption-006",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n\ndef encrypt_5():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    payload = b'application-data'\n    return key.decrypt(payload, object())\n",
+      "source_sha256": "5f64ce98e38cf5e08e8edabdf98b323c68a5bd0a6693222f92a78d9ddaed6194"
+    },
+    {
+      "case_id": "encryption-007",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n\ndef encrypt_6():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    document = b'application-data'\n    return key.public_key().encrypt(document, object())\n",
+      "source_sha256": "fee24a3c4943867cc46bbd31ea9fa718a399165766242e8acd7ed1ad0a231b9f"
+    },
+    {
+      "case_id": "encryption-008",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n\ndef encrypt_7():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    document = b'application-data'\n    return key.decrypt(document, object())\n",
+      "source_sha256": "38cdf7421a87bd62fb8b501eecd51bff7e5e46ddc3f188df41463eea8aa3ee9f"
+    },
+    {
+      "case_id": "negative-001",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n",
+      "source_sha256": "ecb9d53673c7a330f1a8b6c33b956d7b281bc7f89530ccc1390602cacf9d0007"
+    },
+    {
+      "case_id": "negative-002",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\nkey = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n",
+      "source_sha256": "6583a3e81e516db0fed5dace61e2dc44a16459f143a9838576b1a9122c53aeec"
+    },
+    {
+      "case_id": "negative-003",
+      "language": "python",
+      "source": "import jwt\nfrom cryptography.hazmat.primitives.asymmetric import rsa\ndef issue(other_key):\n    unused = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return jwt.encode({'sub': 'x'}, other_key, algorithm='RS256')\n",
+      "source_sha256": "9de9cd3b6ef2e0ab0f662c3ed25c33af273f020d7d17b4bcd0e71684bfc5eea6"
+    },
+    {
+      "case_id": "negative-004",
+      "language": "python",
+      "source": "import jwt\nfrom cryptography.hazmat.primitives.asymmetric import rsa\ndef issue():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return jwt.encode({'sub': 'x'}, key, algorithm='HS256')\n",
+      "source_sha256": "4072918a164290cef6f664bd684da08bb4a113d92443b7b403dbf68b6aebf40b"
+    },
+    {
+      "case_id": "negative-005",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\nkey.sign(b'message', object())\nkey = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n",
+      "source_sha256": "6ee4d30191f49e060e617b55e85f0078237a34eaf0c8d30e5c7c5c5e8b349f44"
+    },
+    {
+      "case_id": "negative-006",
+      "language": "python",
+      "source": "def local_import():\n    from cryptography.hazmat.primitives.asymmetric import rsa as local_rsa\n    return local_rsa\ndef other_scope(jwt, local_rsa):\n    key = local_rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return jwt.encode({'sub': 'x'}, key, algorithm='RS256')\n",
+      "source_sha256": "2537219ca330ff20fa8edf6d5590cc4130d800eccf31457e2db1d8091b50c999"
+    },
+    {
+      "case_id": "negative-007",
+      "language": "python",
+      "source": "import os\nimport jwt\nfrom cryptography.hazmat.primitives.asymmetric import rsa\ndef mixed():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    signed = jwt.encode({'sub': 'x'}, key, algorithm='RS256')\n    secret = os.urandom(32)\n    wrapped = key.public_key().encrypt(secret, object())\n    return signed, wrapped\n",
+      "source_sha256": "3597c645b5813109af33321a1ea5681d816b919d4198082c08d044de28f8d863"
+    },
+    {
+      "case_id": "negative-008",
+      "language": "python",
+      "source": "class rsa:\n    @staticmethod\n    def generate_private_key(**kwargs):\n        return object()\nkey = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n",
+      "source_sha256": "40291d1c08312d63198993492640db7690a95f724be568a67adf69f148f54983"
+    },
+    {
+      "case_id": "negative-009",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\n",
+      "source_sha256": "ecb9d53673c7a330f1a8b6c33b956d7b281bc7f89530ccc1390602cacf9d0007"
+    },
+    {
+      "case_id": "negative-010",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\nkey = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n",
+      "source_sha256": "6583a3e81e516db0fed5dace61e2dc44a16459f143a9838576b1a9122c53aeec"
+    },
+    {
+      "case_id": "negative-011",
+      "language": "python",
+      "source": "import jwt\nfrom cryptography.hazmat.primitives.asymmetric import rsa\ndef issue(other_key):\n    unused = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return jwt.encode({'sub': 'x'}, other_key, algorithm='RS256')\n",
+      "source_sha256": "9de9cd3b6ef2e0ab0f662c3ed25c33af273f020d7d17b4bcd0e71684bfc5eea6"
+    },
+    {
+      "case_id": "negative-012",
+      "language": "python",
+      "source": "import jwt\nfrom cryptography.hazmat.primitives.asymmetric import rsa\ndef issue():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return jwt.encode({'sub': 'x'}, key, algorithm='HS256')\n",
+      "source_sha256": "4072918a164290cef6f664bd684da08bb4a113d92443b7b403dbf68b6aebf40b"
+    },
+    {
+      "case_id": "negative-013",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\nkey.sign(b'message', object())\nkey = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n",
+      "source_sha256": "6ee4d30191f49e060e617b55e85f0078237a34eaf0c8d30e5c7c5c5e8b349f44"
+    },
+    {
+      "case_id": "negative-014",
+      "language": "python",
+      "source": "def local_import():\n    from cryptography.hazmat.primitives.asymmetric import rsa as local_rsa\n    return local_rsa\ndef other_scope(jwt, local_rsa):\n    key = local_rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    return jwt.encode({'sub': 'x'}, key, algorithm='RS256')\n",
+      "source_sha256": "2537219ca330ff20fa8edf6d5590cc4130d800eccf31457e2db1d8091b50c999"
+    },
+    {
+      "case_id": "negative-015",
+      "language": "python",
+      "source": "import os\nimport jwt\nfrom cryptography.hazmat.primitives.asymmetric import rsa\ndef mixed():\n    key = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n    signed = jwt.encode({'sub': 'x'}, key, algorithm='RS256')\n    secret = os.urandom(32)\n    wrapped = key.public_key().encrypt(secret, object())\n    return signed, wrapped\n",
+      "source_sha256": "3597c645b5813109af33321a1ea5681d816b919d4198082c08d044de28f8d863"
+    },
+    {
+      "case_id": "negative-016",
+      "language": "python",
+      "source": "class rsa:\n    @staticmethod\n    def generate_private_key(**kwargs):\n        return object()\nkey = rsa.generate_private_key(public_exponent=65537, key_size=2048)\n",
+      "source_sha256": "40291d1c08312d63198993492640db7690a95f724be568a67adf69f148f54983"
+    },
+    {
+      "case_id": "parse-failure-001",
+      "language": "python",
+      "source": "def broken(:\n    pass\n",
+      "source_sha256": "6b8c8a725c23dc076d9a2c185ce4e02435746bc3b4f99906d13de360e56898c7"
+    },
+    {
+      "case_id": "parse-failure-002",
+      "language": "python",
+      "source": "from cryptography.hazmat.primitives.asymmetric import rsa\nkey = (\n",
+      "source_sha256": "cbb1bd1acdb96adaa88bbd966a607ee3bb09e6ab485ac35d30203999d44a4c5b"
+    },
+    {
+      "case_id": "parse-failure-003",
+      "language": "python",
+      "source": "if True print('broken')\n",
+      "source_sha256": "3f925be7bd88942dfe91b3c11448fbec51c480da866f66310f9024bc93812e81"
+    },
+    {
+      "case_id": "parse-failure-004",
+      "language": "python",
+      "source": "def incomplete():\n    return [1, 2\n",
+      "source_sha256": "55dee0d6bc8b32bccb70ecd5fe667b6647c8f99a9deac16cbbdc33425088cfda"
+    },
+    {
+      "case_id": "unsupported-valid-001",
+      "language": "python",
+      "source": "def use_loaded_key(key):\n    alias = None\n    return key.sign(b'message', object())\n",
+      "source_sha256": "b907d98f9a5fdc0988ad3d3168c57db7f34402d5f1f923e8cc480dbf79b3e54d"
+    },
+    {
+      "case_id": "unsupported-valid-002",
+      "language": "python",
+      "source": "def use_loaded_key(key):\n    alias = None\n    return key.verify(b'sig', b'message', object())\n",
+      "source_sha256": "62b19fd2c79a69e97962f68e8e09d36e15f83dd23ec320fd49d8aa690fdd7990"
+    },
+    {
+      "case_id": "unsupported-valid-003",
+      "language": "python",
+      "source": "def use_loaded_key(key):\n    alias = None\n    return key.public_key().encrypt(b'data', object())\n",
+      "source_sha256": "01fe1825520b450c0ab38089d68798537618d1239961ac8ea60a28d1b7d9f980"
+    },
+    {
+      "case_id": "unsupported-valid-004",
+      "language": "python",
+      "source": "def use_loaded_key(key):\n    alias = None\n    return key.decrypt(b'ciphertext', object())\n",
+      "source_sha256": "a31d92e007ff472e3874b21aea70495cccbe44f7f80200ded97d148c05e9281b"
+    },
+    {
+      "case_id": "unsupported-valid-005",
+      "language": "python",
+      "source": "def use_loaded_key(key):\n    alias = key\n    return alias.sign(b'message', object())\n",
+      "source_sha256": "2d43dab22caf6602c42de3c130340bd029edcf4fce9a8ac69ac2ed7e7aff9e27"
+    },
+    {
+      "case_id": "unsupported-valid-006",
+      "language": "python",
+      "source": "def use_loaded_key(key):\n    alias = key\n    return alias.public_key().encrypt(b'data', object())\n",
+      "source_sha256": "e48026884100a4c54c444fe7f04ed357e152def81896ee98d350c49e28c7d3d0"
+    },
+    {
+      "case_id": "unsupported-valid-007",
+      "language": "python",
+      "source": "def use_loaded_key(key):\n    alias = None\n    return key.sign(b'message', object())\n",
+      "source_sha256": "b907d98f9a5fdc0988ad3d3168c57db7f34402d5f1f923e8cc480dbf79b3e54d"
+    },
+    {
+      "case_id": "unsupported-valid-008",
+      "language": "python",
+      "source": "def use_loaded_key(key):\n    alias = None\n    return key.verify(b'sig', b'message', object())\n",
+      "source_sha256": "62b19fd2c79a69e97962f68e8e09d36e15f83dd23ec320fd49d8aa690fdd7990"
+    },
+    {
+      "case_id": "unsupported-valid-009",
+      "language": "python",
+      "source": "def use_loaded_key(key):\n    alias = None\n    return key.public_key().encrypt(b'data', object())\n",
+      "source_sha256": "01fe1825520b450c0ab38089d68798537618d1239961ac8ea60a28d1b7d9f980"
+    },
+    {
+      "case_id": "unsupported-valid-010",
+      "language": "python",
+      "source": "def use_loaded_key(key):\n    alias = None\n    return key.decrypt(b'ciphertext', object())\n",
+      "source_sha256": "a31d92e007ff472e3874b21aea70495cccbe44f7f80200ded97d148c05e9281b"
+    },
+    {
+      "case_id": "unsupported-valid-011",
+      "language": "python",
+      "source": "def use_loaded_key(key):\n    alias = key\n    return alias.sign(b'message', object())\n",
+      "source_sha256": "2d43dab22caf6602c42de3c130340bd029edcf4fce9a8ac69ac2ed7e7aff9e27"
+    },
+    {
+      "case_id": "unsupported-valid-012",
+      "language": "python",
+      "source": "def use_loaded_key(key):\n    alias = key\n    return alias.public_key().encrypt(b'data', object())\n",
+      "source_sha256": "e48026884100a4c54c444fe7f04ed357e152def81896ee98d350c49e28c7d3d0"
+    }
+  ]
+}

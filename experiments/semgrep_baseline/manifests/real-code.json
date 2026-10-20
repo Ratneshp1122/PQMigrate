@@ -1,0 +1,959 @@
+{
+  "schema_version": 1,
+  "provenance": "Source-only whole-file verification manifest; no annotations or tool predictions read. 119 pinned files containing candidate anchors, not an independent-search corpus.",
+  "scoring": "disabled; gold lock and operation-unit alignment not supplied",
+  "cases": [
+    {
+      "case_id": "file-f8af9b67f33dce03229e",
+      "language": "go",
+      "repository": "go-jose/go-jose",
+      "commit": "25b55feb059b8b08e16a73c601c8b80571fa5208",
+      "path": "asymmetric.go",
+      "source_sha256": "38dec175acae55c72d9e8e7245ad1036d9fe0f8cb66e930b48ddb0945c0a9bcd"
+    },
+    {
+      "case_id": "file-d2a7d20f9d513af0fd3d",
+      "language": "go",
+      "repository": "go-jose/go-jose",
+      "commit": "25b55feb059b8b08e16a73c601c8b80571fa5208",
+      "path": "cipher/key_wrap.go",
+      "source_sha256": "10468f9aabd1604255cb71564047fd23e9cb1f9317e2f145c1f6f11a6de81af8"
+    },
+    {
+      "case_id": "file-5ea1ab0cba520795cf76",
+      "language": "go",
+      "repository": "go-jose/go-jose",
+      "commit": "25b55feb059b8b08e16a73c601c8b80571fa5208",
+      "path": "crypter.go",
+      "source_sha256": "60572804928faa82c32702eb294fef17e45afc0576c862267fb5d36d21c213df"
+    },
+    {
+      "case_id": "file-567366b6e417c0b38ba3",
+      "language": "go",
+      "repository": "go-jose/go-jose",
+      "commit": "25b55feb059b8b08e16a73c601c8b80571fa5208",
+      "path": "cryptosigner/cryptosigner.go",
+      "source_sha256": "bebe959b2003b0b906e9126fb0af00d1bc03470c4b1602aaf5b365266fb45676"
+    },
+    {
+      "case_id": "file-8d65cce6b9d465f8b4a0",
+      "language": "go",
+      "repository": "go-jose/go-jose",
+      "commit": "25b55feb059b8b08e16a73c601c8b80571fa5208",
+      "path": "jose-util/crypto.go",
+      "source_sha256": "98efa7091f0994c66cac9bfc03daf273bb03d70ec11e3203c73b5a14e4ab1960"
+    },
+    {
+      "case_id": "file-8759a033174adcf71c90",
+      "language": "go",
+      "repository": "go-jose/go-jose",
+      "commit": "25b55feb059b8b08e16a73c601c8b80571fa5208",
+      "path": "jose-util/generator/generate.go",
+      "source_sha256": "bffb046bf0170ba1d72c4ad35d46d56a8ea88f93d7b1c3c3f786789b5d0e3a47"
+    },
+    {
+      "case_id": "file-8175d3349967fa8ed4cf",
+      "language": "go",
+      "repository": "go-jose/go-jose",
+      "commit": "25b55feb059b8b08e16a73c601c8b80571fa5208",
+      "path": "jwt/builder.go",
+      "source_sha256": "82dc3a191d9b3911c9a339ea1f81f28ea1b38369932a3b2bda1f28af7b634f82"
+    },
+    {
+      "case_id": "file-f8bedd2f518a768b7fe3",
+      "language": "go",
+      "repository": "go-jose/go-jose",
+      "commit": "25b55feb059b8b08e16a73c601c8b80571fa5208",
+      "path": "jwt/jwt.go",
+      "source_sha256": "41b658accd4e5a6838c453960bbacefb20545bfba5a070df81fc302cfc35472f"
+    },
+    {
+      "case_id": "file-d8b8a659a68e5ef3df0a",
+      "language": "go",
+      "repository": "go-jose/go-jose",
+      "commit": "25b55feb059b8b08e16a73c601c8b80571fa5208",
+      "path": "shared.go",
+      "source_sha256": "1d2f448011fc32353dcd8fbd6b0fe618f1736eca89b647c3eacd6997d55521ef"
+    },
+    {
+      "case_id": "file-89acdebf2454c614fa7f",
+      "language": "go",
+      "repository": "go-jose/go-jose",
+      "commit": "25b55feb059b8b08e16a73c601c8b80571fa5208",
+      "path": "signing.go",
+      "source_sha256": "4ae55c56037e576b9aa80eb9c71075684a5cc646609a00d37ee65d7e9c342562"
+    },
+    {
+      "case_id": "file-8841f5bd57d35afaa65e",
+      "language": "go",
+      "repository": "go-jose/go-jose",
+      "commit": "25b55feb059b8b08e16a73c601c8b80571fa5208",
+      "path": "symmetric.go",
+      "source_sha256": "05dcbc0dff43201ec7f2b5ee74ed57f91994467c677b97f4f6e6f326f1f73871"
+    },
+    {
+      "case_id": "file-d0960813a20b804ea5a2",
+      "language": "go",
+      "repository": "golang-jwt/jwt",
+      "commit": "73c870b18e68b6e654b2b03f485aa3c9fab32cea",
+      "path": "ecdsa.go",
+      "source_sha256": "5dfd7fa9dff8217748dcfc4dae0ca40f321f17203c5b9f3ce0f85141ac396615"
+    },
+    {
+      "case_id": "file-8b31016928321fc56c9f",
+      "language": "go",
+      "repository": "golang-jwt/jwt",
+      "commit": "73c870b18e68b6e654b2b03f485aa3c9fab32cea",
+      "path": "ed25519.go",
+      "source_sha256": "9c8ed1dad135f8b66f66d2dd3e1fa13d4491959c671eee3b1fd4275f8baf0bb2"
+    },
+    {
+      "case_id": "file-00e1e8478ec7c3e9cfbd",
+      "language": "go",
+      "repository": "golang-jwt/jwt",
+      "commit": "73c870b18e68b6e654b2b03f485aa3c9fab32cea",
+      "path": "hmac.go",
+      "source_sha256": "2cd25e5a7b0f18d6e8f7aa25bc756b53fb817e37c37040fe9271bc6cd631baab"
+    },
+    {
+      "case_id": "file-23507aa1f5390164c786",
+      "language": "go",
+      "repository": "golang-jwt/jwt",
+      "commit": "73c870b18e68b6e654b2b03f485aa3c9fab32cea",
+      "path": "none.go",
+      "source_sha256": "05d8223a732bd95a7f2f4cc77c7987b263eb1f12f26a855013d3b746153730e1"
+    },
+    {
+      "case_id": "file-c6373495da62970a393c",
+      "language": "go",
+      "repository": "golang-jwt/jwt",
+      "commit": "73c870b18e68b6e654b2b03f485aa3c9fab32cea",
+      "path": "parser.go",
+      "source_sha256": "7b309ed69d9c0b2ef917b3485d45c5b7c2ccbfc6076fd222d30f74ad69645a66"
+    },
+    {
+      "case_id": "file-0970b3ce471b5d2a617b",
+      "language": "go",
+      "repository": "golang-jwt/jwt",
+      "commit": "73c870b18e68b6e654b2b03f485aa3c9fab32cea",
+      "path": "rsa.go",
+      "source_sha256": "b940b9961ebed5c4fe9799595eed1ea707187ab2df9a699f6f31745d84d5cbbe"
+    },
+    {
+      "case_id": "file-2e15ac76f4371362055b",
+      "language": "go",
+      "repository": "golang-jwt/jwt",
+      "commit": "73c870b18e68b6e654b2b03f485aa3c9fab32cea",
+      "path": "rsa_pss.go",
+      "source_sha256": "0e50870bb770bcde546f9ce4114243905948513528b6788bbf99ff46a797b36b"
+    },
+    {
+      "case_id": "file-e119bdd3e2c9caa040cc",
+      "language": "go",
+      "repository": "golang-jwt/jwt",
+      "commit": "73c870b18e68b6e654b2b03f485aa3c9fab32cea",
+      "path": "signing_method.go",
+      "source_sha256": "110aad1010504df3c57b3c50474c0893604bc11286ee4db6ce4a364958d1a01a"
+    },
+    {
+      "case_id": "file-6381560103853ad76bb9",
+      "language": "go",
+      "repository": "golang-jwt/jwt",
+      "commit": "73c870b18e68b6e654b2b03f485aa3c9fab32cea",
+      "path": "token.go",
+      "source_sha256": "6f85d36c78964f8920a15f0bc74506f17c4f8c541f99fe1b0eea0a7a83417c92"
+    },
+    {
+      "case_id": "file-c0b07e0acd6a0dbfec50",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "acme/acme.go",
+      "source_sha256": "56f0af765dc8338cb128bbe29c97d038874950cbdb99213fadc4db0e1a578e0c"
+    },
+    {
+      "case_id": "file-0e58eb34c030c969725f",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "acme/autocert/autocert.go",
+      "source_sha256": "d2403eb77732b1e0396fecbe7579b3b4ac26102268bda4e11e3587e9ae3f0466"
+    },
+    {
+      "case_id": "file-06d156f1b48cdd10feac",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "acme/autocert/internal/acmetest/ca.go",
+      "source_sha256": "a89edd65e013f0c008d8fddf2e29df4010f930a3ad74b3cdd482becad9acfa9b"
+    },
+    {
+      "case_id": "file-bfe7dcec0fea5fdc85a9",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "acme/internal/acmeprobe/prober.go",
+      "source_sha256": "0d47564297b8cf19ae108d05b5499e1d1c8913d882da3f02c22289f8c9c427e6"
+    },
+    {
+      "case_id": "file-a7ee82f4c5e18daf42a9",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "bcrypt/bcrypt.go",
+      "source_sha256": "828a8f888c646bce098a2a9461043436c87b9f5c9ca54f6a881371efa58d57d4"
+    },
+    {
+      "case_id": "file-b5635b7c24d0f0592c32",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "blowfish/cipher.go",
+      "source_sha256": "c67e62fdf539aa94cd50c1055bdc1d4c6dc93f4b2d654addfd97ccd1d12f6e48"
+    },
+    {
+      "case_id": "file-2637d9021d44b0596ebf",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "bn256/bn256.go",
+      "source_sha256": "4218cac170237a8f32e9b814a3eed0a8c56aebbfda82a179fc592e88a4ea4bb3"
+    },
+    {
+      "case_id": "file-947f2368e1959b03a233",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "bn256/curve.go",
+      "source_sha256": "a47c2f9f3ec86235454015ef0954947144651677f37451b501873b51591124d3"
+    },
+    {
+      "case_id": "file-27c1a53b3528a58ad6db",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "bn256/gfp2.go",
+      "source_sha256": "348ef1f5d113fac8199d34439ee75e853b01b655c04477e156733da9621aca4d"
+    },
+    {
+      "case_id": "file-aeeb61988d38e09e43c1",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "bn256/twist.go",
+      "source_sha256": "ada6804312a275d09b571d94f1fa5bd2cd060a617816e53d75e6667e75fb5d9c"
+    },
+    {
+      "case_id": "file-a9a94ea538629224e18f",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "cast5/cast5.go",
+      "source_sha256": "0cf91b621373f760dafdd5cf1e0350d2b58d427458397dc5a6465de8e0fc5369"
+    },
+    {
+      "case_id": "file-3020387817dfd62a6cae",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "chacha20poly1305/chacha20poly1305_generic.go",
+      "source_sha256": "f3e04c8517e163f94ec2bb6e7b634ef239432ed7422b1d8695cfc446c8551181"
+    },
+    {
+      "case_id": "file-cfd9fd904e6e88c0ba7d",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "cryptobyte/asn1.go",
+      "source_sha256": "a7b568d1a846cfccee16f7847c5a0dcc5326c3c36dd299cc69956d9c1ef164bc"
+    },
+    {
+      "case_id": "file-93424f0b8a4646ec76c4",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ed25519/ed25519.go",
+      "source_sha256": "c92118a6d777b6ab588156a00dd8c36585274fdeae8a2f9a22a5aa27bc945eaa"
+    },
+    {
+      "case_id": "file-2620f3d6b61c53b84257",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "internal/poly1305/poly1305.go",
+      "source_sha256": "c4b20ab7330e47ee155a775f69ae3b0e432c75d74ad005cf764228a69ddf6da6"
+    },
+    {
+      "case_id": "file-bc7ecf9f70f98031357e",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "nacl/auth/auth.go",
+      "source_sha256": "bc34cfb809d22b496963bfbe7871cd70a3403f7fb8bd49c25e5b0290bcd27a24"
+    },
+    {
+      "case_id": "file-cf89730864688f1a5141",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "nacl/box/box.go",
+      "source_sha256": "15bd32db47b24370bcb047bcfd39bff4f9209c19116a0cd6a457bdce557dd1a5"
+    },
+    {
+      "case_id": "file-fd31e95d30a4b393f95b",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "nacl/secretbox/secretbox.go",
+      "source_sha256": "42680a7c19efb204fe67077063b26e683950677ab3c8d629b52fd646134b7aee"
+    },
+    {
+      "case_id": "file-7721bfe52345bc371e64",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "nacl/sign/sign.go",
+      "source_sha256": "7b6eeb5122e5ce3ae06ef6a03efb8e8239c62a0b89d79a4c4b23e6d2db345d6f"
+    },
+    {
+      "case_id": "file-731a35f14a72fccb8ef6",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ocsp/ocsp.go",
+      "source_sha256": "3b0278b4c403c08bb134fcdfe8000e5adc86f3380dd3b0d542d1827c068cc6c7"
+    },
+    {
+      "case_id": "file-d51f174f7ec593e97672",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "openpgp/clearsign/clearsign.go",
+      "source_sha256": "df21c1975bc27cb4aa769a3e517e06047f36e4384d25e4cb1f3352cc26790a51"
+    },
+    {
+      "case_id": "file-4fdfb9c5283220ac8104",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "openpgp/elgamal/elgamal.go",
+      "source_sha256": "9ebd7083b2c9bfb7cbd3a7a11d3910529c9724653d38930aea4b7954a3b37026"
+    },
+    {
+      "case_id": "file-ad78adc04d8dc7adfb6f",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "openpgp/keys.go",
+      "source_sha256": "6ddecd8d792599eceb44b0360054b2302d8e5144694e44314f3aec1f0f552bfa"
+    },
+    {
+      "case_id": "file-b0f172956e2ca7256cfb",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "openpgp/packet/encrypted_key.go",
+      "source_sha256": "3dd5f997da0652e8ab5716eb46cf88efcddc8784afa1adb7f346f9df8e37edc9"
+    },
+    {
+      "case_id": "file-32201ce1119707a5ba56",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "openpgp/packet/ocfb.go",
+      "source_sha256": "97f83c5a3d76122baf10694abd6800ad5de280b484bd4e9b1766061ad72269cb"
+    },
+    {
+      "case_id": "file-ab9abc46bb1e6b14ec92",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "openpgp/packet/packet.go",
+      "source_sha256": "f99df2219dc4194bc874c02f81938b6d7d48a3e9f288e66edaa430e1f9816dd4"
+    },
+    {
+      "case_id": "file-a92f139504591e7ce3e2",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "openpgp/packet/private_key.go",
+      "source_sha256": "ac0518829e82499444699ac5f7f3745da3fe5a21681f7f1e90f1d9bcf67cbdb3"
+    },
+    {
+      "case_id": "file-8f39e34fe5b74a610437",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "openpgp/packet/public_key.go",
+      "source_sha256": "a7c919b8247fb7764acc332f1216f42e581296c85fbddcda4945c6b2d58cb328"
+    },
+    {
+      "case_id": "file-eb952f58cf02400c4f3f",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "openpgp/packet/public_key_v3.go",
+      "source_sha256": "b545509c88e300281ceb5b0184a3fa7c511b2b8467803c51467de3b4f12e9f70"
+    },
+    {
+      "case_id": "file-98bf7b2f17e051760ebf",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "openpgp/packet/signature.go",
+      "source_sha256": "cdb85a4a756fb11dce00be3b7aa190b6a91ca243d3e602f3789a9e1e9ac32705"
+    },
+    {
+      "case_id": "file-238aad01c7bf12ea5dd1",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "openpgp/packet/symmetric_key_encrypted.go",
+      "source_sha256": "0c70f19586b963c517c9d2b65a9606fa2228769108253bff64c7c37c2b097f93"
+    },
+    {
+      "case_id": "file-1cf63cb5462ce30d79ee",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "openpgp/packet/symmetrically_encrypted.go",
+      "source_sha256": "f8a492d681e6464bd2d16f6cb0d07f287611b18b238a433451cf387760c53817"
+    },
+    {
+      "case_id": "file-87255a989478b9cae6ff",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "openpgp/read.go",
+      "source_sha256": "ef4bca884748b4377d6b8de770e9cbf39b0d39a7b13ae023e4c3b522756a488c"
+    },
+    {
+      "case_id": "file-c0b0a1e0a5a51e2ae00f",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "openpgp/write.go",
+      "source_sha256": "2e11f35a464d23f4ad21592bd1dd0518eddfd834646aae68759b8b5d889d11e9"
+    },
+    {
+      "case_id": "file-9dd03eaca7f712f70176",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "otr/otr.go",
+      "source_sha256": "f433614654088f704ad22ea2a6dd9f2b84b485b671b5ba935cf524ed208dd866"
+    },
+    {
+      "case_id": "file-b82077dee9a1707482a2",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "otr/smp.go",
+      "source_sha256": "3a203f22fb5458ada17c0cdab0354763dfaa60b194ae4d260ec777668e4cff43"
+    },
+    {
+      "case_id": "file-be006e149914acb7adf1",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "pkcs12/internal/rc2/rc2.go",
+      "source_sha256": "e761e317dffeed33e5fb443b7317c445d0cb171d1d0c5c96af2d96dda10676d6"
+    },
+    {
+      "case_id": "file-b17dfb2b1e78d2b7ca87",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "poly1305/poly1305_compat.go",
+      "source_sha256": "b0b6f02fc300b88b3b67fae1122876d1ed09bd31043da4fcd6114444a5214be0"
+    },
+    {
+      "case_id": "file-a48f8b59edf2a450f241",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ssh/agent/client.go",
+      "source_sha256": "272d75475ec46144c1557adaf13b2f9e31eba725857dba64c7e4c484ea0441a6"
+    },
+    {
+      "case_id": "file-82d2d6f4dc1e860b882a",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ssh/agent/keyring.go",
+      "source_sha256": "bd3a86623cec98e9ee99ad6c807d3bbe9978310ee2dbb72832eb7756fc5abc9d"
+    },
+    {
+      "case_id": "file-f4081ed8b37dce9ecf86",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ssh/agent/server.go",
+      "source_sha256": "9145c6c43e14640fe2f47031a73225ee5e02c003f4788a8dfc5b1e4fe6238570"
+    },
+    {
+      "case_id": "file-02e57d13589e2ef8cdea",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ssh/certs.go",
+      "source_sha256": "093b1448a7e8a17a5056e31e007bd10cda2e0a67a74b8548cede45068b4b1f2c"
+    },
+    {
+      "case_id": "file-a2b00cabf20cba1ba522",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ssh/cipher.go",
+      "source_sha256": "e7aa62253f84266bf5a90a8d26f908fa36cbf9732a09d775bc83e0922bd1fca6"
+    },
+    {
+      "case_id": "file-0a6e1c88939d98f8caba",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ssh/client.go",
+      "source_sha256": "614d95be492c97e247071ce22bc2d0f53ae206944814b9791227c6435cb3fd67"
+    },
+    {
+      "case_id": "file-2cfd644dbb48ee9e06d5",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ssh/handshake.go",
+      "source_sha256": "2eea5931af6dab0bde843654eea304b9ba0cf0a4a579870be822c1725ec6d95d"
+    },
+    {
+      "case_id": "file-95374a12caa63276d2c6",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ssh/internal/bcrypt_pbkdf/bcrypt_pbkdf.go",
+      "source_sha256": "4694b500beb45c7f61c050b59bd7f7aef88f87790234fa49d78379b032d63d9a"
+    },
+    {
+      "case_id": "file-fd426c0ba42a34b83a0d",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ssh/kex.go",
+      "source_sha256": "0aed5134fc6e67e02fd40eca62a70547dee4d9317dffb3eff0e35052b5c39661"
+    },
+    {
+      "case_id": "file-7e32f8e4f7b037fd23d3",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ssh/keys.go",
+      "source_sha256": "805c102eb987b391c6384fa3d4c31a025c7821e70a1a703d3d6443745881edb3"
+    },
+    {
+      "case_id": "file-d0296bb9e48d21dcb237",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ssh/messages.go",
+      "source_sha256": "fbeeb5fffa18f017609787d1ccf9d177c1d44f65ad784add5680e51000161c45"
+    },
+    {
+      "case_id": "file-a10fd35449b749413f99",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ssh/mldsa.go",
+      "source_sha256": "54aa397a2eec4f6315970f0af4ed352da071af6a8fcffa25b5c83e561ff13a85"
+    },
+    {
+      "case_id": "file-3a3f01dfdffdc5decc90",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ssh/mlkem.go",
+      "source_sha256": "0e78c5f3f901d309aab76b40d83d3dc473908d42b4ddf16d67ea72a5e3fd2c35"
+    },
+    {
+      "case_id": "file-0a7ab3b6bac20b13f0a4",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "ssh/server.go",
+      "source_sha256": "a9ff150f87775be31f40685d38f1c6934101a461f9bce82936a35331f6949c82"
+    },
+    {
+      "case_id": "file-0a592f5c12fdae548548",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "tea/cipher.go",
+      "source_sha256": "341e22c96807966bb8f7c09d15beaa499fe8d89b4a382f92ba9383461766a444"
+    },
+    {
+      "case_id": "file-6ca4737c588994626a9b",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "twofish/twofish.go",
+      "source_sha256": "ed1174646917c06cd3b5205e07e8366b31a80d1142f692a2e4e37326d4308f04"
+    },
+    {
+      "case_id": "file-dab627138535e6b45e6e",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "xtea/cipher.go",
+      "source_sha256": "ab7631895f131f61b21cbf4566a6e1e80ca82d01261e78adfabcac6e49256909"
+    },
+    {
+      "case_id": "file-92b26cea6ab9343f308f",
+      "language": "go",
+      "repository": "golang/crypto",
+      "commit": "c3db4df58582058384d318c87f1c912848d8c464",
+      "path": "xts/xts.go",
+      "source_sha256": "5b070d7c8ab128c00fb072d3fc7f5393132deb3b32eff105fd6e96dc927aaf4e"
+    },
+    {
+      "case_id": "file-0f24c1d944d209d296af",
+      "language": "python",
+      "repository": "jpadilla/pyjwt",
+      "commit": "b5bd6fe6d7ac0370ba90557c7a1e3d50a9414572",
+      "path": "jwt/algorithms.py",
+      "source_sha256": "31e174916a77d17f4ed9dbcd3b869e9264a146aaf8d97f02d9b43bf828fe0441"
+    },
+    {
+      "case_id": "file-36cd53d97d17a326d748",
+      "language": "python",
+      "repository": "jpadilla/pyjwt",
+      "commit": "b5bd6fe6d7ac0370ba90557c7a1e3d50a9414572",
+      "path": "jwt/api_jws.py",
+      "source_sha256": "80e83b3a4089f6a19692bb5b2f56784edc3bd65bf74043bad7a230f9c5bdcf12"
+    },
+    {
+      "case_id": "file-2eae4be3d566f5208e75",
+      "language": "python",
+      "repository": "paramiko/paramiko",
+      "commit": "142f593e40ad767c5e3556cbace66dc84589620c",
+      "path": "paramiko/config.py",
+      "source_sha256": "f6e215032a5e0b91338a656bd518ac9a5533bbcb2d8991382128199e882bf975"
+    },
+    {
+      "case_id": "file-14d62eeba66e8f8b8ac4",
+      "language": "python",
+      "repository": "paramiko/paramiko",
+      "commit": "142f593e40ad767c5e3556cbace66dc84589620c",
+      "path": "paramiko/ecdsakey.py",
+      "source_sha256": "f0b0dca3cf1db9b52cd89670c6ab1ed3811c35684aac9cde3864ec9bc1f465ba"
+    },
+    {
+      "case_id": "file-039dad850a16f4c7aa5c",
+      "language": "python",
+      "repository": "paramiko/paramiko",
+      "commit": "142f593e40ad767c5e3556cbace66dc84589620c",
+      "path": "paramiko/ed25519key.py",
+      "source_sha256": "1e82c1438bbdb0fae287f8d1483bf3300d03f5ff607136ef202c28a84a438c95"
+    },
+    {
+      "case_id": "file-8f6535f66ef8981b1749",
+      "language": "python",
+      "repository": "paramiko/paramiko",
+      "commit": "142f593e40ad767c5e3556cbace66dc84589620c",
+      "path": "paramiko/hostkeys.py",
+      "source_sha256": "fbba647086a7a77af3621b5f9e0f3804deb670fc6ce2f14cc15b4f03f0072cc7"
+    },
+    {
+      "case_id": "file-08b908ead65ff2381f5b",
+      "language": "python",
+      "repository": "paramiko/paramiko",
+      "commit": "142f593e40ad767c5e3556cbace66dc84589620c",
+      "path": "paramiko/kex_curve25519.py",
+      "source_sha256": "be81050ecff392011d58ea836a453ee432d83b7aa8b56717622a8e0943f8183a"
+    },
+    {
+      "case_id": "file-298de0491cb500e13bbc",
+      "language": "python",
+      "repository": "paramiko/paramiko",
+      "commit": "142f593e40ad767c5e3556cbace66dc84589620c",
+      "path": "paramiko/kex_ecdh_nist.py",
+      "source_sha256": "45b1cfc2ff06bb9891f4bc0c7fe374c948d711081128a04b6804f775a72fe384"
+    },
+    {
+      "case_id": "file-b2d65837e03e43132149",
+      "language": "python",
+      "repository": "paramiko/paramiko",
+      "commit": "142f593e40ad767c5e3556cbace66dc84589620c",
+      "path": "paramiko/kex_gex.py",
+      "source_sha256": "03a0ab3317067e1afa56552e5af1500c11be101218fbdf0c41115478d720d2db"
+    },
+    {
+      "case_id": "file-cca28ce5752565a6ed93",
+      "language": "python",
+      "repository": "paramiko/paramiko",
+      "commit": "142f593e40ad767c5e3556cbace66dc84589620c",
+      "path": "paramiko/kex_group14.py",
+      "source_sha256": "7a23866ba5abc2f7cdf59e6cc79702e23e41834249ebca134d84513255eaea56"
+    },
+    {
+      "case_id": "file-a56ba0931854ab8c12ed",
+      "language": "python",
+      "repository": "paramiko/paramiko",
+      "commit": "142f593e40ad767c5e3556cbace66dc84589620c",
+      "path": "paramiko/kex_mlkem.py",
+      "source_sha256": "bcd7ecb7ed992074b0926c54cb51d96b0c7b8ab0ee40ea764ed4cb47a3390414"
+    },
+    {
+      "case_id": "file-06c5b9f55190773829ea",
+      "language": "python",
+      "repository": "paramiko/paramiko",
+      "commit": "142f593e40ad767c5e3556cbace66dc84589620c",
+      "path": "paramiko/packet.py",
+      "source_sha256": "0a87189d9d956f3ed5468fba0463219515aba3b14b2084a9c538987a812cc9a3"
+    },
+    {
+      "case_id": "file-442c7ab0e42b0c060a55",
+      "language": "python",
+      "repository": "paramiko/paramiko",
+      "commit": "142f593e40ad767c5e3556cbace66dc84589620c",
+      "path": "paramiko/pkey.py",
+      "source_sha256": "e4fab624de858065ce25a8f85337c44cd84a8af3c2149775b11159eda7736df7"
+    },
+    {
+      "case_id": "file-4f852b09a3923a59cdbd",
+      "language": "python",
+      "repository": "paramiko/paramiko",
+      "commit": "142f593e40ad767c5e3556cbace66dc84589620c",
+      "path": "paramiko/rsakey.py",
+      "source_sha256": "599e4873423a1efb4153e60e941055e0e4e0af834f83919b2f6dc43caaba32bb"
+    },
+    {
+      "case_id": "file-005b95b7dc997038475b",
+      "language": "python",
+      "repository": "paramiko/paramiko",
+      "commit": "142f593e40ad767c5e3556cbace66dc84589620c",
+      "path": "paramiko/sftp_server.py",
+      "source_sha256": "06c8624d29c3f0f5deafc55e244cfb77c69e446609ac404466202515a9305654"
+    },
+    {
+      "case_id": "file-997e7ee4882ceec24ede",
+      "language": "python",
+      "repository": "paramiko/paramiko",
+      "commit": "142f593e40ad767c5e3556cbace66dc84589620c",
+      "path": "paramiko/transport.py",
+      "source_sha256": "41f13042dfb01e8705849aad17042d4fedc64002ae082260f979a05e350ef4a1"
+    },
+    {
+      "case_id": "file-f3824dd88ed95a63547e",
+      "language": "python",
+      "repository": "paramiko/paramiko",
+      "commit": "142f593e40ad767c5e3556cbace66dc84589620c",
+      "path": "paramiko/util.py",
+      "source_sha256": "6a940ee306d748cf2ef08119871867af0604e1ac69a0118dbe767120a1a14c89"
+    },
+    {
+      "case_id": "file-fa094de9f1d44eb25f21",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "docs/development/custom-vectors/aes-192-gcm-siv/generate_aes192gcmsiv.py",
+      "source_sha256": "b8a95f03d5249c85a25ea95249591f862e1bcc923d5a7f5e1c582b6822b63601"
+    },
+    {
+      "case_id": "file-3a60d4afc70f9c809fd8",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "docs/development/custom-vectors/arc4/generate_arc4.py",
+      "source_sha256": "f2d957922fbb8108f14156b833b7675cc3c1e465ed0d4f1022baecf5572aa04d"
+    },
+    {
+      "case_id": "file-3f29623e381712a5a46e",
+      "language": "go",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "docs/development/custom-vectors/arc4/verify_arc4.go",
+      "source_sha256": "ee19b42fc42f1f89c39b019679691f5992ffcf0d52d3d900460d8c143d487264"
+    },
+    {
+      "case_id": "file-e4bd2caf8959077a9695",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "docs/development/custom-vectors/cast5/generate_cast5.py",
+      "source_sha256": "1fa9242ef0dc67fab6b647301e1849f6f34355fd7a424a37300f51fb6ec68654"
+    },
+    {
+      "case_id": "file-bb91856c9cfc8d94ba11",
+      "language": "go",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "docs/development/custom-vectors/cast5/verify_cast5.go",
+      "source_sha256": "005029e89dc00e29d28cc69f1a05cd07151eec702e8256616fc11838b4f96d10"
+    },
+    {
+      "case_id": "file-f669aae1289123412457",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "docs/development/custom-vectors/hkdf/generate_hkdf.py",
+      "source_sha256": "d1e10c11f4ba0c61b467fea066d70ebf45b711d1b757e6601f38a2c23b6ac5a8"
+    },
+    {
+      "case_id": "file-52f9bd367b326c3cb5b5",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "docs/development/custom-vectors/idea/generate_idea.py",
+      "source_sha256": "28e604f8804cf7f9691f803af7b21138f3ec7836ba9162b2af0dbd05918808e6"
+    },
+    {
+      "case_id": "file-50b2c3a8e9c55cb0e9ae",
+      "language": "go",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "docs/development/custom-vectors/rc2/rc2/rc2.go",
+      "source_sha256": "f0ee91710d9fda0d89d484858f5b4e4393e87606088615198376aa6bcf3d08c6"
+    },
+    {
+      "case_id": "file-7d8abf52977fbfea42d6",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "docs/development/custom-vectors/rsa-oaep-sha2/generate_rsa_oaep_sha2.py",
+      "source_sha256": "37d2fba68e4d5d5f1be363e02dfe01da5f35b2bb9a653fc563737ca92d068aff"
+    },
+    {
+      "case_id": "file-667690a4325a9e9c0eaf",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "docs/development/custom-vectors/secp256k1/generate_secp256k1.py",
+      "source_sha256": "d6fdd7a2a4ab5d2c51841ef682fe2e047dc7b0db13a98ce5e8e4cf9751cd57be"
+    },
+    {
+      "case_id": "file-60b1233507e9580b85af",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "docs/development/custom-vectors/secp256k1/verify_secp256k1.py",
+      "source_sha256": "4f45ebf2111815a4ffca74e2d332c4315a063575b046759a5f6697791c586e81"
+    },
+    {
+      "case_id": "file-bf87b381ce1740773d3f",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "docs/development/custom-vectors/seed/generate_seed.py",
+      "source_sha256": "628dda681f392cf52ef50b21e087bfdd045fb91b7d395d106288e7d815c79224"
+    },
+    {
+      "case_id": "file-ed7bdca1a2c7bf0f12c4",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "src/cryptography/hazmat/_oid.py",
+      "source_sha256": "c23e7825aecf5ae083d77be8dafa92665c09e4b676915bc5709ebd064fc29f1b"
+    },
+    {
+      "case_id": "file-f04d7ee8de51c01f7250",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "src/cryptography/hazmat/backends/openssl/backend.py",
+      "source_sha256": "d0d73315b8b01b17eaf6a8b6f281d8af4f2bfebed5420e005c78dbd2814fc2a0"
+    },
+    {
+      "case_id": "file-cdd43b6e430f298c64ef",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "src/cryptography/hazmat/primitives/asymmetric/dsa.py",
+      "source_sha256": "c33692a45b820fb2975931ac5adf8c96ab90cf94172f4b7eef6f0b86dd454451"
+    },
+    {
+      "case_id": "file-3365a9c1ba29f3b04a4b",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "src/cryptography/hazmat/primitives/asymmetric/ec.py",
+      "source_sha256": "2e495508b2f16db433aa213a1d16984d16ae2cca61614c37b44e9cf28048c584"
+    },
+    {
+      "case_id": "file-a224fd8b9b8538753b22",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "src/cryptography/hazmat/primitives/asymmetric/ed25519.py",
+      "source_sha256": "99b7df2efb3edcf8020de835ad05d55e1ec62e7b6554be004e390811ce29b793"
+    },
+    {
+      "case_id": "file-3701381582063a173929",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "src/cryptography/hazmat/primitives/asymmetric/mlkem.py",
+      "source_sha256": "c2f5647854fee287fe55c500111dbecc8ff98574faaf04c93cc090f2017d1930"
+    },
+    {
+      "case_id": "file-96bd36a688941ef5698b",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "src/cryptography/hazmat/primitives/asymmetric/rsa.py",
+      "source_sha256": "94813b9467b8e3d5b95112d3282a6f1467ab213a2e2a8655f46c2e4f349cb12a"
+    },
+    {
+      "case_id": "file-6a6b15474249c4ab18af",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "src/cryptography/hazmat/primitives/ciphers/base.py",
+      "source_sha256": "6810bb1c7041a22c5e6e6a5aad5af4525383b37543d00ec1ea8cff01a4630eff"
+    },
+    {
+      "case_id": "file-3dba63ebc9e9bb7f81d5",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "src/cryptography/hazmat/primitives/ciphers/modes.py",
+      "source_sha256": "1fb0194a02624930428b482b2fdecdc5a912f79d09c852982ecadaf2d8c73f14"
+    },
+    {
+      "case_id": "file-ab11d33148ad92362bc9",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "src/cryptography/hazmat/primitives/constant_time.py",
+      "source_sha256": "c5dba7593d277fc3af29d72a52186514a6b21a9e3f3e0549454d96d702d2aff0"
+    },
+    {
+      "case_id": "file-72e93fb42eb82b90ac27",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "src/cryptography/hazmat/primitives/serialization/pkcs7.py",
+      "source_sha256": "98533b385b99f1c0b1506528a380a87fa06708773f21bc750108e37f19cf971a"
+    },
+    {
+      "case_id": "file-1f854ecdb265ead54a79",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "src/cryptography/hazmat/primitives/serialization/ssh.py",
+      "source_sha256": "227545d675ee612c58be0f9222d38076bc47b554ee9a07106d41ee99bf0ba7f2"
+    },
+    {
+      "case_id": "file-bd9b7bf9440072da52f6",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "src/cryptography/hazmat/primitives/twofactor/hotp.py",
+      "source_sha256": "8af668e41adc08658bb2aaa5e27655d175c28f218f8bf8877c3165b4694e2709"
+    },
+    {
+      "case_id": "file-cd39eb84c894e6b7bd2e",
+      "language": "python",
+      "repository": "pyca/cryptography",
+      "commit": "f8c6de806b03ab1098a9bc05d082370920efcdf4",
+      "path": "src/cryptography/x509/extensions.py",
+      "source_sha256": "fa25dcc169c82f5ce5e4c977055245904a3fef59dc5def387a1beacd6d6c2b83"
+    }
+  ]
+}

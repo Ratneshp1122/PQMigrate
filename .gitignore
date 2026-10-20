@@ -11,6 +11,10 @@ build/
 .venv/
 venv/
 .venv-d4/
+.venv-semgrep/
+.baseline-test-tmp*/
+.semgrep-settings.yml
+/settings*.yml
 .mypy_cache/
 .pytest_cache/
 .hypothesis/
