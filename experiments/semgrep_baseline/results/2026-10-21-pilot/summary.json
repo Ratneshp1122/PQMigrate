@@ -1,0 +1,10 @@
+{
+  "accuracy": null,
+  "case_count": 72,
+  "finding_count": 98,
+  "gold_lock": "not supplied",
+  "interpretation": "Execution/finding counts only; not precision, recall, TPR or agreement",
+  "statuses": {
+    "complete": 72
+  }
+}

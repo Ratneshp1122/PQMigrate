@@ -1,0 +1,4 @@
+# Preserve hashes and exact stdout/stderr on every platform.
+* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+**/* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+*.zip binary
