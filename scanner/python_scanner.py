@@ -64,8 +64,8 @@ class _CryptoVisitor(ast.NodeVisitor):
     def __init__(self, filepath: str):
         self.filepath = filepath
         self.findings: list[Finding] = []
-        # name_to_module: local name → full import path (for call detection)
-        self._name_to_module: dict[str, str] = {}
+        # Each lexical scope owns its import aliases and shadowed names.
+        self._scopes: list[dict[str, str | None]] = [{}]
 
     # ── Import detection ───────────────────────────────────────────────────────
 
@@ -73,7 +73,7 @@ class _CryptoVisitor(ast.NodeVisitor):
         for alias in node.names:
             module = alias.name
             local  = alias.asname or alias.name.split(".")[0]
-            self._name_to_module[local] = module
+            self._scopes[-1][local] = module if alias.asname else local
             self._check_import(module, node.lineno, node.col_offset,
                                f"import {module}")
         self.generic_visit(node)
@@ -86,7 +86,7 @@ class _CryptoVisitor(ast.NodeVisitor):
             full_path  = f"{module}.{name}"
 
             # Register for later call detection
-            self._name_to_module[local] = full_path
+            self._scopes[-1][local] = full_path
 
             # Try most-specific path first, then parent module
             matched = self._check_import(
@@ -117,22 +117,64 @@ class _CryptoVisitor(ast.NodeVisitor):
     def visit_Call(self, node: ast.Call):
         call_str = self._node_to_str(node.func)
         if call_str:
-            # Direct check against call patterns
-            for key, pattern in CALL_PATTERNS.items():
-                if call_str == key or call_str.startswith(key + "("):
+            parts = call_str.split(".")
+            resolved = self._resolve_root(parts[0])
+            if resolved is not None:
+                resolved_full = ".".join([resolved, *parts[1:]])
+                pattern = CALL_PATTERNS.get(resolved_full)
+                if pattern is not None:
                     self._add(pattern, node.lineno, node.col_offset,
                               "call", call_str + "()")
-                    break
-            # Resolve via import aliases (e.g., imported hashlib → local name "h")
-            # and check if the resolved name is a known pattern
-            parts = call_str.split(".")
-            if parts[0] in self._name_to_module:
-                resolved = self._name_to_module[parts[0]]
-                if len(parts) > 1:
-                    resolved_full = resolved + "." + ".".join(parts[1:])
-                    self._check_import(resolved, node.lineno, node.col_offset,
-                                       call_str + "()")
         self.generic_visit(node)
+
+    def _resolve_root(self, name: str) -> str | None:
+        for scope in reversed(self._scopes):
+            if name in scope:
+                return scope[name]
+        return name
+
+    def visit_FunctionDef(self, node: ast.FunctionDef):
+        self._scopes[-1][node.name] = None
+        for decorator in node.decorator_list:
+            self.visit(decorator)
+        for default in [*node.args.defaults, *node.args.kw_defaults]:
+            if default is not None:
+                self.visit(default)
+        parameters = node.args.posonlyargs + node.args.args + node.args.kwonlyargs
+        if node.args.vararg:
+            parameters.append(node.args.vararg)
+        if node.args.kwarg:
+            parameters.append(node.args.kwarg)
+        self._scopes.append({parameter.arg: None for parameter in parameters})
+        for statement in node.body:
+            self.visit(statement)
+        self._scopes.pop()
+
+    visit_AsyncFunctionDef = visit_FunctionDef
+
+    def visit_ClassDef(self, node: ast.ClassDef):
+        self._scopes[-1][node.name] = None
+        for expression in [*node.decorator_list, *node.bases]:
+            self.visit(expression)
+        self._scopes.append({})
+        for statement in node.body:
+            self.visit(statement)
+        self._scopes.pop()
+
+    def visit_Assign(self, node: ast.Assign):
+        self.visit(node.value)
+        for target in node.targets:
+            self._shadow_assigned_names(target)
+
+    def visit_AnnAssign(self, node: ast.AnnAssign):
+        if node.value is not None:
+            self.visit(node.value)
+        self._shadow_assigned_names(node.target)
+
+    def _shadow_assigned_names(self, target: ast.AST):
+        for child in ast.walk(target):
+            if isinstance(child, ast.Name) and isinstance(child.ctx, ast.Store):
+                self._scopes[-1][child.id] = None
 
     # ── Attribute detection (ssl.PROTOCOL_TLSv1, etc.) ───────────────────────
 
@@ -157,11 +199,14 @@ class _CryptoVisitor(ast.NodeVisitor):
 
     def _add(self, pattern: Pattern, line: int, col: int,
              match_type: str, text: str):
-        """Add a finding, deduplicating by primitive name per file.
-        Each distinct crypto primitive is reported once (first occurrence)."""
+        """Keep one import lead per primitive, but preserve distinct call sites."""
         for existing in self.findings:
-            if existing.pattern.name == pattern.name:
-                return  # already reported this primitive for this file
+            if existing.pattern.name != pattern.name:
+                continue
+            if match_type == "import" and existing.match_type == "import":
+                return
+            if (existing.match_type, existing.line, existing.col) == (match_type, line, col):
+                return
         self.findings.append(Finding(
             filepath=self.filepath,
             line=line,
@@ -183,6 +228,19 @@ def scan_file(filepath: str) -> list[Finding]:
         return []
     visitor = _CryptoVisitor(filepath)
     visitor.visit(tree)
+    # An import is only an inventory lead. Emit supported RSA operations as
+    # separate observations at the decisive call, never at the import line.
+    from pqc_migration_tool.resolver.context_inference import infer_rsa_operations
+
+    if "rsa" in source.lower():
+        rsa_pattern = IMPORT_PATTERNS["cryptography.hazmat.primitives.asymmetric.rsa"]
+        for result in infer_rsa_operations(source, filepath, tree=tree):
+            if result.evidence_line is None or result.evidence_col is None:
+                continue
+            visitor._add(
+                rsa_pattern, result.evidence_line, result.evidence_col,
+                "linked_call", result.call_text or "RSA operation()",
+            )
     # Sort: vulnerable first, then by line number
     return sorted(
         visitor.findings,

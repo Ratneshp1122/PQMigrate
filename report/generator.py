@@ -12,7 +12,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from ..scanner.patterns import Risk
+from ..scanner.patterns import Family, Risk
 from ..scanner.python_scanner import Finding
 from ..risk.scorer import FileSummary, SystemSummary
 
@@ -179,7 +179,7 @@ def build_project_report(summary: SystemSummary):
     import hashlib
     from datetime import datetime, timezone
     import os
-    from pqc_migration_tool.resolver.context_inference import infer_rsa_usage
+    from pqc_migration_tool.resolver.context_inference import infer_rsa_operations
     from pqc_migration_tool.resolver.go_semantic import infer_go_rsa_usage
     from pqc_migration_tool.resolver.planner import MigrationPlanner
     from pqc_migration_tool.schema.models import (
@@ -196,6 +196,7 @@ def build_project_report(summary: SystemSummary):
     planner = MigrationPlanner()
     source_commit = _source_commit(summary.root)
     records = []
+    rsa_operations_by_file = {}
 
     for fs in summary.file_summaries:
         for f in fs.findings:
@@ -204,7 +205,11 @@ def build_project_report(summary: SystemSummary):
             op = CryptoOperation.UNKNOWN
             protocol_context = ProtocolContext.UNKNOWN
             context_evidence = None
-            confidence = ConfidenceLevel.AMBIGUOUS if is_import else ConfidenceLevel.DIRECT
+            confidence = (
+                ConfidenceLevel.AMBIGUOUS
+                if is_import or f.match_type == "linked_call"
+                else ConfidenceLevel.DIRECT
+            )
             detection_type = "import_lead" if is_import else "operation_candidate"
 
             name_lower = f.pattern.name.lower()
@@ -229,23 +234,33 @@ def build_project_report(summary: SystemSummary):
                 except OSError as exc:
                     context_evidence = f"Source could not be read for Go role inference: {exc}."
 
-            # D6: use bounded, same-scope dataflow for RSA. Merely importing an
-            # RSA module remains an inventory lead when no linked operation is
-            # proven. Target source is parsed but never imported or executed.
-            elif is_import and "rsa" in name_lower:
+            # Python imports remain inventory leads. Only the separate,
+            # evidence-linked call observation can carry an inferred RSA role.
+            elif f.filepath.lower().endswith(".py") and "rsa" in name_lower:
                 semantic_role_checked = True
-                try:
-                    source = Path(f.filepath).read_text(encoding="utf-8", errors="replace")
-                    inference = infer_rsa_usage(source, f.filepath)
-                    context_evidence = inference.evidence
-                    if inference.role != CryptoRole.UNKNOWN:
+                if f.match_type == "linked_call" and f.pattern.name == "RSA":
+                    if f.filepath not in rsa_operations_by_file:
+                        try:
+                            source = Path(f.filepath).read_text(encoding="utf-8", errors="replace")
+                            rsa_operations_by_file[f.filepath] = infer_rsa_operations(source, f.filepath)
+                        except OSError:
+                            rsa_operations_by_file[f.filepath] = []
+                    matching = [
+                        result for result in rsa_operations_by_file[f.filepath]
+                        if result.evidence_line == f.line and result.evidence_col == f.col
+                    ]
+                    if len(matching) == 1 and matching[0].role != CryptoRole.UNKNOWN:
+                        inference = matching[0]
                         role = inference.role
                         op = inference.operation
                         protocol_context = inference.protocol_context
                         confidence = inference.confidence
+                        context_evidence = inference.evidence
                         detection_type = "linked_operation"
-                except OSError as exc:
-                    context_evidence = f"Source could not be read for role inference: {exc}."
+                    else:
+                        context_evidence = "No unique RSA inference matches this call site."
+                elif is_import:
+                    context_evidence = "RSA import is an inventory lead, not an observed operation."
 
             if not is_import and not semantic_role_checked:
                 if any(x in name_lower for x in ["sign", "ecdsa", "ed25519", "dsa"]):
@@ -266,13 +281,20 @@ def build_project_report(summary: SystemSummary):
 
             status = SecurityStatus.QUANTUM_VULNERABLE
             if f.pattern.risk.value == "SAFE":
-                status = SecurityStatus.STANDARDIZED_PQC
+                status = (
+                    SecurityStatus.STANDARDIZED_PQC
+                    if f.pattern.family in {Family.PQC_KEM, Family.PQC_SIG, Family.HYBRID}
+                    else SecurityStatus.CONTEXT_DEPENDENT
+                )
             elif "sha256" in f.pattern.name.lower() or "aes" in f.pattern.name.lower():
                 status = SecurityStatus.QUANTUM_SECURITY_REDUCED
             elif f.pattern.risk.value == "MEDIUM":
                 status = SecurityStatus.DEPRECATED_CLASSICALLY
 
-            finding_key = f"{f.filepath}:{f.line}:{f.pattern.name}:{role.value}:{op.value}"
+            finding_key = (
+                f"{f.filepath}:{f.line}:{f.col}:{f.match_type}:"
+                f"{f.pattern.name}:{role.value}:{op.value}"
+            )
             finding_id = hashlib.sha256(finding_key.encode("utf-8")).hexdigest()[:12]
             ir = CryptoIR(
                 id=finding_id,

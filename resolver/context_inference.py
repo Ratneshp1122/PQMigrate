@@ -7,6 +7,7 @@ inside one module/function scope and abstains when evidence conflicts.
 from __future__ import annotations
 
 import ast
+from collections import Counter
 from dataclasses import dataclass
 
 from pqc_migration_tool.schema.models import (
@@ -25,6 +26,8 @@ class InferenceResult:
     confidence: ConfidenceLevel = ConfidenceLevel.AMBIGUOUS
     evidence: str = "No linked RSA operation was found."
     evidence_line: int | None = None
+    evidence_col: int | None = None
+    call_text: str | None = None
 
 
 class _ScopeCollector(ast.NodeVisitor):
@@ -76,8 +79,11 @@ def _root_name(node: ast.AST) -> str | None:
 class PythonRoleAnalyzer:
     """Infer a small set of RSA roles using same-scope dataflow."""
 
-    def __init__(self, source_code: str, filename: str = "<unknown>") -> None:
-        self.tree = ast.parse(source_code, filename=filename)
+    def __init__(
+        self, source_code: str, filename: str = "<unknown>", tree: ast.Module | None = None
+    ) -> None:
+        self.source_code = source_code
+        self.tree = tree if tree is not None else ast.parse(source_code, filename=filename)
         self.module_imports = self._collect_imports(_nodes_in_scope(self.tree.body))
 
     @staticmethod
@@ -86,7 +92,9 @@ class PythonRoleAnalyzer:
         for node in nodes:
             if isinstance(node, ast.Import):
                 for alias in node.names:
-                    imports[alias.asname or alias.name.split(".")[0]] = alias.name
+                    imports[alias.asname or alias.name.split(".")[0]] = (
+                        alias.name if alias.asname else alias.name.split(".")[0]
+                    )
             elif isinstance(node, ast.ImportFrom):
                 module = node.module or ""
                 for alias in node.names:
@@ -115,12 +123,43 @@ class PythonRoleAnalyzer:
             return node.value
         return None
 
-    def _analyze_scope(self, statements: list[ast.stmt]) -> list[InferenceResult]:
+    @staticmethod
+    def _typed_rsa_parameters(
+        parameters: ast.arguments | None, imports: dict[str, str], nodes: list[ast.AST]
+    ) -> dict[str, str]:
+        """Trust only explicit cryptography RSA types that are not rebound."""
+        if parameters is None:
+            return {}
+        assignments = {
+            node.id for node in nodes
+            if isinstance(node, ast.Name) and isinstance(node.ctx, (ast.Store, ast.Del))
+        }
+        typed: dict[str, str] = {}
+        for parameter in parameters.posonlyargs + parameters.args + parameters.kwonlyargs:
+            dotted = _dotted_name(parameter.annotation) if parameter.annotation else ""
+            first, *rest = dotted.split(".")
+            resolved = ".".join([imports.get(first, first), *rest]) if dotted else ""
+            if parameter.arg in assignments:
+                continue
+            if resolved == "cryptography.hazmat.primitives.asymmetric.rsa.RSAPrivateKey":
+                typed[parameter.arg] = "private"
+            elif resolved == "cryptography.hazmat.primitives.asymmetric.rsa.RSAPublicKey":
+                typed[parameter.arg] = "public"
+        return typed
+
+    def _analyze_scope(
+        self, statements: list[ast.stmt], parameters: ast.arguments | None = None
+    ) -> list[InferenceResult]:
         nodes = _nodes_in_scope(statements)
         imports = dict(self.module_imports)
         imports.update(self._collect_imports(nodes))
         rsa_keys: dict[str, int] = {}
         session_secrets: dict[str, int] = {}
+        typed_keys = self._typed_rsa_parameters(parameters, imports, nodes)
+        writes = Counter(
+            node.id for node in nodes
+            if isinstance(node, ast.Name) and isinstance(node.ctx, (ast.Store, ast.Del))
+        )
 
         for node in sorted(nodes, key=lambda item: getattr(item, "lineno", 0)):
             if not isinstance(node, (ast.Assign, ast.AnnAssign)):
@@ -130,9 +169,15 @@ class PythonRoleAnalyzer:
             if assigned is None or not isinstance(value, ast.Call):
                 continue
             call_name = self._resolved_call_name(value, imports)
-            if call_name.endswith(".rsa.generate_private_key"):
+            if (
+                call_name == "cryptography.hazmat.primitives.asymmetric.rsa.generate_private_key"
+                and writes[assigned] == 1
+            ):
                 rsa_keys[assigned] = node.lineno
-            elif call_name in {"os.urandom", "secrets.token_bytes", "secrets.token_hex"}:
+            elif (
+                call_name in {"os.urandom", "secrets.token_bytes", "secrets.token_hex"}
+                and writes[assigned] == 1
+            ):
                 session_secrets[assigned] = node.lineno
 
         results: list[InferenceResult] = []
@@ -143,23 +188,30 @@ class PythonRoleAnalyzer:
 
             if call_name == "jwt.encode" and len(node.args) >= 2:
                 key_name = node.args[1].id if isinstance(node.args[1], ast.Name) else None
+                generated_key = key_name in rsa_keys and rsa_keys[key_name] < node.lineno
+                typed_private = typed_keys.get(key_name or "") == "private"
                 algorithm = next(
                     (self._literal_string(keyword.value) for keyword in node.keywords if keyword.arg == "algorithm"),
                     None,
                 )
                 if (
-                    key_name in rsa_keys
-                    and rsa_keys[key_name] < node.lineno
+                    (generated_key or typed_private)
                     and algorithm is not None
-                    and algorithm.upper().startswith("RS")
+                    and algorithm.upper().startswith(("RS", "PS"))
                 ):
                     results.append(InferenceResult(
                         role=CryptoRole.SIGNATURE,
                         operation=CryptoOperation.SIGN,
                         protocol_context=ProtocolContext.JWT,
-                        confidence=ConfidenceLevel.DIRECT,
-                        evidence=f"Line {node.lineno}: jwt.encode consumes tracked RSA key '{key_name}' with algorithm '{algorithm}'.",
+                        confidence=ConfidenceLevel.INFERRED if typed_private else ConfidenceLevel.DIRECT,
+                        evidence=(
+                            f"Line {node.lineno}: jwt.encode consumes "
+                            f"{'typed RSA private parameter' if typed_private else 'tracked RSA key'} "
+                            f"'{key_name}' with algorithm '{algorithm}'."
+                        ),
                         evidence_line=node.lineno,
+                        evidence_col=node.col_offset,
+                        call_text="jwt.encode()",
                     ))
                 continue
 
@@ -167,17 +219,32 @@ class PythonRoleAnalyzer:
                 continue
             method = node.func.attr
             key_name = _root_name(node.func.value)
-            if key_name not in rsa_keys or rsa_keys[key_name] >= node.lineno:
+            generated_key = key_name in rsa_keys and rsa_keys[key_name] < node.lineno
+            typed_kind = typed_keys.get(key_name or "") if isinstance(node.func.value, ast.Name) else None
+            if not generated_key and typed_kind is None:
                 continue
+
+            if typed_kind == "private" and method in {"verify", "encrypt"}:
+                continue
+            if typed_kind == "public" and method in {"sign", "decrypt"}:
+                continue
+            provenance = (
+                f"explicitly typed RSA {typed_kind} parameter" if typed_kind
+                else "RSA key"
+            )
+            confidence = ConfidenceLevel.INFERRED if typed_kind else ConfidenceLevel.DIRECT
+            call_text = (ast.get_source_segment(self.source_code, node.func) or method) + "()"
 
             if method in {"sign", "verify"}:
                 operation = CryptoOperation.SIGN if method == "sign" else CryptoOperation.VERIFY
                 results.append(InferenceResult(
                     role=CryptoRole.SIGNATURE,
                     operation=operation,
-                    confidence=ConfidenceLevel.DIRECT,
-                    evidence=f"Line {node.lineno}: RSA key '{key_name}' is used by .{method}().",
+                    confidence=confidence,
+                    evidence=f"Line {node.lineno}: {provenance} '{key_name}' is used by .{method}().",
                     evidence_line=node.lineno,
+                    evidence_col=node.col_offset,
+                    call_text=call_text,
                 ))
             elif method == "encrypt":
                 plaintext = node.args[0].id if node.args and isinstance(node.args[0], ast.Name) else None
@@ -185,37 +252,47 @@ class PythonRoleAnalyzer:
                     results.append(InferenceResult(
                         role=CryptoRole.KEY_TRANSPORT,
                         operation=CryptoOperation.ENCRYPT,
-                        confidence=ConfidenceLevel.DIRECT,
+                        confidence=confidence,
                         evidence=(
-                            f"Line {node.lineno}: RSA key '{key_name}' encrypts tracked session secret "
+                            f"Line {node.lineno}: {provenance} '{key_name}' encrypts tracked session secret "
                             f"'{plaintext}' generated on line {session_secrets[plaintext]}."
                         ),
                         evidence_line=node.lineno,
+                        evidence_col=node.col_offset,
+                        call_text=call_text,
                     ))
                 else:
                     results.append(InferenceResult(
                         role=CryptoRole.ENCRYPTION,
                         operation=CryptoOperation.ENCRYPT,
                         confidence=ConfidenceLevel.INFERRED,
-                        evidence=f"Line {node.lineno}: RSA key '{key_name}' encrypts data whose session-key purpose is unresolved.",
+                        evidence=f"Line {node.lineno}: {provenance} '{key_name}' encrypts data whose session-key purpose is unresolved.",
                         evidence_line=node.lineno,
+                        evidence_col=node.col_offset,
+                        call_text=call_text,
                     ))
             elif method == "decrypt":
                 results.append(InferenceResult(
                     role=CryptoRole.ENCRYPTION,
                     operation=CryptoOperation.DECRYPT,
                     confidence=ConfidenceLevel.INFERRED,
-                    evidence=f"Line {node.lineno}: RSA key '{key_name}' decrypts data; transport purpose is unresolved.",
+                    evidence=f"Line {node.lineno}: {provenance} '{key_name}' decrypts data; transport purpose is unresolved.",
                     evidence_line=node.lineno,
+                    evidence_col=node.col_offset,
+                    call_text=call_text,
                 ))
 
         return results
 
-    def infer_rsa_usage(self) -> InferenceResult:
+    def infer_rsa_operations(self) -> list[InferenceResult]:
         results = self._analyze_scope(self.tree.body)
         for node in ast.walk(self.tree):
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                results.extend(self._analyze_scope(node.body))
+                results.extend(self._analyze_scope(node.body, node.args))
+        return sorted(results, key=lambda result: result.evidence_line or 0)
+
+    def infer_rsa_usage(self) -> InferenceResult:
+        results = self.infer_rsa_operations()
 
         if not results:
             return InferenceResult()
@@ -233,3 +310,13 @@ def infer_rsa_usage(source_code: str, filename: str = "<unknown>") -> InferenceR
         return PythonRoleAnalyzer(source_code, filename).infer_rsa_usage()
     except SyntaxError as exc:
         return InferenceResult(evidence=f"AST parsing failed: {exc.msg} at line {exc.lineno}.")
+
+
+def infer_rsa_operations(
+    source_code: str, filename: str = "<unknown>", tree: ast.Module | None = None
+) -> list[InferenceResult]:
+    """Return supported call-site results without collapsing a file to one role."""
+    try:
+        return PythonRoleAnalyzer(source_code, filename, tree).infer_rsa_operations()
+    except SyntaxError:
+        return []

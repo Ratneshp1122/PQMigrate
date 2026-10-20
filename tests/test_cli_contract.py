@@ -98,11 +98,13 @@ def test_review_fixtures_produce_role_aware_advisory_plans(tmp_path: Path) -> No
     jwt = next(
         record for record in records
         if record["finding"]["location"]["file_path"].endswith("review_rsa_jwt_signing.py")
+        and record["finding"]["detection_type"] == "linked_operation"
     )
     transport = next(
         record for record in records
         if record["finding"]["primitive_name"] == "RSA"
         and record["finding"]["location"]["file_path"].endswith("review_rsa_key_transport.py")
+        and record["finding"]["detection_type"] == "linked_operation"
     )
     import_only = next(
         record for record in records
@@ -110,6 +112,11 @@ def test_review_fixtures_produce_role_aware_advisory_plans(tmp_path: Path) -> No
     )
 
     assert jwt["finding"]["role"] == "signature"
+    assert jwt["finding"]["location"]["line_number"] != next(
+        record["finding"]["location"]["line_number"] for record in records
+        if record["finding"]["location"]["file_path"].endswith("review_rsa_jwt_signing.py")
+        and record["finding"]["detection_type"] == "import_lead"
+    )
     assert jwt["finding"]["protocol_context"] == "jwt"
     assert jwt["plan"]["target_algorithm"] == "ML-DSA assessment"
     assert jwt["plan"]["rule_id"] == "RSA-SIGNATURE-001"
