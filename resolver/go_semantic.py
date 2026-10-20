@@ -36,6 +36,12 @@ _IMPORT_SPEC = re.compile(
 _TYPED_RSA_PARAMETER = re.compile(
     r"\b(?P<name>[A-Za-z_][A-Za-z0-9_]*)\s+\*?(?P<alias>[A-Za-z_][A-Za-z0-9_]*)\.(?P<kind>PrivateKey|PublicKey)\b"
 )
+_TYPED_RSA_FIELD = re.compile(
+    r"^\s*(?P<name>[A-Za-z_][A-Za-z0-9_]*)\s+\*?(?P<alias>[A-Za-z_][A-Za-z0-9_]*)\.(?P<kind>PrivateKey|PublicKey)\s*$"
+)
+_METHOD_RECEIVER = re.compile(
+    r"^\(\s*(?P<name>[A-Za-z_][A-Za-z0-9_]*)\s+\*?(?P<type>[A-Za-z_][A-Za-z0-9_]*)\s*\)$"
+)
 
 
 @dataclass(frozen=True)
@@ -81,6 +87,14 @@ def _root_identifier(text: str) -> str | None:
     value = text.strip().lstrip("&*").strip()
     match = re.match(r"([A-Za-z_][A-Za-z0-9_]*)", value)
     return match.group(1) if match else None
+
+
+def _key_reference(text: str) -> str | None:
+    """Accept only a bare key or one direct receiver field, not arbitrary chains."""
+    value = text.strip().lstrip("&*").strip()
+    if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)?", value):
+        return value
+    return None
 
 
 def _call_parts(source: bytes, call: "Node") -> tuple[str, list[str]]:
@@ -151,6 +165,26 @@ class GoRoleAnalyzer:
             target[match.group("name")] = _line(scope)
         return private_keys, public_keys
 
+    def _typed_struct_fields(self, rsa_aliases: set[str]) -> dict[str, dict[str, str]]:
+        """Resolve direct RSA key fields declared in a same-file named struct."""
+        structs: dict[str, dict[str, str]] = {}
+        for node in _walk(self.tree.root_node):
+            if node.type != "type_spec":
+                continue
+            children = node.named_children
+            if len(children) != 2 or children[0].type != "type_identifier" or children[1].type != "struct_type":
+                continue
+            fields: dict[str, str] = {}
+            for field in _walk(children[1]):
+                if field.type != "field_declaration":
+                    continue
+                match = _TYPED_RSA_FIELD.fullmatch(_text(self.source, field))
+                if match and match.group("alias") in rsa_aliases:
+                    fields[match.group("name")] = match.group("kind")
+            if fields:
+                structs[_text(self.source, children[0])] = fields
+        return structs
+
     @staticmethod
     def _package_call(function: str) -> tuple[str, str] | None:
         if "." not in function:
@@ -158,8 +192,18 @@ class GoRoleAnalyzer:
         alias, method = function.split(".", 1)
         return alias, method
 
-    def _analyze_scope(self, scope: "Node", rsa_aliases: set[str]) -> list[_Operation]:
+    def _analyze_scope(
+        self, scope: "Node", rsa_aliases: set[str],
+        struct_fields: dict[str, dict[str, str]],
+    ) -> list[_Operation]:
         private_keys, public_keys = self._typed_parameters(scope, rsa_aliases)
+        if scope.type == "method_declaration":
+            receiver = scope.child_by_field_name("receiver")
+            match = _METHOD_RECEIVER.fullmatch(_text(self.source, receiver)) if receiver else None
+            if match:
+                for field_name, kind in struct_fields.get(match.group("type"), {}).items():
+                    target = private_keys if kind == "PrivateKey" else public_keys
+                    target[f"{match.group('name')}.{field_name}"] = _line(scope)
         byte_buffers: dict[str, int] = {}
         session_secrets: dict[str, int] = {}
         shadowed_aliases: set[str] = set()
@@ -172,14 +216,17 @@ class GoRoleAnalyzer:
             if node.type in {"short_var_declaration", "assignment_statement"}:
                 left_values, right_values = _assignment_parts(self.source, node)
                 left_names = [name for value in left_values if (name := _identifier(value))]
+                left_refs = [ref for value in left_values if (ref := _key_reference(value))]
                 if node.type == "short_var_declaration":
                     shadowed_aliases.update(set(left_names) & rsa_aliases)
 
                 # A later write invalidates earlier identity or secret evidence.
                 # Re-establish tracking below only for a recognized new value.
-                for name in left_names:
-                    private_keys.pop(name, None)
-                    public_keys.pop(name, None)
+                for name in left_refs:
+                    for tracked in list(private_keys) + list(public_keys):
+                        if tracked == name or tracked.startswith(name + "."):
+                            private_keys.pop(tracked, None)
+                            public_keys.pop(tracked, None)
                     byte_buffers.pop(name, None)
                     session_secrets.pop(name, None)
 
@@ -226,7 +273,7 @@ class GoRoleAnalyzer:
                 is_rsa_package = alias in rsa_aliases and alias not in shadowed_aliases
 
                 if is_rsa_package and method in {"SignPKCS1v15", "SignPSS"} and len(args) >= 2:
-                    key_name = _root_identifier(args[1])
+                    key_name = _key_reference(args[1])
                     if key_name in private_keys:
                         operations.append(_Operation(InferenceResult(
                             role=CryptoRole.SIGNATURE,
@@ -240,7 +287,7 @@ class GoRoleAnalyzer:
                     continue
 
                 if is_rsa_package and method in {"VerifyPKCS1v15", "VerifyPSS"} and args:
-                    key_name = _root_identifier(args[0])
+                    key_name = _key_reference(args[0])
                     if key_name in public_keys or key_name in private_keys:
                         operations.append(_Operation(InferenceResult(
                             role=CryptoRole.SIGNATURE,
@@ -261,9 +308,13 @@ class GoRoleAnalyzer:
                     key_index, plaintext_index = encrypt_indexes[method]
                     if len(args) <= plaintext_index:
                         continue
-                    key_name = _root_identifier(args[key_index])
+                    key_name = _key_reference(args[key_index])
                     plaintext = _identifier(args[plaintext_index])
-                    tracked_public = key_name in public_keys or key_name in private_keys
+                    tracked_public = (
+                        key_name in public_keys or key_name in private_keys
+                        or bool(key_name and key_name.endswith(".PublicKey")
+                                and key_name.split(".")[0] in private_keys)
+                    )
                     if not tracked_public:
                         continue
                     if plaintext in session_secrets:
@@ -281,11 +332,12 @@ class GoRoleAnalyzer:
                         )
                     else:
                         result = InferenceResult(
-                            role=CryptoRole.ENCRYPTION,
+                            role=CryptoRole.UNKNOWN,
                             operation=CryptoOperation.ENCRYPT,
-                            confidence=ConfidenceLevel.INFERRED,
+                            confidence=ConfidenceLevel.AMBIGUOUS,
                             evidence=(
-                                f"Line {line}: {function} encrypts data whose session-key purpose is unresolved."
+                                f"Line {line}: {function} uses a tracked RSA key, but the plaintext's "
+                                "data-versus-key-transport purpose is unresolved."
                             ),
                             evidence_line=line,
                             evidence_col=_column(node),
@@ -294,9 +346,36 @@ class GoRoleAnalyzer:
                     operations.append(_Operation(result, key_name or "<expression>"))
                     continue
 
+                decrypt_indexes = {
+                    "DecryptOAEP": 2,
+                    "DecryptPKCS1v15": 1,
+                    "DecryptPKCS1v15SessionKey": 1,
+                }
+                if is_rsa_package and method in decrypt_indexes:
+                    key_index = decrypt_indexes[method]
+                    if len(args) <= key_index:
+                        continue
+                    key_name = _key_reference(args[key_index])
+                    if key_name not in private_keys:
+                        continue
+                    result = InferenceResult(
+                        role=CryptoRole.UNKNOWN,
+                        operation=CryptoOperation.DECRYPT,
+                        confidence=ConfidenceLevel.AMBIGUOUS,
+                        evidence=(
+                            f"Line {line}: {function} consumes tracked RSA private key "
+                            f"'{key_name}', but the ciphertext's purpose is unresolved."
+                        ),
+                        evidence_line=line,
+                        evidence_col=_column(node),
+                        call_text=f"{function}()",
+                    )
+                    operations.append(_Operation(result, key_name))
+                    continue
+
             # Methods on a proven key are also semantically meaningful.
             method_match = re.fullmatch(
-                r"(?P<receiver>[A-Za-z_][A-Za-z0-9_]*)\.(?P<method>Sign|Decrypt)",
+                r"(?P<receiver>[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)?)\.(?P<method>Sign|Decrypt)",
                 function,
             )
             if not method_match:
@@ -343,10 +422,11 @@ class GoRoleAnalyzer:
             node for node in _walk(self.tree.root_node)
             if node.type in {"function_declaration", "method_declaration"}
         ]
+        struct_fields = self._typed_struct_fields(rsa_aliases)
         operations = [
             operation.result
             for scope in scopes
-            for operation in self._analyze_scope(scope, rsa_aliases)
+            for operation in self._analyze_scope(scope, rsa_aliases, struct_fields)
         ]
         return sorted(operations, key=lambda result: (
             result.evidence_line or 0, result.evidence_col or 0
@@ -361,12 +441,13 @@ class GoRoleAnalyzer:
             return InferenceResult(evidence="No non-blank crypto/rsa import was resolved.")
 
         operations: list[_Operation] = []
+        struct_fields = self._typed_struct_fields(rsa_aliases)
         scopes = [
             node for node in _walk(self.tree.root_node)
             if node.type in {"function_declaration", "method_declaration"}
         ]
         for scope in scopes:
-            operations.extend(self._analyze_scope(scope, rsa_aliases))
+            operations.extend(self._analyze_scope(scope, rsa_aliases, struct_fields))
 
         if not operations:
             return InferenceResult(

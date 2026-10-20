@@ -241,6 +241,11 @@ def build_project_report(summary: SystemSummary):
                         confidence = inference.confidence
                         context_evidence = inference.evidence
                         detection_type = "linked_operation"
+                    elif len(matching) == 1:
+                        inference = matching[0]
+                        op = inference.operation
+                        confidence = inference.confidence
+                        context_evidence = inference.evidence
                     else:
                         context_evidence = "No unique Go RSA inference matches this call site."
                 elif is_import:

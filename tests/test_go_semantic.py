@@ -231,3 +231,87 @@ func sign(digest []byte, replacement interface{}) {
 }
 '''
     assert infer_go_rsa_operations(source, "reassigned.go") == []
+
+
+def test_go_typed_receiver_field_links_signature() -> None:
+    source = r'''
+package demo
+import (
+    "crypto/rand"
+    "crypto/rsa"
+)
+type signer struct { privateKey *rsa.PrivateKey }
+func (ctx signer) sign(digest []byte) {
+    _, _ = rsa.SignPSS(rand.Reader, ctx.privateKey, 0, digest, nil)
+}
+'''
+    results = infer_go_rsa_operations(source, "typed-field.go")
+    assert len(results) == 1
+    assert results[0].role == CryptoRole.SIGNATURE
+    assert "ctx.privateKey" in results[0].evidence
+
+
+def test_go_receiver_field_mutation_abstains() -> None:
+    source = r'''
+package demo
+import (
+    "crypto/rand"
+    "crypto/rsa"
+)
+type signer struct { privateKey *rsa.PrivateKey }
+func (ctx *signer) sign(digest []byte) {
+    ctx.privateKey = nil
+    _, _ = rsa.SignPSS(rand.Reader, ctx.privateKey, 0, digest, nil)
+}
+'''
+    assert infer_go_rsa_operations(source, "mutated-field.go") == []
+
+
+def test_go_rsa_encrypt_without_secret_proof_abstains_on_role(tmp_path: Path) -> None:
+    source = r'''
+package demo
+import (
+    "crypto/rand"
+    "crypto/rsa"
+    "crypto/sha256"
+)
+func encrypt(key *rsa.PublicKey, data []byte) {
+    _, _ = rsa.EncryptOAEP(sha256.New(), rand.Reader, key, data, nil)
+}
+'''
+    path = tmp_path / "ambiguous.go"
+    path.write_text(source, encoding="utf-8")
+    findings = scan_go_file(str(path))
+    report = build_project_report(score_system(str(tmp_path), findings, files_scanned=1))
+    call = next(record for record in report.records if record.finding.location.line_number == 9)
+    assert call.finding.role == CryptoRole.UNKNOWN
+    assert call.finding.operation == CryptoOperation.ENCRYPT
+    assert call.finding.detection_type == "operation_candidate"
+    assert call.plan.requires_manual_intervention is True
+
+
+def test_go_rsa_decrypt_apis_are_call_candidates_without_role(tmp_path: Path) -> None:
+    source = r'''
+package demo
+import (
+    "crypto/rand"
+    "crypto/rsa"
+    "crypto/sha256"
+)
+type decryptor struct { privateKey *rsa.PrivateKey }
+func (ctx decryptor) decrypt(ciphertext []byte, key []byte) {
+    _, _ = rsa.DecryptOAEP(sha256.New(), rand.Reader, ctx.privateKey, ciphertext, nil)
+    _ = rsa.DecryptPKCS1v15SessionKey(rand.Reader, ctx.privateKey, ciphertext, key)
+}
+'''
+    path = tmp_path / "decrypt.go"
+    path.write_text(source, encoding="utf-8")
+    report = build_project_report(score_system(str(tmp_path), scan_go_file(str(path)), files_scanned=1))
+    calls = [
+        record for record in report.records
+        if record.finding.operation == CryptoOperation.DECRYPT
+    ]
+    assert len(calls) == 2
+    assert {record.finding.location.line_number for record in calls} == {10, 11}
+    assert all(record.finding.role == CryptoRole.UNKNOWN for record in calls)
+    assert all(record.plan.requires_manual_intervention for record in calls)
