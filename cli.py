@@ -21,6 +21,7 @@ Usage:
 """
 
 import json
+import argparse
 import os
 import re
 import shutil
@@ -532,6 +533,40 @@ def cmd_dashboard(args: list[str]):
     finally: server.server_close()
 
 
+def cmd_external_triage(args: list[str]):
+    """Align external SARIF candidates without importing them as PQMigrate facts."""
+    from pqc_migration_tool.scanner.external_triage import build_external_triage
+
+    parser = argparse.ArgumentParser(prog="cli.py external-triage")
+    parser.add_argument("source_root")
+    parser.add_argument("--sarif", action="append", required=True, metavar="TOOL=FILE")
+    parser.add_argument("--pqmigrate-report", type=Path)
+    parser.add_argument("--output", type=Path)
+    options = parser.parse_args(args)
+    try:
+        sarif_inputs = []
+        for item in options.sarif:
+            tool, sep, filename = item.partition("=")
+            if not sep or not filename:
+                raise ValueError("--sarif must have the form TOOL=FILE")
+            sarif_inputs.append((tool, Path(filename)))
+        document = build_external_triage(
+            Path(options.source_root), sarif_inputs, options.pqmigrate_report
+        )
+        rendered = json.dumps(document, indent=2, sort_keys=True) + "\n"
+        if options.output:
+            protected = {path.resolve() for _, path in sarif_inputs}
+            if options.pqmigrate_report:
+                protected.add(options.pqmigrate_report.resolve())
+            if options.output.resolve() in protected:
+                raise ValueError("Output must not overwrite an input report")
+            options.output.write_text(rendered, encoding="utf-8")
+        else:
+            print(rendered, end="")
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        parser.error(str(exc))
+
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # main
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -548,6 +583,7 @@ def main():
         print("  verify-preview <file.py>   Verify D12 preview in a disposable copy")
         print("  interop-lab                Run the bounded D14 compatibility matrix")
         print("  dashboard --input FILE     Serve the read-only D15/D16 local workbench")
+        print("  external-triage ROOT       Align external SARIF leads with PQMigrate JSON")
         print("  migration <primitive>      Show migration code example")
         print("  list-patterns             List all detectable patterns")
         print("  list-rules [yaml-path]    Validate and list D7 rules")
@@ -590,6 +626,7 @@ def main():
         "verify-preview": cmd_verify_preview,
         "interop-lab":    cmd_interop_lab,
         "dashboard":      cmd_dashboard,
+        "external-triage": cmd_external_triage,
         "export":        cmd_export,
         "migration":     cmd_migration,
         "list-patterns": cmd_list_patterns,
