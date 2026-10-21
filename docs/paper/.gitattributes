@@ -1,0 +1,3 @@
+*.pdf binary
+revision/build-audit.json -text
+revision/integration_sources.json -text
