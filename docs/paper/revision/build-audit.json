@@ -1,9 +1,12 @@
 {
-  "original_sha256": "6cde5495e7cc16b88c274e78a6f75e244401465c894f52f61dff4e61fbbaf2d7",
-  "revised_sha256": "f4eabe0f28d1d004558ee29cee65100cb5f9f361cf9cfa036c6beea234e49c39",
-  "page_count": 5,
-  "citation_count": 26,
-  "verification_date": "2026-10-21",
-  "historical_result_pages_removed": true,
-  "note": "One integrated manuscript; historical performance tables, plots and numerical findings removed at author request. No replacement accuracy calculated."
+  "source_sha256": "6cde5495e7cc16b88c274e78a6f75e244401465c894f52f61dff4e61fbbaf2d7",
+  "output_sha256": "6cde5495e7cc16b88c274e78a6f75e244401465c894f52f61dff4e61fbbaf2d7",
+  "page_count": 8,
+  "original_pdf_preserved_byte_for_byte": true,
+  "theory_and_wording_changed": false,
+  "formatting_changed": false,
+  "numbers_or_graphs_changed": false,
+  "eligible_annotation_metrics_available": false,
+  "status": "awaiting completed, locked independent annotations and comparable metrics",
+  "note": "The clean A packet remains unreviewed. Unscored Semgrep findings are not annotation accuracy and cannot justify numeric replacements."
 }
