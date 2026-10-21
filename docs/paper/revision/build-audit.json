@@ -1,12 +1,50 @@
 {
   "source_sha256": "6cde5495e7cc16b88c274e78a6f75e244401465c894f52f61dff4e61fbbaf2d7",
-  "output_sha256": "6cde5495e7cc16b88c274e78a6f75e244401465c894f52f61dff4e61fbbaf2d7",
-  "page_count": 8,
-  "original_pdf_preserved_byte_for_byte": true,
+  "output_sha256": "fff4b33e36eec05f252a66ed3db917484e0927eed80679e5c4d2844d9727371f",
+  "page_count": 9,
+  "original_page_count": 8,
+  "original_page_streams_and_text_preserved": true,
+  "preserved_pages": [
+    {
+      "page": 1,
+      "content_sha256": "45c6ae5bc829cadb9e4e4e945249e1625b4a26ce63ce91a2110a9fea6b02a63d"
+    },
+    {
+      "page": 2,
+      "content_sha256": "75009019f7c2f9e3af552c57508150d060b4666d9254fc6f14c0a2ba8322c508"
+    },
+    {
+      "page": 3,
+      "content_sha256": "0c5e17476a36ccd3f1ec66223edc4aba65d3df3245f2eb19ff98348970adc85b"
+    },
+    {
+      "page": 4,
+      "content_sha256": "d19198bb35fcab385737153324b8165a6dd3ac8898e8eeefa034e52c76c14fe6"
+    },
+    {
+      "page": 5,
+      "content_sha256": "0b02359cdd8ce431c40d3eb6652eb6c56f198547961cd7617193c0b39d76b34a"
+    },
+    {
+      "page": 6,
+      "content_sha256": "d40ce735d316050f46231580e3ba998693e7f8a0022959a4f1fc0329237c6275"
+    },
+    {
+      "page": 7,
+      "content_sha256": "2607683c78de75e0ae5eef6685fffd4fa9103b517d28ed5f8c695a92e0296705"
+    },
+    {
+      "page": 8,
+      "content_sha256": "fab0c058b74480b7e36b55dba9f95f04f9ae417f3d007573a67dbd9c435a25a5"
+    }
+  ],
+  "appendix_pages": 1,
+  "appendix_font": "PaperTimes",
   "theory_and_wording_changed": false,
-  "formatting_changed": false,
+  "original_page_formatting_changed": false,
   "numbers_or_graphs_changed": false,
   "eligible_annotation_metrics_available": false,
-  "status": "awaiting completed, locked independent annotations and comparable metrics",
-  "note": "The clean A packet remains unreviewed. Unscored Semgrep findings are not annotation accuracy and cannot justify numeric replacements."
+  "status": "proposed future-work appendix added; integration and market superiority unvalidated",
+  "source_audit_sha256": "8d45a06a318379858bf4216097f43ad9717efb105336ea7fdc7869048a549e45",
+  "note": "Original paper pages and results unchanged. The appendix proposes CryptoScan, Semgrep, Where's Crypto? and CRYLOGGER adapters and an independent evaluation; it reports no achieved 95-percent superiority."
 }
